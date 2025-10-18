@@ -51,6 +51,20 @@ namespace OnlineSinavSistemi.Data
                 .HasOne(se => se.Student)
                 .WithMany(u => u.StudentExams)
                 .HasForeignKey(se => se.StudentId);
+
+            builder.Entity<Answer>()
+             .HasOne(a => a.StudentExam)
+             .WithMany() // parametresiz
+             .HasForeignKey(a => a.StudentExamId)
+             .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Answer>()
+                .HasOne(a => a.Question)
+                .WithMany() // parametresiz
+                .HasForeignKey(a => a.QuestionId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
         }
     }
-}
+    }
