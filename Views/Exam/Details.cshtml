@@ -1,0 +1,47 @@
+@model OnlineSinavSistemi.Models.Exam
+@{
+    ViewBag.Title = "Sýnav Detaylarý";
+}
+
+<h2>@Model.Baslik</h2>
+<p>Ders: @Model.Course.DersAdi</p>
+<p>Baþlangýç: @Model.BaslangicTarihi.ToString("g")</p>
+<p>Süre: @Model.SureDakika dk</p>
+<p>Durum: @(Model.Yayinlandi ? "Yayýnlandý" : "Taslak")</p>
+
+<h4>Sorular</h4>
+<a asp-controller="Question" asp-action="Index" asp-route-examId="@Model.Id" class="btn btn-primary mb-2">Sorularý Yönet</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Soru Metni</th>
+            <th>Tip</th>
+            <th>Þýklar / Dosya</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var question in Model.Questions)
+        {
+            <tr>
+                <td>@question.SoruMetni</td>
+                <td>@question.Tip</td>
+                <td>
+                    @if(question.Tip == OnlineSinavSistemi.Models.QuestionType.CoktanSecmeli)
+                    {
+                        <ul>
+                            @foreach(var choice in question.Choices)
+                            {
+                                <li>@choice.Metin</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <span>Öðrenci dosya yükleyecek</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

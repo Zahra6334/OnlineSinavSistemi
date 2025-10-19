@@ -1,0 +1,49 @@
+@model IEnumerable<OnlineSinavSistemi.Models.Answer>
+
+    @{
+    ViewData["Title"] = "Cevaplar";
+    }
+
+    <h2>Cevaplar</h2>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Öðrenci</th>
+                <th>Soru</th>
+                <th>Seçilen Þýk</th>
+                <th>Dosya Yolu</th>
+                <th>Not</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var answer in Model ?? new List<OnlineSinavSistemi.Models.Answer>())
+        {
+            <tr>
+                <td>@answer.StudentExam?.Student?.UserName</td>
+                <td>@answer.Question?.SoruMetni</td>
+                <td>
+                    @if(answer.SelectedChoiceId.HasValue)
+                    {
+                    @answer.SelectedChoiceId
+                    }
+                    else
+                    {
+                    <em>Yok</em>
+                    }
+                </td>
+                <td>
+                    @if(!string.IsNullOrEmpty(answer.FilePath))
+                    {
+                    <a href="@Url.Content(answer.FilePath)" target="_blank">Dosya Aç</a>
+                    }
+                    else
+                    {
+                    <em>Yok</em>
+                    }
+                </td>
+               
+            </tr>
+        }
+        </tbody>
+    </table>

@@ -1,36 +1,33 @@
-﻿@model OnlineSinavSistemi.Models.Exam
+﻿@model IEnumerable<OnlineSinavSistemi.Models.Course>
+    @{
+    ViewBag.Title = "Derslerim";
+    }
 
-<h2>@Model.Baslik - Düzenle</h2>
+    <h2>Derslerim</h2>
 
-<a asp-action="AddChoiceQuestion" asp-route-examId="@Model.Id" class="btn btn-primary">
-    Çoktan Seçmeli Soru Ekle
-</a>
+    <a asp-action="Create" class="btn btn-primary mb-3">Yeni Ders Ekle</a>
 
-<a asp-action="AddClassicQuestion" asp-route-examId="@Model.Id" class="btn btn-secondary">
-    Klasik Soru Ekle
-</a>
-
-<h3>Eklenen Sorular</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Soru Metni</th>
-            <th>Tip</th>
-            <th>İşlemler</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var question in Model.Questions)
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Ders Adı</th>
+                <th>Öğrenci Sayısı</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var course in Model)
         {
             <tr>
-                <td>@question.SoruMetni</td>
-                <td>@question.Tip</td>
+                <td>@course.DersAdi</td>
+                <td>@(course.CourseStudents?.Count ?? 0)</td>
                 <td>
-                    <a asp-action="EditQuestion" asp-route-id="@question.Id">Düzenle</a>
-                    |
-                    <a asp-action="DeleteQuestion" asp-route-id="@question.Id">Sil</a>
+                    <a asp-action="Edit" asp-route-id="@course.Id" class="btn btn-sm btn-warning">Düzenle</a>
+                    <a asp-action="Details" asp-route-id="@course.Id" class="btn btn-sm btn-info">Detay</a>
+                    <a asp-action="Delete" asp-route-id="@course.Id" class="btn btn-sm btn-danger">Sil</a>
+                    <a asp-controller="Exam" asp-action="Index" asp-route-teacherId="@User.Identity.Name" class="btn btn-sm btn-primary">Sınavlar</a>
                 </td>
             </tr>
         }
-    </tbody>
-</table>
+        </tbody>
+    </table>

@@ -1,0 +1,23 @@
+@model IEnumerable<OnlineSinavSistemi.Models.Reminder>
+    @{
+    ViewBag.Title = "Hatýrlatýcýlar";
+    }
+
+    <h2>Yaklaþan Sýnav Hatýrlatýcýlarý</h2>
+
+    @if (!Model.Any())
+{
+    <p>Henüz yeni hatýrlatýcý yok.</p>
+}
+else
+{
+    <ul class="list-group">
+        @foreach(var reminder in Model)
+        {
+        <li class="list-group-item">
+            <strong>@reminder.Exam.Baslik</strong> - @reminder.Message <br />
+            <small>@reminder.Date.ToString("g")</small>
+        </li>
+        }
+    </ul>
+}

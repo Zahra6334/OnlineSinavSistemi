@@ -1,0 +1,37 @@
+@model IEnumerable<OnlineSinavSistemi.Models.StudentExam>
+    @{
+    ViewBag.Title = "Sýnavlarým";
+    }
+
+    <h2>Yaklaþan / Aktif Sýnavlar</h2>
+
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Sýnav Baþlýðý</th>
+                <th>Ders</th>
+                <th>Baþlangýç</th>
+                <th>Süre</th>
+                <th>Durum</th>
+                <th>Ýþlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Exam.Baslik</td>
+                <td>@item.Exam.Course.DersAdi</td>
+                <td>@item.Exam.BaslangicTarihi.ToString("g")</td>
+                <td>@item.Exam.SureDakika dk</td>
+                <td>@(item.Tamamlandi ? "Tamamlandý" : "Bekliyor")</td>
+                <td>
+                    @if(!item.Tamamlandi)
+                    {
+                    <a asp-action="TakeExam" asp-route-examId="@item.ExamId" class="btn btn-primary">Sýnava Gir</a>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>

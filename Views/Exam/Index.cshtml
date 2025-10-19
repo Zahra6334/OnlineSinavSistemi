@@ -1,45 +1,42 @@
 ﻿@model IEnumerable<OnlineSinavSistemi.Models.Exam>
-@{
-    ViewData["Title"] = "Sınavlarım";
-}
+    @{
+    ViewBag.Title = "Sınavlarım";
+    }
 
-<h2>Sınavlarım</h2>
+    <h2>Sınavlarım</h2>
 
-<p>
-    <a class="btn btn-primary" asp-action="Create">Yeni Sınav Oluştur</a>
-</p>
+    <a asp-action="Create" class="btn btn-primary mb-3">Yeni Sınav Oluştur</a>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Başlık</th>
-            <th>Ders</th>
-            <th>Süre (dk)</th>
-            <th>Başlangıç Tarihi</th>
-            <th>Yayın Durumu</th>
-            <th>İşlemler</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var exam in Model)
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Başlık</th>
+                <th>Ders</th>
+                <th>Başlangıç Tarihi</th>
+                <th>Süre</th>
+                <th>Yayın Durumu</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var exam in Model)
         {
             <tr>
                 <td>@exam.Baslik</td>
-                <td>@exam.Course?.DersAdi</td>
-                <td>@exam.SureDakika</td>
+                <td>@exam.Course.DersAdi</td>
                 <td>@exam.BaslangicTarihi.ToString("g")</td>
-                <td>@(exam.Yayinlandi ? "Evet" : "Hayır")</td>
+                <td>@exam.SureDakika dk</td>
+                <td>@(exam.Yayinlandi ? "Yayınlandı" : "Taslak")</td>
                 <td>
-                    <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@exam.Id">Detay</a>
-                    <form asp-action="TogglePublish" asp-route-id="@exam.Id" method="post" style="display:inline;">
-                        <button type="submit" class="btn btn-warning btn-sm">
-                            @(exam.Yayinlandi ? "Kaldır" : "Yayınla")
-                        </button>
-                    </form>
-                    <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@exam.Id"
-                       onclick="return confirm('Sınavı silmek istediğinize emin misiniz?');">Sil</a>
+                    <a asp-action="Edit" asp-route-id="@exam.Id" class="btn btn-sm btn-warning">Düzenle</a>
+                    <a asp-action="Details" asp-route-id="@exam.Id" class="btn btn-sm btn-info">Detay</a>
+                    <a asp-action="Delete" asp-route-id="@exam.Id" class="btn btn-sm btn-danger">Sil</a>
+                    @if(!exam.Yayinlandi)
+                    {
+                    <a asp-action="Publish" asp-route-id="@exam.Id" class="btn btn-sm btn-success">Yayınla</a>
+                    }
                 </td>
             </tr>
         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
