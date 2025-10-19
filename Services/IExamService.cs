@@ -9,5 +9,11 @@ namespace OnlineSinavSistemi.Services
         Task<Exam> CreateExamAsync(Exam exam);
         Task<Exam> GetExamByIdAsync(int id);
         Task<IEnumerable<Exam>> GetExamsForTeacherAsync(string teacherId);
+
+        // Yeni metodlar
+        Task PublishExamAsync(int examId);
+        Task<IEnumerable<ApplicationUser>> GetStudentsForExamAsync(int examId);
+        Task<StudentExam> GetStudentExamByIdAsync(int studentExamId);
+        Task GradeStudentExamAsync(StudentExam model);
     }
 }

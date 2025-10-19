@@ -1,0 +1,36 @@
+﻿@model OnlineSinavSistemi.Models.Exam
+
+<h2>@Model.Baslik - Düzenle</h2>
+
+<a asp-action="AddChoiceQuestion" asp-route-examId="@Model.Id" class="btn btn-primary">
+    Çoktan Seçmeli Soru Ekle
+</a>
+
+<a asp-action="AddClassicQuestion" asp-route-examId="@Model.Id" class="btn btn-secondary">
+    Klasik Soru Ekle
+</a>
+
+<h3>Eklenen Sorular</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Soru Metni</th>
+            <th>Tip</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var question in Model.Questions)
+        {
+            <tr>
+                <td>@question.SoruMetni</td>
+                <td>@question.Tip</td>
+                <td>
+                    <a asp-action="EditQuestion" asp-route-id="@question.Id">Düzenle</a>
+                    |
+                    <a asp-action="DeleteQuestion" asp-route-id="@question.Id">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

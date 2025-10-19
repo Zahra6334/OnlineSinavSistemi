@@ -20,5 +20,8 @@ namespace OnlineSinavSistemi.Models
         public bool ScoreShared { get; set; }
 
         public ICollection<Answer> Answers { get; set; }
+        public DateTime BitisZamani { get; internal set; }
+        public bool Tamamlandi { get; internal set; }
+        public DateTime BaslangicTarihi { get; internal set; }
     }
 }

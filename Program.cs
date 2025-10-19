@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using OnlineSinavSistemi.Data;
 using OnlineSinavSistemi.Models;
 using OnlineSinavSistemi.Services;
-using OnlineSinavSistemi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

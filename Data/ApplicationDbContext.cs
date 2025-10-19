@@ -4,11 +4,15 @@ using OnlineSinavSistemi.Models;
 
 namespace OnlineSinavSistemi.Data
 {
+    
+
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
 
+        // ✅ DbSet Tanımları
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseStudent> CourseStudents { get; set; }
         public DbSet<Exam> Exams { get; set; }
@@ -22,49 +26,87 @@ namespace OnlineSinavSistemi.Data
         {
             base.OnModelCreating(builder);
 
-            // Course -> Ogretmen (restrict delete)
+            // =============================
+            //  🔹 Course - Teacher (Ogretmen)
+            // =============================
             builder.Entity<Course>()
                 .HasOne(c => c.Ogretmen)
                 .WithMany()
                 .HasForeignKey(c => c.OgretmenId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // =============================
+            //  🔹 Exam - Teacher (Ogretmen)
+            // =============================
             builder.Entity<Exam>()
                 .HasOne(e => e.Ogretmen)
                 .WithMany()
                 .HasForeignKey(e => e.OgretmenId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // CourseStudent relation
+            // =============================
+            //  🔹 Course - Student (Many-to-Many)
+            // =============================
+            builder.Entity<CourseStudent>()
+                .HasKey(cs => new { cs.CourseId, cs.StudentId }); // Composite Key
+
             builder.Entity<CourseStudent>()
                 .HasOne(cs => cs.Course)
                 .WithMany(c => c.CourseStudents)
-                .HasForeignKey(cs => cs.CourseId);
+                .HasForeignKey(cs => cs.CourseId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<CourseStudent>()
                 .HasOne(cs => cs.Student)
                 .WithMany()
-                .HasForeignKey(cs => cs.StudentId);
+                .HasForeignKey(cs => cs.StudentId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // StudentExam -> Student relation
+            // =============================
+            //  🔹 StudentExam (Bir öğrenci bir sınava bir kez girebilir)
+            // =============================
+            builder.Entity<StudentExam>()
+                .HasIndex(se => new { se.StudentId, se.ExamId })
+                .IsUnique();
+
             builder.Entity<StudentExam>()
                 .HasOne(se => se.Student)
                 .WithMany(u => u.StudentExams)
-                .HasForeignKey(se => se.StudentId);
+                .HasForeignKey(se => se.StudentId)
+                .OnDelete(DeleteBehavior.Restrict);
 
+            // =============================
+            //  🔹 Question - Choice (Cascade Delete)
+            // =============================
+            builder.Entity<Choice>()
+                .HasOne(c => c.Question)
+                .WithMany(q => q.Choices)
+                .HasForeignKey(c => c.QuestionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // =============================
+            //  🔹 Answer - StudentExam & Question
+            // =============================
             builder.Entity<Answer>()
-             .HasOne(a => a.StudentExam)
-             .WithMany() // parametresiz
-             .HasForeignKey(a => a.StudentExamId)
-             .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(a => a.StudentExam)
+                .WithMany()
+                .HasForeignKey(a => a.StudentExamId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Answer>()
                 .HasOne(a => a.Question)
-                .WithMany() // parametresiz
+                .WithMany()
                 .HasForeignKey(a => a.QuestionId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-
+            // =============================
+            //  🔹 Reminder - Student
+            // =============================
+            builder.Entity<Reminder>()
+                .HasOne(r => r.Student)
+                .WithMany()
+                .HasForeignKey(r => r.StudentId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
-    }
+}

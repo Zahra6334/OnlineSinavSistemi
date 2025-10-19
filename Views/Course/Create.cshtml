@@ -1,0 +1,23 @@
+﻿@model OnlineSinavSistemi.Models.Course
+@{
+    ViewData["Title"] = "Yeni Ders Ekle";
+}
+
+<h2>Yeni Ders Ekle</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="DersAdi"></label>
+        <input asp-for="DersAdi" class="form-control" placeholder="Ders Adı giriniz" />
+        <span asp-validation-for="DersAdi" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-2">Kaydet</button>
+    <a class="btn btn-secondary mt-2" asp-action="Index">Geri</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
