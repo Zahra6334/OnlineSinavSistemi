@@ -5,7 +5,7 @@ namespace OnlineSinavSistemi.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public string Name { get; set; }
+        public string AdSoyad { get; set; }
         public string Rol { get; set; } // "Ogretmen" veya "Ogrenci"
         public string Numara { get; set; } // öğrenci numarası (opsiyonel)
         public string Brans { get; set; } // öğretmen branşı (opsiyonel)

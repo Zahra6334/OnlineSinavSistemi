@@ -6,7 +6,7 @@ using OnlineSinavSistemi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Connection string - appsettings.json içinde tanýmla
+// Connection string - appsettings.json iï¿½inde tanï¿½mla
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -21,7 +21,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 
 builder.Services.AddControllersWithViews();
 
-// Servis kaydý (sonraki adýmda yazacaðýmýz servis)
+// Servis kaydï¿½ (sonraki adï¿½mda yazacaï¿½ï¿½mï¿½z servis)
 builder.Services.AddScoped<IExamService, ExamService>();
 
 var app = builder.Build();
@@ -42,6 +42,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages(); // Identity UI için
+app.MapRazorPages(); // Identity UI iï¿½in
 
 app.Run();

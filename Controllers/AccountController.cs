@@ -41,7 +41,7 @@ namespace OnlineSinavSistemi.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name };
+            var user = new ApplicationUser { UserName = model.Email, Email = model.Email, AdSoyad = model.Name };
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)

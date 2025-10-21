@@ -8,11 +8,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #B79C94;
-            --secondary-color: #F5E9D4;
-            --accent-color: #8B7D7B;
-            --dark-color: #5D4037;
-            --light-color: #FDF6E3;
+            --primary-color: #1B3B6F;
+            --secondary-color: #E1E2E1;
+            --accent-color: #34495E;
+            --dark-color: #0D1B2A;
+            --light-color: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
@@ -24,20 +30,83 @@
             flex-direction: column;
         }
 
-        .navbar {
-            background-color: var(--primary-color);
+        /* Header Styles */
+        .main-header {
+            background: var(--primary-color);
+            color: var(--light-color);
+            padding: 1rem 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .navbar-brand {
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
             font-weight: 700;
-            color: var(--light-color) !important;
-            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--light-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: bold;
+            color: var(--primary-color);
+            border: 2px solid var(--light-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+            .nav-links a {
+                color: var(--light-color);
+                text-decoration: none;
+                font-weight: 500;
+                transition: color 0.3s ease;
+                padding: 0.5rem 1rem;
+                border-radius: 6px;
+            }
+
+                .nav-links a:hover {
+                    color: var(--secondary-color);
+                    background: rgba(255,255,255,0.1);
+                }
+
+                .nav-links a.active {
+                    background: rgba(255,255,255,0.2);
+                }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
         .hero-section {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-            color: white;
+            color: var(--light-color);
             padding: 4rem 0;
             margin-bottom: 3rem;
             border-radius: 0 0 30px 30px;
@@ -47,6 +116,12 @@
             font-size: 2.8rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
+            color: var(--light-color);
+        }
+
+        .hero-subtitle {
+            color: var(--light-color);
+            opacity: 0.9;
         }
 
         .exam-illustration {
@@ -55,16 +130,17 @@
             padding: 2rem;
             text-align: center;
             backdrop-filter: blur(10px);
+            color: var(--light-color);
         }
 
         .exam-icon {
             font-size: 4rem;
             margin-bottom: 1rem;
-            color: var(--secondary-color);
+            color: var(--light-color);
         }
 
         .feature-card {
-            background-color: white;
+            background-color: var(--light-color);
             border-radius: 15px;
             padding: 2rem;
             height: 100%;
@@ -84,7 +160,7 @@
         }
 
         .auth-section {
-            background-color: white;
+            background-color: var(--light-color);
             border-radius: 20px;
             padding: 3rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
@@ -116,6 +192,7 @@
             font-weight: 600;
             border-radius: 50px;
             transition: all 0.3s ease;
+            color: var(--light-color);
         }
 
             .btn-primary-custom:hover {
@@ -136,13 +213,13 @@
 
             .btn-secondary-custom:hover {
                 background-color: var(--primary-color);
-                color: white;
+                color: var(--light-color);
                 transform: translateY(-3px);
                 box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             }
 
         .btn-light-custom {
-            background-color: white;
+            background-color: var(--light-color);
             border: none;
             padding: 12px 30px;
             font-weight: 600;
@@ -184,7 +261,7 @@
         }
 
         .exam-steps {
-            background: white;
+            background: var(--light-color);
             border-radius: 15px;
             padding: 2rem;
             margin: 2rem 0;
@@ -194,7 +271,7 @@
             width: 50px;
             height: 50px;
             background: var(--primary-color);
-            color: white;
+            color: var(--light-color);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -209,192 +286,220 @@
             gap: 1rem;
             flex-wrap: wrap;
         }
+
+        .section-title {
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        /* Responsive tasarım */
+        @@media (max-width: 768px) {
+            .header-content
+
+        {
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .nav-links {
+            gap: 1rem;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+        }
+
+        .auth-buttons {
+            justify-content: center;
+        }
+
+        }
+
+        @@media (max-width: 480px) {
+            .nav-links
+
+        {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-links a {
+            padding: 0.5rem;
+        }
+
+        .hero-title {
+            font-size: 1.8rem;
+        }
+
+        }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-graduation-cap me-2"></i>Online Sınav Sistemi
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Ana Sayfa</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sınavlar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sonuçlar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">İletişim</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-outline-light btn-sm ms-2" href="#">Giriş Yap</a>
-                    </li>
-                </ul>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo">
+                <h1><i class="fas fa-graduation-cap me-2"></i>Online Sınav Sistemi</h1>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h1 class="hero-title">Online Sınav Yönetim Sistemi</h1>
-                    <p class="lead mb-4">Güvenli, modern ve kolay sınav deneyimi. Öğrenciler ve eğitmenler için profesyonel çözüm.</p>
-                    <div class="d-flex gap-3 flex-wrap">
-                        <a class="btn btn-light-custom btn-lg px-4 py-2" asp-controller="Account" asp-action="Login">Giriş Yap</a>
-                        <a class="btn btn-outline-light btn-lg px-4 py-2" asp-controller="Account" asp-action="Register">Kayıt Ol</a>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h1 class="hero-title">Online Sınav Yönetim Sistemi</h1>
+                        <p class="lead mb-4 hero-subtitle">Güvenli, modern ve kolay sınav deneyimi. Öğrenciler ve eğitmenler için profesyonel çözüm.</p>
+                        <div class="d-flex gap-3 flex-wrap">
+                            <a class="btn btn-light-custom btn-lg px-4 py-2" asp-controller="Account" asp-action="Login">Giriş Yap</a>
+                            <a class="btn btn-outline-light btn-lg px-4 py-2" asp-controller="Account" asp-action="Register">Kayıt Ol</a>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="exam-illustration">
-                        <i class="fas fa-laptop-code exam-icon"></i>
-                        <h4>Online Sınav Platformu</h4>
-                        <p>Her yerden, her zaman sınavlara katılın</p>
+                    <div class="col-lg-6">
+                        <div class="exam-illustration">
+                            <i class="fas fa-laptop-code exam-icon"></i>
+                            <h4>Online Sınav Platformu</h4>
+                            <p>Her yerden, her zaman sınavlara katılın</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- How It Works -->
-    <section class="container">
-        <div class="row text-center mb-5">
-            <div class="col">
-                <h2 class="fw-bold" style="color: var(--primary-color);">Sınav Süreci</h2>
-                <p class="lead">Sadece 3 adımda sınavlara katılın</p>
-            </div>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="exam-steps text-center">
-                    <div class="step-number">1</div>
-                    <h4>Kayıt Ol</h4>
-                    <p>Hesabınızı oluşturun ve giriş yapın. Öğrenci veya eğitmen olarak kaydolabilirsiniz.</p>
+        <!-- How It Works -->
+        <section class="container">
+            <div class="row text-center mb-5">
+                <div class="col">
+                    <h2 class="fw-bold section-title">Sınav Süreci</h2>
+                    <p class="lead">Sadece 3 adımda sınavlara katılın</p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="exam-steps text-center">
-                    <div class="step-number">2</div>
-                    <h4>Sınava Katıl</h4>
-                    <p>Mevcut sınavlardan birini seçin ve zamanlayıcı ile sınavınızı tamamlayın.</p>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="exam-steps text-center">
+                        <div class="step-number">1</div>
+                        <h4>Kayıt Ol</h4>
+                        <p>Hesabınızı oluşturun ve giriş yapın. Öğrenci veya eğitmen olarak kaydolabilirsiniz.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="exam-steps text-center">
+                        <div class="step-number">2</div>
+                        <h4>Sınava Katıl</h4>
+                        <p>Mevcut sınavlardan birini seçin ve zamanlayıcı ile sınavınızı tamamlayın.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="exam-steps text-center">
+                        <div class="step-number">3</div>
+                        <h4>Sonuçları Gör</h4>
+                        <p>Sınav bitiminde anında sonuçlarınızı ve detaylı analiz raporunuzu görün.</p>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="exam-steps text-center">
-                    <div class="step-number">3</div>
-                    <h4>Sonuçları Gör</h4>
-                    <p>Sınav bitiminde anında sonuçlarınızı ve detaylı analiz raporunuzu görün.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Features Section -->
-    <section class="container mb-5">
-        <div class="row text-center mb-5">
-            <div class="col">
-                <h2 class="fw-bold" style="color: var(--primary-color);">Sistem Özellikleri</h2>
-                <p class="lead">Modern sınav yönetimi için gelişmiş özellikler</p>
-            </div>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="feature-card text-center">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h4>Güvenli Sınav</h4>
-                    <p>Gelişmiş güvenlik önlemleri, tarayıcı kilit sistemi ve kopya önleme teknolojisi.</p>
+        <!-- Features Section -->
+        <section class="container mb-5">
+            <div class="row text-center mb-5">
+                <div class="col">
+                    <h2 class="fw-bold section-title">Sistem Özellikleri</h2>
+                    <p class="lead">Modern sınav yönetimi için gelişmiş özellikler</p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="feature-card text-center">
-                    <div class="feature-icon">
-                        <i class="fas fa-stopwatch"></i>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Güvenli Sınav</h4>
+                        <p>Gelişmiş güvenlik önlemleri, tarayıcı kilit sistemi ve kopya önleme teknolojisi.</p>
                     </div>
-                    <h4>Zaman Yönetimi</h4>
-                    <p>Gerçek zamanlı sınav süresi takibi ve otomatik sınav sonlandırma.</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-stopwatch"></i>
+                        </div>
+                        <h4>Zaman Yönetimi</h4>
+                        <p>Gerçek zamanlı sınav süresi takibi ve otomatik sınav sonlandırma.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h4>Detaylı Raporlama</h4>
+                        <p>Kapsamlı performans analizi, konu bazlı başarı istatistikleri.</p>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="feature-card text-center">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-bar"></i>
-                    </div>
-                    <h4>Detaylı Raporlama</h4>
-                    <p>Kapsamlı performans analizi, konu bazlı başarı istatistikleri.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Auth Section -->
-    <section class="container">
-        <div class="auth-section">
-            <div class="row">
-                <div class="col-lg-6 mb-4 mb-lg-0">
-                    <h3 class="auth-title">Öğrenci Hesabı</h3>
-                    <p>Öğrenci hesabı oluşturarak sınavlara katılabilir, sonuçlarınızı takip edebilir ve performans analizi yapabilirsiniz.</p>
-                    <ul class="list-unstyled mb-4">
-                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Sınırsız sınav katılımı</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Detaylı performans analizi</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Sınav geçmişi takibi</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Sertifika alma imkanı</li>
-                    </ul>
-                    <div class="auth-buttons">
-                        <a class="btn btn-primary-custom" asp-controller="Account" asp-action="Register">Öğrenci Kayıt Ol</a>
-                        <a class="btn btn-secondary-custom" asp-controller="Account" asp-action="Login">Öğrenci Girişi</a>
+        <!-- Auth Section -->
+        <section class="container">
+            <div class="auth-section">
+                <div class="row">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <h3 class="auth-title">Öğrenci Hesabı</h3>
+                        <p>Öğrenci hesabı oluşturarak sınavlara katılabilir, sonuçlarınızı takip edebilir ve performans analizi yapabilirsiniz.</p>
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Sınırsız sınav katılımı</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Detaylı performans analizi</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Sınav geçmişi takibi</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Sertifika alma imkanı</li>
+                        </ul>
+                        <div class="auth-buttons">
+                            <a class="btn btn-primary-custom" asp-controller="Account" asp-action="Register">Öğrenci Kayıt Ol</a>
+                            <a class="btn btn-secondary-custom" asp-controller="Account" asp-action="Login">Öğrenci Girişi</a>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <h3 class="auth-title">Eğitmen Hesabı</h3>
-                    <p>Eğitmen hesabı ile sınav oluşturabilir, sınavları yönetebilir ve öğrenci performanslarını takip edebilirsiniz.</p>
-                    <ul class="list-unstyled mb-4">
-                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Sınav oluşturma ve yönetme</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Öğrenci performans takibi</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Soru bankası yönetimi</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Detaylı raporlama</li>
-                    </ul>
-                    <div class="auth-buttons">
-                        <a class="btn btn-primary-custom" asp-controller="Account" asp-action="Register">Eğitmen Kayıt Ol</a>
-                        <a class="btn btn-secondary-custom" asp-controller="Account" asp-action="Login">Eğitmen Girişi</a>
+                    <div class="col-lg-6">
+                        <h3 class="auth-title">Eğitmen Hesabı</h3>
+                        <p>Eğitmen hesabı ile sınav oluşturabilir, sınavları yönetebilir ve öğrenci performanslarını takip edebilirsiniz.</p>
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Sınav oluşturma ve yönetme</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Öğrenci performans takibi</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Soru bankası yönetimi</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Detaylı raporlama</li>
+                        </ul>
+                        <div class="auth-buttons">
+                            <a class="btn btn-primary-custom" asp-controller="Account" asp-action="Register">Eğitmen Kayıt Ol</a>
+                            <a class="btn btn-secondary-custom" asp-controller="Account" asp-action="Login">Eğitmen Girişi</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Stats Section -->
-    <section class="container my-5">
-        <div class="row text-center">
-            <div class="col-md-3 col-6 mb-4">
-                <div class="stat-number">15.000+</div>
-                <div class="stat-label">Kayıtlı Öğrenci</div>
+        <!-- Stats Section -->
+        <section class="container my-5">
+            <div class="row text-center">
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-number">15.000+</div>
+                    <div class="stat-label">Kayıtlı Öğrenci</div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-number">8.000+</div>
+                    <div class="stat-label">Tamamlanan Sınav</div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Aktif Eğitmen</div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-number">%99.8</div>
+                    <div class="stat-label">Sistem Güvenilirliği</div>
+                </div>
             </div>
-            <div class="col-md-3 col-6 mb-4">
-                <div class="stat-number">8.000+</div>
-                <div class="stat-label">Tamamlanan Sınav</div>
-            </div>
-            <div class="col-md-3 col-6 mb-4">
-                <div class="stat-number">500+</div>
-                <div class="stat-label">Aktif Eğitmen</div>
-            </div>
-            <div class="col-md-3 col-6 mb-4">
-                <div class="stat-number">%99.8</div>
-                <div class="stat-label">Sistem Güvenilirliği</div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>

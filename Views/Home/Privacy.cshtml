@@ -1,31 +1,478 @@
-﻿@{
-    ViewData["Title"] = "Gizlilik Politikası";
-}
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gizlilik Politikası - Online Sınav Sistemi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1B3B6F;
+            --secondary-color: #E1E2E1;
+            --accent-color: #34495E;
+            --dark-color: #0D1B2A;
+            --light-color: #FFFFFF;
+        }
 
-<div class="container mt-5">
-    <h1 class="display-4">@ViewData["Title"]</h1>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <p class="lead mt-3">
-        Bu sayfa, Online Sınav Sistemi'nde kullanıcı bilgilerinin nasıl korunduğunu ve işlendiğini açıklar.
-    </p>
+        body {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-    <h3 class="mt-4">Toplanan Bilgiler</h3>
-    <p>
-        Sisteme kaydolurken verdiğiniz bilgiler (ad, soyad, e-posta vb.) yalnızca sınavların yönetimi ve kullanıcı deneyimi için kullanılmaktadır.
-    </p>
+        /* Header Styles */
+        .main-header {
+            background: var(--primary-color);
+            color: var(--light-color);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-    <h3 class="mt-4">Bilgi Güvenliği</h3>
-    <p>
-        Tüm kişisel bilgiler, güvenli veri tabanlarında saklanır ve üçüncü kişilerle paylaşılmaz. Kullanıcı verileri şifrelenmiş şekilde korunur.
-    </p>
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    <h3 class="mt-4">Çerezler ve Takip</h3>
-    <p>
-        Sistem, kullanıcı deneyimini geliştirmek için çerezler kullanabilir. Bu çerezler kişisel bilgilerinizi ifşa etmez.
-    </p>
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
 
-    <h3 class="mt-4">İletişim</h3>
-    <p>
-        Gizlilik politikamızla ilgili sorularınız için <a href="mailto:support@onlinesinavsistemi.com">support@onlinesinavsistemi.com</a> adresinden bizimle iletişime geçebilirsiniz.
-    </p>
-</div>
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--light-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: bold;
+            color: var(--primary-color);
+            border: 2px solid var(--light-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+            .nav-links a {
+                color: var(--light-color);
+                text-decoration: none;
+                font-weight: 500;
+                transition: color 0.3s ease;
+                padding: 0.5rem 1rem;
+                border-radius: 6px;
+            }
+
+                .nav-links a:hover {
+                    color: var(--secondary-color);
+                    background: rgba(255,255,255,0.1);
+                }
+
+                .nav-links a.active {
+                    background: rgba(255,255,255,0.2);
+                }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            color: var(--light-color);
+            padding: 3rem 0;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .privacy-content {
+            background-color: var(--light-color);
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 3rem;
+        }
+
+        .privacy-section {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+
+            .privacy-section:last-of-type {
+                border-bottom: none;
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
+
+        .section-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+            .section-title:after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 50px;
+                height: 3px;
+                background-color: var(--primary-color);
+            }
+
+        .info-card {
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            padding: 2rem 0;
+            margin-top: auto;
+        }
+
+        .btn-primary-custom {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            color: var(--light-color);
+        }
+
+            .btn-primary-custom:hover {
+                background-color: var(--accent-color);
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+            margin: 2rem 0;
+        }
+
+        .back-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+            .back-link:hover {
+                color: var(--accent-color);
+            }
+
+        /* Responsive tasarım */
+        @@media (max-width: 768px) {
+            .header-content
+
+        {
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .nav-links {
+            gap: 1rem;
+        }
+
+        .privacy-content {
+            padding: 2rem 1.5rem;
+        }
+
+        .page-title h1 {
+            font-size: 2.2rem;
+        }
+
+        }
+
+        @@media (max-width: 480px) {
+            .nav-links
+
+        {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-links a {
+            padding: 0.5rem;
+        }
+
+        .page-title h1 {
+            font-size: 1.8rem;
+        }
+
+        .privacy-content {
+            padding: 1.5rem 1rem;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">OS</div>
+                Online Sınav Sistemi
+            </div>
+            <nav class="nav-links">
+                <a href="/">Home</a>
+                <a href="#" class="active">Privacy</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Title -->
+        <section class="page-title">
+            <div class="container">
+                <h1 class="display-4 fw-bold">Gizlilik Politikası</h1>
+                <p class="lead mt-3">Online Sınav Sistemi'nde kullanıcı bilgilerinin nasıl korunduğunu ve işlendiğini açıklar.</p>
+            </div>
+        </section>
+
+        <!-- Privacy Content -->
+        <section class="container">
+            <div class="privacy-content">
+                <div class="row">
+                    <div class="col-12">
+                        <a href="/" class="back-link">
+                            <i class="fas fa-arrow-left me-2"></i>Ana Sayfaya Dön
+                        </a>
+
+                        <div class="privacy-section">
+                            <h3 class="section-title">Toplanan Bilgiler</h3>
+                            <p>
+                                Online Sınav Sistemi'ne kaydolurken ve platformu kullanırken aşağıdaki bilgileri topluyoruz:
+                            </p>
+                            <ul>
+                                <li>Ad, soyad ve iletişim bilgileriniz</li>
+                                <li>E-posta adresiniz ve hesap bilgileriniz</li>
+                                <li>Sınav performansınız ve sonuç verileriniz</li>
+                                <li>Sistem kullanım alışkanlıklarınız (anonim olarak)</li>
+                            </ul>
+                            <div class="info-card">
+                                <p class="mb-0">
+                                    <i class="fas fa-info-circle info-icon"></i>
+                                    Bu bilgiler yalnızca sınavların yönetimi, kullanıcı deneyiminin iyileştirilmesi ve sistemin güvenliğinin sağlanması amacıyla kullanılmaktadır.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="privacy-section">
+                            <h3 class="section-title">Bilgi Güvenliği</h3>
+                            <p>
+                                Kullanıcı verilerinin güvenliği bizim için en yüksek önceliğe sahiptir. Bu kapsamda aşağıdaki güvenlik önlemlerini uygulamaktayız:
+                            </p>
+                            <ul>
+                                <li>Tüm kişisel bilgiler, güvenli veri tabanlarında saklanır</li>
+                                <li>Veri iletimi SSL şifrelemesi ile korunur</li>
+                                <li>Kullanıcı verileri üçüncü kişilerle paylaşılmaz</li>
+                                <li>Düzenli güvenlik denetimleri ve yedeklemeler yapılır</li>
+                            </ul>
+                            <div class="info-card">
+                                <p class="mb-0">
+                                    <i class="fas fa-shield-alt info-icon"></i>
+                                    Sistemimiz, uluslararası veri güvenliği standartlarına uygun olarak tasarlanmış ve sürekli güncellenmektedir.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="privacy-section">
+                            <h3 class="section-title">Çerezler ve Takip</h3>
+                            <p>
+                                Online Sınav Sistemi, kullanıcı deneyimini geliştirmek ve sistem performansını izlemek için çerezler kullanmaktadır.
+                            </p>
+                            <p>
+                                Kullandığımız çerez türleri:
+                            </p>
+                            <ul>
+                                <li><strong>Oturum Çerezleri:</strong> Giriş yaptığınız süre boyunca oturumunuzu yönetmek için kullanılır</li>
+                                <li><strong>Tercih Çerezleri:</strong> Dil, tema gibi tercihlerinizi hatırlamak için kullanılır</li>
+                                <li><strong>Analitik Çerezler:</strong> Sistem performansını ve kullanımını anonim olarak analiz etmek için kullanılır</li>
+                            </ul>
+                            <div class="info-card">
+                                <p class="mb-0">
+                                    <i class="fas fa-cookie info-icon"></i>
+                                    Bu çerezler kişisel bilgilerinizi ifşa etmez ve reklam amaçlı kullanılmaz. Tarayıcı ayarlarınızdan çerezleri kontrol edebilirsiniz.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="privacy-section">
+                            <h3 class="section-title">Veri Saklama ve Silme</h3>
+                            <p>
+                                Kullanıcı hesaplarınızı istediğiniz zaman silebilir ve kişisel verilerinizin sistemden kaldırılmasını talep edebilirsiniz.
+                            </p>
+                            <p>
+                                Hesap silme işlemi sonrasında:
+                            </p>
+                            <ul>
+                                <li>Kişisel bilgileriniz veritabanımızdan tamamen silinir</li>
+                                <li>Sınav sonuçlarınız anonim hale getirilir (istatistiksel amaçlarla)</li>
+                                <li>E-posta listemizden çıkarılırsınız</li>
+                            </ul>
+                        </div>
+
+                        <div class="privacy-section">
+                            <h3 class="section-title">Üçüncü Taraf Hizmetleri</h3>
+                            <p>
+                                Online Sınav Sistemi, hizmet kalitesini artırmak için aşağıdaki güvenilir üçüncü taraf hizmetlerini kullanmaktadır:
+                            </p>
+                            <ul>
+                                <li>Bulut sunucu sağlayıcıları (veri barındırma)</li>
+                                <li>E-posta servis sağlayıcıları (bildirim gönderimi)</li>
+                                <li>Analitik araçları (sistem performansı izleme)</li>
+                            </ul>
+                            <p>
+                                Tüm üçüncü taraf hizmet sağlayıcılarımız, veri güvenliği ve gizlilik konusunda yüksek standartlara sahip şirketlerdir.
+                            </p>
+                        </div>
+
+                        <div class="privacy-section">
+                            <h3 class="section-title">Politika Değişiklikleri</h3>
+                            <p>
+                                Gizlilik politikamız, yasal düzenlemelerdeki değişiklikler veya sistem güncellemeleri nedeniyle zaman zaman güncellenebilir.
+                            </p>
+                            <p>
+                                Politikada önemli değişiklikler yapıldığında:
+                            </p>
+                            <ul>
+                                <li>Kullanıcılar e-posta ile bilgilendirilir</li>
+                                <li>Web sitemizde ilan edilir</li>
+                                <li>Yürürlük tarihi belirtilir</li>
+                            </ul>
+                        </div>
+
+                        <div class="privacy-section">
+                            <h3 class="section-title">İletişim</h3>
+                            <p>
+                                Gizlilik politikamızla ilgili sorularınız, endişeleriniz veya veri haklarınızı kullanmak istediğinizde bizimle iletişime geçebilirsiniz.
+                            </p>
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fas fa-envelope fa-lg me-3" style="color: var(--primary-color);"></i>
+                                        <div>
+                                            <h5 class="mb-1">E-posta</h5>
+                                            <p class="mb-0">support@onlinesinavsistemi.com</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fas fa-phone fa-lg me-3" style="color: var(--primary-color);"></i>
+                                        <div>
+                                            <h5 class="mb-1">Telefon</h5>
+                                            <p class="mb-0">0 (212) 555 55 55</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <a href="mailto:support@onlinesinavsistemi.com" class="btn btn-primary-custom">
+                                    <i class="fas fa-paper-plane me-2"></i>Mesaj Gönder
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5><i class="fas fa-graduation-cap me-2"></i>Online Sınav Sistemi</h5>
+                    <p>Modern, güvenli ve kullanıcı dostu online sınav platformu. Eğitimde dijital dönüşüme katkı sağlıyoruz.</p>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5>Bağlantılar</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-light">Ana Sayfa</a></li>
+                        <li><a href="#" class="text-light">Sınavlar</a></li>
+                        <li><a href="#" class="text-light">Sonuçlar</a></li>
+                        <li><a href="#" class="text-light">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5>Destek</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">Yardım Merkezi</a></li>
+                        <li><a href="#" class="text-light">SSS</a></li>
+                        <li><a href="#" class="text-light">Kullanım Kılavuzu</a></li>
+                        <li><a href="#" class="text-light">Teknik Destek</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>İletişim</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i> info@onlinesinav.com</li>
+                        <li><i class="fas fa-phone me-2"></i> 0 (212) 555 55 55</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> İstanbul, Türkiye</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="row">
+                <div class="col text-center">
+                    <p>&copy; 2023 Online Sınav Sistemi. Tüm hakları saklıdır. | <a href="#" class="text-light">Gizlilik Politikası</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
