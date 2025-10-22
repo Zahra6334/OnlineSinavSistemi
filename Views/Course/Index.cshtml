@@ -1,19 +1,18 @@
 ﻿@model IEnumerable<OnlineSinavSistemi.Models.Course>
 @{
-    ViewData["Title"] = "Derslerim";
+    ViewData["Title"] = "Dersler";
 }
 
 <h2>Derslerim</h2>
-
 <p>
-    <a class="btn btn-primary" asp-action="Create">Yeni Ders Ekle</a>
+    <a asp-action="Create" class="btn btn-primary">Yeni Ders Ekle</a>
 </p>
 
 <table class="table table-striped">
     <thead>
         <tr>
             <th>Ders Adı</th>
-            <th>Toplam Sınav</th>
+            <th>Sınav Sayısı</th>
             <th>Öğrenci Sayısı</th>
             <th>İşlemler</th>
         </tr>
@@ -23,12 +22,11 @@
         {
             <tr>
                 <td>@course.DersAdi</td>
-                <td>@(course.Exams != null ? course.Exams.Count : 0)</td>
-                <td>@(course.CourseStudents != null ? course.CourseStudents.Count : 0)</td>
+                <td>@course.Exams?.Count ?? 0</td>
+                <td>@course.CourseStudents?.Count ?? 0</td>
                 <td>
-                    <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@course.Id">Detay</a>
-                    <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@course.Id"
-                       onclick="return confirm('Dersi silmek istediğinize emin misiniz?');">Sil</a>
+                    <a asp-action="Details" asp-route-id="@course.Id" class="btn btn-info btn-sm">Detay</a>
+                    <a asp-action="Delete" asp-route-id="@course.Id" class="btn btn-danger btn-sm">Sil</a>
                 </td>
             </tr>
         }

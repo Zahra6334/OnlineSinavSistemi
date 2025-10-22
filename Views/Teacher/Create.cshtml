@@ -1,17 +1,50 @@
-@model OnlineSinavSistemi.Models.Course
+@model OnlineSinavSistemi.Models.Exam
+
 @{
-    ViewBag.Title = "Yeni Ders Ekle";
+    ViewData["Title"] = "Yeni Sýnav Oluþtur";
 }
 
-<h2>Yeni Ders Ekle</h2>
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
 
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="DersAdi"></label>
-        <input asp-for="DersAdi" class="form-control" />
-        <span asp-validation-for="DersAdi" class="text-danger"></span>
-    </div>
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="Course" class="form-label">Sýnav Adý</label>
+            <input asp-for="Course" class="form-control" />
+            <span asp-validation-for="Course" class="text-danger"></span>
+        </div>
 
-    <button type="submit" class="btn btn-success">Kaydet</button>
-    <a asp-action="Index" class="btn btn-secondary">Geri</a>
-</form>
+        <div class="mb-3">
+            <label asp-for="CourseId" class="form-label">Ders Seçin</label>
+            <select asp-for="CourseId" class="form-select" asp-items="ViewBag.Dersler">
+                <option value="">-- Ders Seçin --</option>
+                <option value="1">Matematik</option>
+                <option value="2">Türkçe</option>
+                <option value="3">Fizik</option>
+                <option value="4">Kimya</option>
+                <option value="5">Biyoloji</option>
+                <option value="6">Tarih</option>
+                <option value="7">Coðrafya</option>
+                <option value="8">Ýngilizce</option>
+                <option value="9">Felsefe</option>
+                <option value="11">Din Kültürü ve Ahlak Bilgisi</option>
+                <option value="12">Müzik</option>
+                <option value="13">Görsel Sanatlar</option>
+            </select>
+            <span asp-validation-for="CourseId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="SureDakika" class="form-label">Sýnav Tarihi</label>
+            <input asp-for="SureDakika" type="datetime-local" class="form-control" />
+            <span asp-validation-for="SureDakika" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">Oluþtur</button>
+        <a asp-action="Index" class="btn btn-secondary">Geri</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

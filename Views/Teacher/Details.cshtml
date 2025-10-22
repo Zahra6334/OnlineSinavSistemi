@@ -1,0 +1,45 @@
+﻿@model OnlineSinavSistemi.Models.Exam
+@{
+    ViewData["Title"] = "Sınav Detayları";
+    var katilimlar = ViewBag.Katilimlar as List<OnlineSinavSistemi.Models.StudentExam>;
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Course</h5>
+            <p class="card-text"><strong>Ders:</strong> @Model.Course.DersAdi</p>
+            <p class="card-text"><strong>Tarih:</strong> @Model.SureDakika.ToString("dd.MM.yyyy HH:mm")</p>
+        </div>
+    </div>
+
+    <h4>Katılımcılar</h4>
+    @if (katilimlar != null && katilimlar.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Öğrenci Adı</th>
+                    <th>Durum</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var k in katilimlar)
+                {
+                    <tr>
+                        <td>@k.Student.AdSoyad</td>
+                        <td>@(k.Completed ? "Girdi" : "Girmedi")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Henüz sınava giriş yapılmamış.</p>
+    }
+
+    <a asp-action="Index" class="btn btn-secondary mt-2">Geri</a>
+</div>

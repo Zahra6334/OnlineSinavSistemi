@@ -292,6 +292,55 @@
             text-align: center;
         }
 
+        .system-features {
+            background-color: var(--light-color);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+        }
+
+        .feature-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+            .feature-list li {
+                padding: 10px 0;
+                border-bottom: 1px solid var(--secondary-color);
+            }
+
+                .feature-list li:last-child {
+                    border-bottom: none;
+                }
+
+            .feature-list i {
+                color: var(--primary-color);
+                margin-right: 10px;
+            }
+
+        .exam-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .exam-type-card {
+            flex: 1;
+            min-width: 200px;
+            background-color: var(--light-color);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .exam-type-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
         /* Responsive tasarım */
         @@media (max-width: 768px) {
             .header-content
@@ -312,6 +361,10 @@
 
         .auth-buttons {
             justify-content: center;
+        }
+
+        .exam-types {
+            flex-direction: column;
         }
 
         }
@@ -355,8 +408,8 @@
                         <h1 class="hero-title">Online Sınav Yönetim Sistemi</h1>
                         <p class="lead mb-4 hero-subtitle">Güvenli, modern ve kolay sınav deneyimi. Öğrenciler ve eğitmenler için profesyonel çözüm.</p>
                         <div class="d-flex gap-3 flex-wrap">
-                            <a class="btn btn-light-custom btn-lg px-4 py-2" asp-controller="Account" asp-action="Login">Giriş Yap</a>
-                            <a class="btn btn-outline-light btn-lg px-4 py-2" asp-controller="Account" asp-action="Register">Kayıt Ol</a>
+                            <a class="btn btn-light-custom btn-lg px-4 py-2" href="#features">Sistem Özellikleri</a>
+                            <a class="btn btn-outline-light btn-lg px-4 py-2" href="#how-it-works">Nasıl Çalışır?</a>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -371,7 +424,7 @@
         </section>
 
         <!-- How It Works -->
-        <section class="container">
+        <section class="container" id="how-it-works">
             <div class="row text-center mb-5">
                 <div class="col">
                     <h2 class="fw-bold section-title">Sınav Süreci</h2>
@@ -404,7 +457,7 @@
         </section>
 
         <!-- Features Section -->
-        <section class="container mb-5">
+        <section class="container mb-5" id="features">
             <div class="row text-center mb-5">
                 <div class="col">
                     <h2 class="fw-bold section-title">Sistem Özellikleri</h2>
@@ -442,36 +495,54 @@
             </div>
         </section>
 
-        <!-- Auth Section -->
+        <!-- System Features Section -->
         <section class="container">
-            <div class="auth-section">
+            <div class="system-features">
                 <div class="row">
                     <div class="col-lg-6 mb-4 mb-lg-0">
-                        <h3 class="auth-title">Öğrenci Hesabı</h3>
-                        <p>Öğrenci hesabı oluşturarak sınavlara katılabilir, sonuçlarınızı takip edebilir ve performans analizi yapabilirsiniz.</p>
-                        <ul class="list-unstyled mb-4">
-                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Sınırsız sınav katılımı</li>
-                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Detaylı performans analizi</li>
-                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Sınav geçmişi takibi</li>
-                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Sertifika alma imkanı</li>
+                        <h3 class="auth-title">Sistem Özellikleri</h3>
+                        <p>Online sınav sistemimiz, modern eğitim ihtiyaçlarına uygun olarak tasarlanmış kapsamlı özelliklere sahiptir.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> Çoktan seçmeli, doğru/yanlış, boşluk doldurma soru tipleri</li>
+                            <li><i class="fas fa-check-circle"></i> Otomatik sınav değerlendirme ve notlandırma</li>
+                            <li><i class="fas fa-check-circle"></i> Gerçek zamanlı sınav izleme ve denetim</li>
+                            <li><i class="fas fa-check-circle"></i> Soru bankası ve sınav havuzu yönetimi</li>
+                            <li><i class="fas fa-check-circle"></i> Sınav sonuçlarının anında görüntülenmesi</li>
+                            <li><i class="fas fa-check-circle"></i> Detaylı performans analizi ve raporlama</li>
                         </ul>
-                        <div class="auth-buttons">
-                            <a class="btn btn-primary-custom" asp-controller="Account" asp-action="Register">Öğrenci Kayıt Ol</a>
-                            <a class="btn btn-secondary-custom" asp-controller="Account" asp-action="Login">Öğrenci Girişi</a>
-                        </div>
                     </div>
                     <div class="col-lg-6">
-                        <h3 class="auth-title">Eğitmen Hesabı</h3>
-                        <p>Eğitmen hesabı ile sınav oluşturabilir, sınavları yönetebilir ve öğrenci performanslarını takip edebilirsiniz.</p>
-                        <ul class="list-unstyled mb-4">
-                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Sınav oluşturma ve yönetme</li>
-                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Öğrenci performans takibi</li>
-                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Soru bankası yönetimi</li>
-                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Detaylı raporlama</li>
-                        </ul>
-                        <div class="auth-buttons">
-                            <a class="btn btn-primary-custom" asp-controller="Account" asp-action="Register">Eğitmen Kayıt Ol</a>
-                            <a class="btn btn-secondary-custom" asp-controller="Account" asp-action="Login">Eğitmen Girişi</a>
+                        <h3 class="auth-title">Desteklenen Sınav Türleri</h3>
+                        <p>Sistemimiz çeşitli sınav formatlarını desteklemektedir:</p>
+                        <div class="exam-types">
+                            <div class="exam-type-card">
+                                <div class="exam-type-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <h5>Quiz</h5>
+                                <p>Kısa süreli değerlendirme sınavları</p>
+                            </div>
+                            <div class="exam-type-card">
+                                <div class="exam-type-icon">
+                                    <i class="fas fa-tasks"></i>
+                                </div>
+                                <h5>Ara Sınav</h5>
+                                <p>Dönem içi değerlendirme sınavları</p>
+                            </div>
+                            <div class="exam-type-card">
+                                <div class="exam-type-icon">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <h5>Final Sınavı</h5>
+                                <p>Dönem sonu değerlendirme sınavları</p>
+                            </div>
+                            <div class="exam-type-card">
+                                <div class="exam-type-icon">
+                                    <i class="fas fa-award"></i>
+                                </div>
+                                <h5>Sertifika Sınavı</h5>
+                                <p>Yeterlilik belirleme sınavları</p>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,32 +1,40 @@
 @model IEnumerable<OnlineSinavSistemi.Models.Question>
-    @{
-    ViewBag.Title = "Soru Listesi";
-    }
+@{
+    ViewData["Title"] = "Sorular";
+    var examId = ViewBag.ExamId;
+}
 
-    <h2>Sorular</h2>
+<h2>Sýnav Sorularý</h2>
 
-    <a asp-action="Create" asp-route-examId="@ViewBag.ExamId" class="btn btn-primary">Yeni Soru Ekle</a>
+<p>
+    <a asp-action="Create" asp-route-examId="@examId" class="btn btn-primary">Yeni Soru Ekle</a>
+</p>
 
-    <table class="table table-bordered mt-3">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Soru Metni</th>
-                <th>Tip</th>
-                <th>Ýþlemler</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Soru Metni</th>
+            <th>Þýklar</th>
+            <th>Ýþlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var q in Model)
         {
             <tr>
-                <td>@item.Id</td>
-                <td>@item.SoruMetni</td>
-                <td>@item.Tip</td>
+                <td>@q.SoruMetni</td>
                 <td>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Sil</a>
+                    <ul>
+                        @foreach (var c in q.Choices)
+                        {
+                            <li>@c.Metin @(c.IsCorrect ? "(Doðru)" : "")</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@q.Id" class="btn btn-danger btn-sm">Sil</a>
                 </td>
             </tr>
         }
-        </tbody>
-    </table>
+    </tbody>
+</table>

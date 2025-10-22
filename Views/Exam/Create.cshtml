@@ -1,6 +1,6 @@
 @model OnlineSinavSistemi.Models.Exam
 @{
-    ViewBag.Title = "Yeni Sýnav Oluþtur";
+    ViewData["Title"] = "Yeni Sýnav Oluþtur";
 }
 
 <h2>Yeni Sýnav Oluþtur</h2>
@@ -11,24 +11,14 @@
         <input asp-for="Baslik" class="form-control" />
         <span asp-validation-for="Baslik" class="text-danger"></span>
     </div>
-
     <div class="form-group">
-        <label>Ders Seç</label>
-        <select asp-for="CourseId" asp-items="ViewBag.Courses" class="form-control"></select>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="BaslangicTarihi"></label>
-        <input asp-for="BaslangicTarihi" type="datetime-local" class="form-control" />
-        <span asp-validation-for="BaslangicTarihi" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="SureDakika">Süre (dakika)</label>
-        <input asp-for="SureDakika" type="number" class="form-control" />
+        <label asp-for="SureDakika"></label>
+        <input asp-for="SureDakika" class="form-control" type="number" />
         <span asp-validation-for="SureDakika" class="text-danger"></span>
     </div>
-
-    <button type="submit" class="btn btn-success">Kaydet</button>
-    <a asp-action="Index" class="btn btn-secondary">Geri</a>
+    <div class="form-group">
+        <label>Ders Seç</label>
+        <select asp-for="CourseId" asp-items="ViewBag.Dersler" class="form-control"></select>
+    </div>
+    <button type="submit" class="btn btn-success">Oluþtur</button>
 </form>

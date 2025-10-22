@@ -1,6 +1,6 @@
 @model OnlineSinavSistemi.Models.Question
 @{
-    ViewBag.Title = "Yeni Soru Ekle";
+    ViewData["Title"] = "Yeni Soru Ekle";
 }
 
 <h2>Yeni Soru Ekle</h2>
@@ -10,16 +10,19 @@
 
     <div class="form-group">
         <label asp-for="SoruMetni"></label>
-        <input asp-for="SoruMetni" class="form-control" />
+        <textarea asp-for="SoruMetni" class="form-control"></textarea>
         <span asp-validation-for="SoruMetni" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Tip"></label>
-        <select asp-for="Tip" class="form-control" asp-items="Html.GetEnumSelectList<OnlineSinavSistemi.Models.QuestionType>()">
-        </select>
+        <label>Þýklar</label>
+        @for (int i = 0; i < 4; i++)
+        {
+            <input type="text" name="Choices[@i].Metin" class="form-control mb-1" placeholder="Þýk @i" />
+            <label>Doðru mu?</label>
+            <input type="checkbox" name="Choices[@i].IsCorrect" />
+        }
     </div>
 
     <button type="submit" class="btn btn-success">Kaydet</button>
-    <a asp-action="Index" asp-route-examId="@Model.ExamId" class="btn btn-secondary">Geri</a>
 </form>

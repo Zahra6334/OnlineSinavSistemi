@@ -1,33 +1,40 @@
-﻿@model IEnumerable<OnlineSinavSistemi.Models.Course>
-    @{
-    ViewBag.Title = "Derslerim";
-    }
+﻿@model OnlineSinavSistemi.Models.Exam
 
-    <h2>Derslerim</h2>
+@{
+    ViewData["Title"] = "Sınavı Düzenle";
+}
 
-    <a asp-action="Create" class="btn btn-primary mb-3">Yeni Ders Ekle</a>
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Ders Adı</th>
-                <th>Öğrenci Sayısı</th>
-                <th>İşlemler</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var course in Model)
-        {
-            <tr>
-                <td>@course.DersAdi</td>
-                <td>@(course.CourseStudents?.Count ?? 0)</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@course.Id" class="btn btn-sm btn-warning">Düzenle</a>
-                    <a asp-action="Details" asp-route-id="@course.Id" class="btn btn-sm btn-info">Detay</a>
-                    <a asp-action="Delete" asp-route-id="@course.Id" class="btn btn-sm btn-danger">Sil</a>
-                    <a asp-controller="Exam" asp-action="Index" asp-route-teacherId="@User.Identity.Name" class="btn btn-sm btn-primary">Sınavlar</a>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="Course" class="form-label">Sınav Adı</label>
+            <input asp-for="Course" class="form-control" />
+            <span asp-validation-for="Course" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="CourseId" class="form-label">Ders Seçin</label>
+            <select asp-for="CourseId" class="form-select" asp-items="ViewBag.Dersler">
+                <option value="">-- Ders Seçin --</option>
+            </select>
+            <span asp-validation-for="CourseId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="SureDakika" class="form-label">Sınav Tarihi</label>
+            <input asp-for="SureDakika" type="datetime-local" class="form-control" />
+            <span asp-validation-for="SureDakika" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">Güncelle</button>
+        <a asp-action="Index" class="btn btn-secondary">Geri</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
