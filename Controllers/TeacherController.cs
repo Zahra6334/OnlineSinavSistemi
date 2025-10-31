@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlineSinavSistemi.Data;
@@ -12,22 +13,27 @@ namespace OnlineSinavSistemi.Controllers
     public class TeacherController : Controller
     {
         private readonly ApplicationDbContext _context;
+      
 
         public TeacherController(ApplicationDbContext context)
         {
             _context = context;
+            
         }
+
 
         // ------------------------
         // INDEX: Dersler veya sınavlar listesi
         // ------------------------
         public async Task<IActionResult> Index()
         {
-            var teacherId = User.Identity.Name;
+            // Burada User.Identity.Name kullanıyoruz, OgretmenId ile eşleşmeli
+            var teacher = await _context.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
             var sinavlar = await _context.Exams
-                                         .Where(e => e.OgretmenId == teacherId)
+                                         .Where(e => e.OgretmenId == teacher.Id)
                                          .Include(e => e.Course)
                                          .ToListAsync();
+
             return View(sinavlar);
         }
 
@@ -60,36 +66,42 @@ namespace OnlineSinavSistemi.Controllers
         public async Task<IActionResult> Create()
         {
             var teacherId = User.Identity.Name;
+
             var dersler = await _context.Courses
                                         .Where(d => d.OgretmenId == teacherId)
                                         .ToListAsync();
 
-            ViewBag.Dersler = new SelectList(dersler, "Id", "Name");
+            ViewBag.Dersler = new SelectList(dersler, "Id", "DersAdi");
             return View();
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Exam sinav)
         {
-            if (ModelState.IsValid)
+           
+            var teacher = await _context.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+            if (teacher == null) return Unauthorized();
+
+            if (!ModelState.IsValid)
             {
-                sinav.OgretmenId = User.Identity.Name;
-                sinav.BaslangicTarihi = DateTime.Now;
-
-                _context.Exams.Add(sinav);
-                await _context.SaveChangesAsync();
-
-                TempData["Success"] = "Sınav başarıyla oluşturuldu!";
-                return RedirectToAction(nameof(Index));
+                var dersler = await _context.Courses
+                                            .Where(d => d.OgretmenId == teacher.Id)
+                                            .ToListAsync();
+                ViewBag.Dersler = new SelectList(dersler, "Id", "DersAdi");
+                return View(sinav);
             }
 
-            var dersler = await _context.Courses
-                                        .Where(d => d.OgretmenId == User.Identity.Name)
-                                        .ToListAsync();
-            ViewBag.Dersler = new SelectList(dersler, "Id", "Name");
-            return View(sinav);
+            sinav.OgretmenId = teacher.Id;
+            sinav.BaslangicTarihi = DateTime.Now;
+
+            _context.Exams.Add(sinav);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Sınav başarıyla oluşturuldu!";
+            return RedirectToAction(nameof(Index));
         }
+
+
 
         // ------------------------
         // EDIT: Sınav düzenleme

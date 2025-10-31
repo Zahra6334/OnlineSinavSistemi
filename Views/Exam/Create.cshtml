@@ -1,24 +1,69 @@
 @model OnlineSinavSistemi.Models.Exam
+
 @{
     ViewData["Title"] = "Yeni Sýnav Oluþtur";
 }
 
-<h2>Yeni Sýnav Oluþtur</h2>
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
 
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="Baslik"></label>
-        <input asp-for="Baslik" class="form-control" />
-        <span asp-validation-for="Baslik" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="SureDakika"></label>
-        <input asp-for="SureDakika" class="form-control" type="number" />
-        <span asp-validation-for="SureDakika" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label>Ders Seç</label>
-        <select asp-for="CourseId" asp-items="ViewBag.Dersler" class="form-control"></select>
-    </div>
-    <button type="submit" class="btn btn-success">Oluþtur</button>
-</form>
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label class="form-label">Sýnav Baþlýðý</label>
+            <input asp-for="Baslik" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Süre (Dakika)</label>
+            <input asp-for="SureDakika" type="number" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Baþlangýç Tarihi</label>
+            <input asp-for="BaslangicTarihi" type="datetime-local" class="form-control" />
+        </div>
+
+        <div id="soruListesi">
+            <h5>Sorular</h5>
+            <div class="soru mb-3">
+                <label>Soru Metni</label>
+                <input name="Questions[0].SoruMetni" class="form-control" />
+
+                <label>Tür</label>
+                <select name="Questions[0].Tip" class="form-select">
+                    <option value="0">Çoktan Seçmeli</option>
+                    <option value="1">Klasik</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="button" id="addQuestion" class="btn btn-outline-primary mb-3">
+            Yeni Soru Ekle
+        </button>
+
+        <button type="submit" class="btn btn-success">Sýnavý Kaydet</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        let soruIndex = 1;
+        document.getElementById("addQuestion").addEventListener("click", function () {
+            const container = document.getElementById("soruListesi");
+            const newSoru = document.createElement("div");
+            newSoru.classList.add("soru", "mb-3");
+            newSoru.innerHTML = `
+                <label>Soru Metni</label>
+                <input name="Questions[${soruIndex}].SoruMetni" class="form-control" />
+
+                <label>Tür</label>
+                <select name="Questions[${soruIndex}].Tip" class="form-select">
+                    <option value="0">Çoktan Seçmeli</option>
+                    <option value="1">Klasik</option>
+                </select>
+            `;
+            container.appendChild(newSoru);
+            soruIndex++;
+        });
+    </script>
+}
