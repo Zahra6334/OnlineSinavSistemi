@@ -1,68 +1,73 @@
 @model OnlineSinavSistemi.Models.Exam
+@using OnlineSinavSistemi.Models
 
-@{
-    ViewData["Title"] = "Yeni Sýnav Oluþtur";
-}
+<h2>Yeni Sýnav Oluþtur</h2>
 
-<div class="container mt-4">
-    <h2>@ViewData["Title"]</h2>
+<form asp-action="Create" method="post">
+    <div>
+        <label>Baþlýk</label>
+        <input asp-for="Baslik" />
+    </div>
+    <div>
+        <label>Süre (dakika)</label>
+        <input asp-for="SureDakika" type="number" />
+    </div>
+    <div>
+        <label>Ders</label>
+        <select asp-for="CourseId" asp-items="@(ViewBag.Dersler)">
+            <option value="">-- Ders Seçin --</option>
+        </select>
+    </div>
 
-    <form asp-action="Create" method="post">
-        <div class="mb-3">
-            <label class="form-label">Sýnav Baþlýðý</label>
-            <input asp-for="Baslik" class="form-control" />
-        </div>
 
-        <div class="mb-3">
-            <label class="form-label">Süre (Dakika)</label>
-            <input asp-for="SureDakika" type="number" class="form-control" />
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Baþlangýç Tarihi</label>
-            <input asp-for="BaslangicTarihi" type="datetime-local" class="form-control" />
-        </div>
-
-        <div id="soruListesi">
-            <h5>Sorular</h5>
-            <div class="soru mb-3">
-                <label>Soru Metni</label>
-                <input name="Questions[0].SoruMetni" class="form-control" />
-
-                <label>Tür</label>
-                <select name="Questions[0].Tip" class="form-select">
-                    <option value="0">Çoktan Seçmeli</option>
-                    <option value="1">Klasik</option>
-                </select>
+    <h3>Sorular</h3>
+    <div id="sorularContainer">
+        <div class="soru-item">
+            <label>Soru Metni</label>
+            <input name="Sorular[0].SoruMetni" />
+            <label>Tip</label>
+            <select name="Sorular[0].Tip">
+                <option value="0">Çoktan Seçmeli</option>
+                <option value="1">Klasik</option>
+            </select>
+            <div class="seceneklerContainer">
+                <label>Þýklar (çoktan seçmeli için)</label>
+                <input name="Sorular[0].Secenekler[0]" placeholder="Þýk 1" />
+                <input name="Sorular[0].Secenekler[1]" placeholder="Þýk 2" />
+                <input name="Sorular[0].Secenekler[2]" placeholder="Þýk 3" />
+                <input name="Sorular[0].Secenekler[3]" placeholder="Þýk 4" />
             </div>
         </div>
+    </div>
 
-        <button type="button" id="addQuestion" class="btn btn-outline-primary mb-3">
-            Yeni Soru Ekle
-        </button>
-
-        <button type="submit" class="btn btn-success">Sýnavý Kaydet</button>
-    </form>
-</div>
+    <button type="button" id="addSoruBtn">Yeni Soru Ekle</button>
+    <button type="submit">Sýnavý Kaydet</button>
+</form>
 
 @section Scripts {
     <script>
-        let soruIndex = 1;
-        document.getElementById("addQuestion").addEventListener("click", function () {
-            const container = document.getElementById("soruListesi");
-            const newSoru = document.createElement("div");
-            newSoru.classList.add("soru", "mb-3");
-            newSoru.innerHTML = `
+        var soruIndex = 1;
+        document.getElementById("addSoruBtn").addEventListener("click", function () {
+            var container = document.getElementById("sorularContainer");
+            var html = `
+            <div class="soru-item">
                 <label>Soru Metni</label>
-                <input name="Questions[${soruIndex}].SoruMetni" class="form-control" />
-
-                <label>Tür</label>
-                <select name="Questions[${soruIndex}].Tip" class="form-select">
+                <input name="Sorular[${soruIndex}].SoruMetni" />
+                <label>Tip</label>
+                <select name="Sorular[${soruIndex}].Tip">
                     <option value="0">Çoktan Seçmeli</option>
                     <option value="1">Klasik</option>
                 </select>
+                <div class="seceneklerContainer">
+                    <label>Þýklar (çoktan seçmeli için)</label>
+                    <input name="Sorular[${soruIndex}].Secenekler[0]" placeholder="Þýk 1" />
+                    <input name="Sorular[${soruIndex}].Secenekler[1]" placeholder="Þýk 2" />
+                    <input name="Sorular[${soruIndex}].Secenekler[2]" placeholder="Þýk 3" />
+                    <input name="Sorular[${soruIndex}].Secenekler[3]" placeholder="Þýk 4" />
+                </div>
+            </div>
             `;
-            container.appendChild(newSoru);
+            container.insertAdjacentHTML('beforeend', html);
             soruIndex++;
         });
     </script>

@@ -1,9 +1,10 @@
 ﻿@model OnlineSinavSistemi.Models.Course
+
 @{
-    ViewData["Title"] = "Yeni Ders Ekle";
+    ViewData["Title"] = "Ders Ekle";
 }
 
-<h2>Yeni Ders Ekle</h2>
+<h2>Ders Ekle</h2>
 
 <form asp-action="Create" method="post">
     <div class="form-group">
@@ -11,5 +12,14 @@
         <input asp-for="DersAdi" class="form-control" />
         <span asp-validation-for="DersAdi" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-success">Kaydet</button>
+
+    ```
+    <button type="submit" class="btn btn-primary mt-2">Dersi Kaydet</button>
+    <a asp-action="Index" class="btn btn-secondary mt-2">Geri Dön</a>
+    
+
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

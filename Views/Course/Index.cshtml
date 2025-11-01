@@ -1,19 +1,19 @@
 ﻿@model IEnumerable<OnlineSinavSistemi.Models.Course>
 @{
-    ViewData["Title"] = "Dersler";
+    ViewData["Title"] = "Derslerim";
 }
 
 <h2>Derslerim</h2>
+
 <p>
-    <a asp-action="Create" class="btn btn-primary">Yeni Ders Ekle</a>
+    <a asp-action="Create" class="btn btn-success">Yeni Ders Ekle</a>
 </p>
 
-<table class="table table-striped">
+<table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>Ders Adı</th>
-            <th>Sınav Sayısı</th>
-            <th>Öğrenci Sayısı</th>
+            <th>Toplam Sınav</th>
             <th>İşlemler</th>
         </tr>
     </thead>
@@ -22,8 +22,7 @@
         {
             <tr>
                 <td>@course.DersAdi</td>
-                <td>@course.Exams?.Count ?? 0</td>
-                <td>@course.CourseStudents?.Count ?? 0</td>
+                <td>@(course.Exams?.Count() ?? 0)</td>
                 <td>
                     <a asp-action="Details" asp-route-id="@course.Id" class="btn btn-info btn-sm">Detay</a>
                     <a asp-action="Delete" asp-route-id="@course.Id" class="btn btn-danger btn-sm">Sil</a>

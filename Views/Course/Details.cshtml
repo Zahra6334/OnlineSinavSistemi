@@ -1,4 +1,5 @@
 ﻿@model OnlineSinavSistemi.Models.Course
+
 @{
     ViewData["Title"] = "Ders Detayları";
 }
@@ -6,20 +7,38 @@
 <h2>@Model.DersAdi</h2>
 
 <h4>Öğrenciler</h4>
-<ul>
-    @foreach (var cs in Model.CourseStudents)
-    {
-        <li>@cs.Student.UserName</li>
-    }
-</ul>
+@if (Model.CourseStudents != null && Model.CourseStudents.Any())
+{
+    <ul>
+        @foreach (var cs in Model.CourseStudents)
+        {
+            <li>@cs.Student?.UserName</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Bu derse kayıtlı öğrenci bulunmamaktadır.</p>
+}
 
 <h4>Sınavlar</h4>
-<ul>
-    @foreach (var exam in Model.Exams)
-    {
-        <li>
-            <a asp-controller="Exam" asp-action="Details" asp-route-id="@exam.Id">@exam.Baslik</a>
-            (@exam.Yayinlandi ? "Yayınlandı" : "Yayınlanmadı")
-        </li>
-    }
-</ul>
+@if (Model.Exams != null && Model.Exams.Any())
+{
+    <ul>
+        @foreach (var exam in Model.Exams)
+        {
+            <li>
+                <a asp-controller="Exam" asp-action="Details" asp-route-id="@exam.Id">@exam.Baslik</a>
+                (@(exam.Yayinlandi ? "Yayınlandı" : "Yayınlanmadı"))
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Bu derse ait sınav bulunmamaktadır.</p>
+}
+
+<p>
+    <a asp-action="Index" class="btn btn-secondary mt-2">Geri Dön</a>
+</p>

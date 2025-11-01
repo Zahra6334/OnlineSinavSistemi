@@ -1,33 +1,40 @@
-﻿@model IEnumerable<OnlineSinavSistemi.Models.Exam>
+﻿@{
+    ViewData["Title"] = "Öğretmen Paneli";
+}
 
-<h2>Sınav Listesi</h2>
+<h2>👨‍🏫 Hoş geldiniz, @User.Identity.Name</h2>
 
-<a asp-action="Create" class="btn btn-success mb-3">Yeni Sınav Oluştur</a>
+<div class="dashboard">
+    <a asp-controller="Course" asp-action="Index" class="btn btn-primary btn-lg">📘 Ders Ekle</a>
+    <a asp-controller="Exam" asp-action="Index" class="btn btn-success btn-lg">🧾 Sınav Oluştur</a>
+    <a asp-controller="Exam" asp-action="Index" class="btn btn-info btn-lg">📋 Sınavları Listele</a>
+  
+</div>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Başlık</th>
-            <th>Ders</th>
-            <th>Başlangıç Tarihi</th>
-            <th>Süre (dk)</th>
-            <th>İşlemler</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var sinav in Model)
-        {
-            <tr>
-                <td>@sinav.Baslik</td>
-                <td>@sinav.Course?.DersAdi</td>
-                <td>@sinav.BaslangicTarihi.ToString("g")</td>
-                <td>@sinav.SureDakika</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@sinav.Id" class="btn btn-info btn-sm">Detay</a>
-                    <a asp-action="Edit" asp-route-id="@sinav.Id" class="btn btn-warning btn-sm">Düzenle</a>
-                    <a asp-action="Delete" asp-route-id="@sinav.Id" class="btn btn-danger btn-sm">Sil</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="stats">
+    <p><strong>Ders Sayısı:</strong> @ViewBag.DersSayisi</p>
+    <p><strong>Sınav Sayısı:</strong> @ViewBag.SinavSayisi</p>
+</div>
+
+<style>
+    .dashboard {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 250px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .stats {
+        margin-top: 30px;
+    }
+</style>

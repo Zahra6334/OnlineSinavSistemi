@@ -1,28 +1,23 @@
 @model OnlineSinavSistemi.Models.Question
-@{
-    ViewData["Title"] = "Yeni Soru Ekle";
-}
 
-<h2>Yeni Soru Ekle</h2>
+<h2>Soru Ekle</h2>
 
 <form asp-action="Create" method="post">
     <input type="hidden" asp-for="ExamId" />
 
     <div class="form-group">
-        <label asp-for="SoruMetni"></label>
-        <textarea asp-for="SoruMetni" class="form-control"></textarea>
-        <span asp-validation-for="SoruMetni" class="text-danger"></span>
+        <label>Soru Metni</label>
+        <input asp-for="SoruMetni" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label>Þýklar</label>
-        @for (int i = 0; i < 4; i++)
-        {
-            <input type="text" name="Choices[@i].Metin" class="form-control mb-1" placeholder="Þýk @i" />
-            <label>Doðru mu?</label>
-            <input type="checkbox" name="Choices[@i].IsCorrect" />
-        }
+        <label>Tip</label>
+        <select asp-for="Tip" class="form-control">
+            <option value="0">Çoktan Seçmeli</option>
+            <option value="1">Klasik</option>
+        </select>
     </div>
 
-    <button type="submit" class="btn btn-success">Kaydet</button>
+    <button type="submit" class="btn btn-success">Soru Ekle</button>
+    <a asp-controller="Exam" asp-action="Index" class="btn btn-secondary">Sýnavlar</a>
 </form>

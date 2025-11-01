@@ -130,11 +130,12 @@ namespace OnlineSinavSistemi.Areas.Identity.Pages.Account
                     // Kullanıcının rolüne göre yönlendirme
                     if (user.Rol == "Ogretmen")
                     {
-                        return RedirectToAction("Index","Teacher","Index" );
+                        return RedirectToAction("Index", "Teacher");
+
                     }
                     else if (user.Rol == "Ogrenci")
                     {
-                        return RedirectToAction("Index","StudentExam","Index" );
+                        return RedirectToAction("Index", "StudentExam");
                     }
                     else
                     {
