@@ -115,57 +115,51 @@ namespace OnlineSinavSistemi.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid)
+
+            // Rol bazlý validasyon
+            if (Input.Rol?.Equals("Ogretmen", StringComparison.OrdinalIgnoreCase) == true)
             {
-                var user = CreateUser();
+                if (string.IsNullOrWhiteSpace(Input.Brans))
+                    ModelState.AddModelError("Input.Brans", "Branþ zorunludur.");
+                if (string.IsNullOrWhiteSpace(Input.Numara))
+                    ModelState.AddModelError("Input.Numara", "Numara zorunludur.");
+            }
+            else if (Input.Rol?.Equals("Ogrenci", StringComparison.OrdinalIgnoreCase) == true)
+            {
+                if (string.IsNullOrWhiteSpace(Input.Numara))
+                    ModelState.AddModelError("Input.Numara", "Numara zorunludur.");
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-
-                // Yeni alanlarý ekle
-                user.AdSoyad = Input.AdSoyad;
-                user.Rol = Input.Rol;
-                user.Numara = Input.Numara;
-                user.Brans = Input.Brans;
-
-                var result = await _userManager.CreateAsync(user, Input.Password);
-
-
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User created a new account with password.");
-
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
-                }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+                Input.Brans = "";
             }
 
-            // If we got this far, something failed, redisplay form
+            var user = CreateUser();
+
+            await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+            await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+            user.AdSoyad = Input.AdSoyad;
+            user.Rol = Input.Rol;
+            user.Numara = Input.Numara;
+            user.Brans = Input.Brans; // Öðretmen dolu, öðrenci boþ olacak
+
+            var result = await _userManager.CreateAsync(user, Input.Password);
+
+            if (result.Succeeded)
+            {
+                _logger.LogInformation("Kullanýcý baþarýyla oluþturuldu.");
+                await _userManager.AddToRoleAsync(user, Input.Rol);
+                // rol atamasý
+
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return LocalRedirect(returnUrl);
+            }
+
+            foreach (var error in result.Errors)
+                ModelState.AddModelError(string.Empty, error.Description);
+
             return Page();
         }
+
 
         private ApplicationUser CreateUser()
         {

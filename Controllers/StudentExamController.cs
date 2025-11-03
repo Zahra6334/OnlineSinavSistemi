@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineSinavSistemi.Models;
 using OnlineSinavSistemi.Services;
@@ -10,33 +11,47 @@ namespace OnlineSinavSistemi.Controllers
     public class StudentExamController : Controller
     {
         private readonly IStudentExamService _studentExamService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public StudentExamController(IStudentExamService studentExamService)
+        public StudentExamController(IStudentExamService studentExamService, UserManager<ApplicationUser> userManager)
         {
             _studentExamService = studentExamService;
+            _userManager = userManager;
         }
 
-        // Öğrenciye ait sınavları listele
+        // ---------------------------------------------------------------------
+        // 🔹 STUDENT DASHBOARD (ANA SAYFA)
+        // ---------------------------------------------------------------------
         public async Task<IActionResult> Index()
         {
-            var exams = await _studentExamService.GetExamsForStudentAsync(User.Identity.Name);
+            var user = await _userManager.GetUserAsync(User); // buradan kullanıcı Id al
+            if (user == null)
+                return RedirectToAction("AccessDenied", "Account");
+
+            var exams = await _studentExamService.GetExamsForStudentAsync(user.Id); // Id kullan
             return View(exams);
         }
 
-        // Sınava giriş
         public async Task<IActionResult> TakeExam(int examId)
         {
-            var studentExam = await _studentExamService.StartExamAsync(examId, User.Identity.Name);
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                return RedirectToAction("AccessDenied", "Account");
+
+            var studentExam = await _studentExamService.StartExamAsync(examId, user.Id); // Id kullan
             if (studentExam == null)
                 return RedirectToAction("Index");
 
             return View(studentExam);
         }
 
-        // Sınavı bitir ve cevapları kaydet
         [HttpPost]
         public async Task<IActionResult> SubmitExam(StudentExam model)
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                return RedirectToAction("AccessDenied", "Account");
+
             await _studentExamService.SubmitExamAsync(model);
             return RedirectToAction("Index");
         }

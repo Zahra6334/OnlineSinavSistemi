@@ -1,36 +1,56 @@
 @model OnlineSinavSistemi.Models.Exam
 @{
     ViewData["Title"] = "Sýnav Detaylarý";
-    var katilimlar = ViewBag.Katilimlar as IEnumerable<OnlineSinavSistemi.Models.StudentExam>;
+    var students = ViewBag.Students as IEnumerable<OnlineSinavSistemi.Models.ApplicationUser>;
 }
 
 <h2>@Model.Baslik</h2>
+
 <p>Ders: @Model.Course?.DersAdi</p>
-<p>Süre: @Model.SureDakika dk</p>
-<p>Baþlangýç: @Model.BaslangicTarihi.ToString("g")</p>
+<p>Süre: @Model.SureDakika dakika</p>
+<p>Baþlangýç Tarihi: @Model.BaslangicTarihi.ToString("g")</p>
 <p>Yayýn Durumu: @(Model.Yayinlandi ? "Yayýnlandý" : "Yayýnlanmadý")</p>
 
-<h4>Katýlýmcýlar</h4>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Öðrenci</th>
-            <th>Baþlangýç</th>
-            <th>Bitiþ</th>
-            <th>Puan</th>
-            <th>Tamamlandý</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var se in katilimlar)
-        {
+<form asp-action="TogglePublish" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <button type="submit" class="btn btn-primary">
+        @(Model.Yayinlandi ? "Yayýndan Kaldýr" : "Yayýnla")
+    </button>
+</form>
+
+<h3>Öðrenciler ve Sýnav Durumlarý</h3>
+@if (students != null && students.Any())
+{
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <td>@se.Student.UserName</td>
-                <td>@se.StartTime.ToString("g")</td>
-                <td>@se.EndTime?.ToString("g")</td>
-                <td>@se.Score</td>
-                <td>@(se.Completed ? "Evet" : "Hayýr")</td>
+                <th>Numara</th>
+                <th>Ad Soyad</th>
+                <th>Baþlangýç Tarihi</th>
+                <th>Bitiþ Tarihi</th>
+                <th>Tamamlandý</th>
+                <th>Puan</th>
+                <th>Puan Paylaþýldý</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var s in students)
+            {
+                var studentExam = s.StudentExams.FirstOrDefault(se => se.ExamId == Model.Id);
+                <tr>
+                    <td>@s.Numara</td>
+                    <td>@s.AdSoyad</td>
+                    <td>@studentExam?.StartTime.ToString("g")</td>
+                    <td>@studentExam?.EndTime?.ToString("g")</td>
+                    <td>@(studentExam != null ? (studentExam.Completed ? "Evet" : "Hayýr") : "-")</td>
+                    <td>@studentExam?.Score?.ToString("F2")</td>
+                    <td>@(studentExam != null ? (studentExam.ScoreShared ? "Evet" : "Hayýr") : "-")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Henüz öðrenci yok veya öðrenciler sýnava katýlmadý.</p>
+}

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using OnlineSinavSistemi.Data;
 using OnlineSinavSistemi.Models;
 using OnlineSinavSistemi.Services;
@@ -15,86 +16,142 @@ namespace OnlineSinavSistemi.Controllers
         private readonly IExamService _examService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _db;
+
         public ExamController(IExamService examService, UserManager<ApplicationUser> userManager, ApplicationDbContext db)
         {
             _examService = examService;
             _userManager = userManager;
             _db = db;
-
         }
 
-        // Sınav listesi
+        // 🟢 Sınav listesi
         public async Task<IActionResult> Index()
+        {
+            var userId = _userManager.GetUserId(User);
+
+            // Öğretmenin sınavlarını getir
+            var exams = await _db.Exams
+                                 .Where(e => e.OgretmenId == userId)
+                                 .Include(e => e.Course)
+                                 .ToListAsync();
+
+            return View(exams);
+        }
+
+        // 🟢 Yeni sınav oluştur (GET)
+        public IActionResult Create()
         {
             var userId = _userManager.GetUserId(User);
             var dersler = _db.Courses.Where(c => c.OgretmenId == userId).ToList();
             ViewBag.Dersler = new SelectList(dersler, "Id", "DersAdi");
-            return View();
+
+            var model = new Exam
+            {
+                BaslangicTarihi = DateTime.Now // default değer
+            };
+
+            return View(model);
         }
 
-        // Yeni sınav oluştur (GET)
-        public IActionResult Create()
-        {
-            var userId = _userManager.GetUserId(User);
-
-            // Öğretmenin derslerini çekiyoruz
-            var dersler = _db.Courses
-                             .Where(c => c.OgretmenId == userId)
-                             .ToList();
-
-            ViewBag.Dersler = new SelectList(dersler, "Id", "DersAdi");
-            return View();
-
-        }
-
-        // Yeni sınav oluştur (POST)
-        // ExamController.cs
-        // ... (diğer kodlar)
-
-        // Yeni sınav oluştur (POST)
+        // 🟢 Yeni sınav oluştur (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Exam model)
         {
-            if (!ModelState.IsValid || model.CourseId == 0) // Tek bir kontrol bloğuna alalım
-            {
-                // **!!! BURASI YENİ EKLENEN KISIM !!!**
-                var userId = _userManager.GetUserId(User);
-                var dersler = _db.Courses
-                                 .Where(c => c.OgretmenId == userId)
-                                 .ToList();
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                return Unauthorized();
 
-                // ViewBag.Dersler'i yeniden dolduruyoruz
+            if (ModelState.IsValid || model.CourseId == 0)
+            {
+                var dersler = _db.Courses.Where(c => c.OgretmenId == user.Id).ToList();
                 ViewBag.Dersler = new SelectList(dersler, "Id", "DersAdi");
 
                 if (model.CourseId == 0)
-                {
                     ModelState.AddModelError("CourseId", "Lütfen bir ders seçin.");
-                }
 
-                return View(model); // View'a geri dönülüyor
+                return View(model);
             }
 
-           
-
-            var user = await _userManager.GetUserAsync(User);
+            // Öğretmen ID ve default başlangıç tarihi
             model.OgretmenId = user.Id;
+            if (model.BaslangicTarihi == default)
+                model.BaslangicTarihi = DateTime.Now;
 
-           
-            var createdExam = await _examService.CreateExamAsync(model);
+            await _examService.CreateExamAsync(model);
 
-            return RedirectToAction("Create", "Question", new { examId = createdExam.Id });
+            return RedirectToAction("Index");
         }
 
-
-        // Sınav detayları (soru listesi)
+        // 🟢 Sınav detayları (öğretmen)
         public async Task<IActionResult> Details(int id)
         {
             var exam = await _examService.GetExamByIdAsync(id);
-            if (exam == null)
-                return NotFound();
+            if (exam == null) return NotFound();
+
+            var students = await _examService.GetStudentsForExamAsync(id);
+            ViewBag.Students = students;
 
             return View(exam);
+        }
+
+        // 🟢 Sınav düzenle (GET)
+        public async Task<IActionResult> Edit(int id)
+        {
+            var exam = await _examService.GetExamByIdAsync(id);
+            if (exam == null) return NotFound();
+
+            ViewBag.Dersler = new SelectList(_db.Courses.Where(c => c.OgretmenId == exam.OgretmenId).ToList(), "Id", "DersAdi", exam.CourseId);
+            return View(exam);
+        }
+
+        // 🟢 Sınav düzenle (POST)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Exam model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var exam = await _examService.GetExamByIdAsync(model.Id);
+            if (exam == null) return NotFound();
+
+            exam.Baslik = model.Baslik;
+            exam.CourseId = model.CourseId;
+            exam.SureDakika = model.SureDakika;
+            exam.BaslangicTarihi = model.BaslangicTarihi;
+
+            await _db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        // 🟢 Sınav sil (GET)
+        public async Task<IActionResult> Delete(int id)
+        {
+            var exam = await _examService.GetExamByIdAsync(id);
+            if (exam == null) return NotFound();
+
+            return View(exam);
+        }
+
+        // 🟢 Sınav sil (POST)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var exam = await _examService.GetExamByIdAsync(id);
+            if (exam == null) return NotFound();
+
+            _db.Exams.Remove(exam);
+            await _db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        // 🟢 Sınav yayınla / yayından kaldır
+        [HttpPost]
+        public async Task<IActionResult> TogglePublish(int id)
+        {
+            await _examService.PublishExamAsync(id);
+            return RedirectToAction("Details", new { id });
         }
     }
 }

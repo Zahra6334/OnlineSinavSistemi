@@ -1,0 +1,21 @@
+﻿@model OnlineSinavSistemi.Models.Exam
+@{
+    ViewData["Title"] = "Sınav Sil";
+}
+
+<h2>Sınav Sil</h2>
+
+<h3>Bu sınavı silmek istediğinize emin misiniz?</h3>
+
+<div>
+    <h4>@Model.Baslik</h4>
+    <p>Ders: @Model.Course?.DersAdi</p>
+    <p>Süre: @Model.SureDakika dakika</p>
+    <p>Başlangıç Tarihi: @Model.BaslangicTarihi.ToString("g")</p>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form>

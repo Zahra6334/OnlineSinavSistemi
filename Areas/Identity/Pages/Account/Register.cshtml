@@ -9,23 +9,29 @@
 <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
+            <h2>Yeni hesap oluştur</h2>
             <hr />
+
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+            <!-- E-Posta -->
             <div class="form-floating mb-3">
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                 <label asp-for="Input.Email">Email</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
+
+            <!-- Ad Soyad -->
+            <div class="form-group mb-3">
                 <label asp-for="Input.AdSoyad"></label>
                 <input asp-for="Input.AdSoyad" class="form-control" />
                 <span asp-validation-for="Input.AdSoyad" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <!-- Rol -->
+            <div class="form-group mb-3">
                 <label asp-for="Input.Rol"></label>
-                <select asp-for="Input.Rol" class="form-control">
+                <select asp-for="Input.Rol" class="form-control" id="roleSelect">
                     <option value="">Seçiniz</option>
                     <option value="Ogretmen">Öğretmen</option>
                     <option value="Ogrenci">Öğrenci</option>
@@ -33,44 +39,49 @@
                 <span asp-validation-for="Input.Rol" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <!-- Numara -->
+            <div class="form-group mb-3">
                 <label asp-for="Input.Numara"></label>
                 <input asp-for="Input.Numara" class="form-control" />
                 <span asp-validation-for="Input.Numara" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <!-- Branş (sadece öğretmende gözükecek) -->
+            <div class="form-group mb-3" id="bransDiv" style="display:none;">
                 <label asp-for="Input.Brans"></label>
                 <input asp-for="Input.Brans" class="form-control" />
                 <span asp-validation-for="Input.Brans" class="text-danger"></span>
             </div>
 
+            <!-- Şifre -->
             <div class="form-floating mb-3">
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
                 <label asp-for="Input.Password">Password</label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
+
+            <!-- Şifre tekrar -->
             <div class="form-floating mb-3">
                 <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
                 <label asp-for="Input.ConfirmPassword">Confirm Password</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Kayıt Ol</button>
         </form>
     </div>
+
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h3>Use another service to register.</h3>
+            <h3>Harici bir servisle kayıt ol</h3>
             <hr />
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
+                    <p>
+                        Harici kimlik doğrulama servisi yok. Daha fazla bilgi için
+                        <a href="https://go.microsoft.com/fwlink/?LinkID=532715">buraya tıklayın</a>.
+                    </p>
                 }
                 else
                 {
@@ -79,7 +90,9 @@
                             <p>
                                 @foreach (var provider in Model.ExternalLogins!)
                                 {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name">
+                                        @provider.DisplayName ile giriş yap
+                                    </button>
                                 }
                             </p>
                         </div>
@@ -92,4 +105,21 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.getElementById("roleSelect").addEventListener("change", function () {
+            var selectedRole = this.value;
+            var bransDiv = document.getElementById("bransDiv");
+            var bransInput = document.getElementById("Input_Brans");
+
+            if (selectedRole === "Ogretmen") {
+                bransDiv.style.display = "block";
+            } else {
+                bransDiv.style.display = "none";
+                if (bransInput) {
+                    bransInput.value = ""; // Branş'ı boş gönder
+                }
+            }
+        });
+    </script>
 }

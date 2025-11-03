@@ -1,37 +1,55 @@
 @model IEnumerable<OnlineSinavSistemi.Models.StudentExam>
-    @{
+
+@{
     ViewBag.Title = "Sýnavlarým";
-    }
+}
 
-    <h2>Yaklaþan / Aktif Sýnavlar</h2>
+<h2>Yaklaþan / Aktif Sýnavlar</h2>
 
+<div class="mb-3">
+    <strong>Toplam Sýnav:</strong> @ViewBag.ToplamSinav<br />
+    <strong>Tamamlanan:</strong> @ViewBag.TamamlananSinav<br />
+    <strong>Bekleyen:</strong> @ViewBag.BekleyenSinav
+</div>
+
+@if (!Model.Any())
+{
+    <p>Henüz atanmýþ bir sýnavýnýz yok.</p>
+}
+else
+{
     <table class="table table-bordered mt-3">
         <thead>
             <tr>
                 <th>Sýnav Baþlýðý</th>
                 <th>Ders</th>
                 <th>Baþlangýç</th>
-                <th>Süre</th>
+                <th>Süre (dk)</th>
                 <th>Durum</th>
                 <th>Ýþlem</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Exam.Baslik</td>
-                <td>@item.Exam.Course.DersAdi</td>
-                <td>@item.Exam.BaslangicTarihi.ToString("g")</td>
-                <td>@item.Exam.SureDakika dk</td>
-                <td>@(item.Tamamlandi ? "Tamamlandý" : "Bekliyor")</td>
-                <td>
-                    @if(!item.Tamamlandi)
-                    {
-                    <a asp-action="TakeExam" asp-route-examId="@item.ExamId" class="btn btn-primary">Sýnava Gir</a>
-                    }
-                </td>
-            </tr>
-        }
+            {
+                <tr>
+                    <td>@item.Exam?.Baslik</td>
+                    <td>@item.Exam?.Course?.DersAdi</td>
+                    <td>@item.Exam?.BaslangicTarihi.ToString("g")</td>
+                    <td>@item.Exam?.SureDakika</td>
+                    <td>@(item.Completed ? "Tamamlandý" : "Bekliyor")</td>
+                    <td>
+                        @if (!item.Completed)
+                        {
+                            <a asp-action="TakeExam" asp-route-examId="@item.ExamId" class="btn btn-primary">Sýnava Gir</a>
+                        }
+                        else
+                        {
+                            <span class="text-success">Tamamlandý</span>
+                        }
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
+}

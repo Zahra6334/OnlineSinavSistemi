@@ -29,7 +29,7 @@ namespace OnlineSinavSistemi.Services
             {
                 ExamId = examId,
                 StudentId = studentId,
-                BaslangicTarihi = DateTime.Now
+                StartTime = DateTime.Now
             };
 
             _db.StudentExams.Add(se);
@@ -42,8 +42,8 @@ namespace OnlineSinavSistemi.Services
             var se = await _db.StudentExams.FindAsync(model.Id);
             if (se != null)
             {
-                se.BitisZamani = DateTime.Now;
-                se.Tamamlandi = true;
+                se.EndTime = DateTime.Now;
+                se.Completed = true;
                 await _db.SaveChangesAsync();
             }
         }
