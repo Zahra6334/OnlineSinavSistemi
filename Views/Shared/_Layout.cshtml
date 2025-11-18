@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using OnlineSinavSistemi.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,12 +11,198 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/OnlineSinavSistemi.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: -4px 0 20px rgba(0,0,0,0.2);
+            transition: right 0.4s cubic-bezier(0.86, 0, 0.07, 1); /* Daha yumuşak geçiş */
+            z-index: 1050;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+            .sidebar.open {
+                right: 0;
+            }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1049;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+            .sidebar-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+        .hamburger-menu {
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+            .hamburger-menu:hover {
+                background-color: #e9ecef;
+            }
+
+        .hamburger-icon {
+            font-size: 1.3rem;
+            color: #333;
+        }
+
+        /* ... Diğer CSS stilleri (Sidebar Header, Menu, Button vs.) aynı kalabilir ... */
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .sidebar-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: #6c757d;
+            padding: 5px;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+            .sidebar-close:hover {
+                background-color: #e9ecef;
+                color: #dc3545;
+                transform: rotate(90deg);
+            }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            .sidebar-menu li {
+                margin-bottom: 8px;
+            }
+
+            .sidebar-menu a {
+                display: flex;
+                align-items: center;
+                padding: 12px 15px;
+                color: #495057;
+                text-decoration: none;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+                font-weight: 500;
+            }
+
+                .sidebar-menu a:hover {
+                    background: linear-gradient(135deg, #007bff, #0056b3);
+                    color: white;
+                    transform: translateX(5px);
+                    box-shadow: 0 3px 10px rgba(0,123,255,0.3);
+                }
+
+                .sidebar-menu a i {
+                    width: 25px;
+                    margin-right: 12px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                }
+
+        .sidebar-divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #dee2e6, transparent);
+            margin: 20px 0;
+            border: none;
+        }
+
+        .logout-form {
+            margin: 0;
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            text-align: left;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: #dc3545;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+            .logout-btn:hover {
+                background: linear-gradient(135deg, #dc3545, #c82333);
+                color: white;
+                transform: translateX(5px);
+                box-shadow: 0 3px 10px rgba(220,53,69,0.3);
+            }
+
+        /* Navbar düzenlemeleri */
+        .navbar-nav {
+            align-items: center;
+        }
+
+        .nav-item {
+            margin-left: 10px;
+        }
+
+        /* Main content adjustment when sidebar is open */
+        body.sidebar-open {
+            overflow: hidden; /* Sidebar açıkken ana içeriğin kaymasını engeller */
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OnlineSinavSistemi</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-graduation-cap me-2"></i>OnlineSinavSistemi
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,41 +210,90 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home me-1"></i>Home
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                <i class="fas fa-shield-alt me-1"></i>Privacy
+                            </a>
                         </li>
                     </ul>
 
-                    <!-- Sağ tarafa Login ve Register butonları -->
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
-                                <i class="fas fa-sign-in-alt me-1"></i> Giriş Yap
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">
-                                <i class="fas fa-user-plus me-1"></i> Kayıt Ol
-                            </a>
-                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <div class="hamburger-menu" id="hamburgerTrigger" title="Kullanıcı Menüsü">
+                                    <i class="fas fa-bars hamburger-icon"></i>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">
+                                    <i class="fas fa-user-plus me-1"></i> Kayıt Ol
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
+                                    <i class="fas fa-sign-in-alt me-1"></i> Giriş Yap
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
-
             </div>
         </nav>
     </header>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewData["Title"] - Online Sınav Sistemi</title>
 
-        <!-- 🧩 Tarayıcı sekmesinde gözükecek küçük logo -->
-        <link rel="icon" type="image/x-icon" href="/favicon.ico">
-        <!-- Eğer PNG kullanacaksan -->
-        <!--<link rel="icon" type="image/png" href="~/images/favicon.png" /> -->
-    </head>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h5 class="sidebar-title"><i class="fas fa-user-circle me-2"></i>Kullanıcı Menüsü</h5>
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li>
+                    <a asp-controller="Account" asp-action="ProfileDetails">
+                        <i class="fas fa-info-circle"></i> Profil Bilgilerim
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Courses" asp-action="MyCourses">
+                        <i class="fas fa-book"></i> Derslerim
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Exams" asp-action="MyExams">
+                        <i class="fas fa-graduation-cap"></i> Sınavlarım
+                    </a>
+                </li>
+                <div class="sidebar-divider"></div>
+                <li>
+                    <a asp-controller="Account" asp-action="Profile" title="Yönet">
+                        <i class="fas fa-cog"></i> Hesap Ayarları
+                    </a>
+                </li>
+                <div class="sidebar-divider"></div>
+                <li>
+                    <form class="logout-form" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button type="submit" class="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> Çıkış Yap
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    }
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -70,6 +309,61 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const hamburgerTrigger = document.getElementById('hamburgerTrigger');
+            const sidebarClose = document.getElementById('sidebarClose');
+            const body = document.body;
+
+            // Sidebar'ı açma/kapama fonksiyonu
+            function toggleSidebar() {
+                const is_open = sidebar.classList.contains('open');
+                if (is_open) {
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('active');
+                    body.classList.remove('sidebar-open');
+                } else {
+                    sidebar.classList.add('open');
+                    overlay.classList.add('active');
+                    body.classList.add('sidebar-open');
+                }
+            }
+
+            // 1. Tetikleyiciye (Hamburger İkonu) Tıklama Olayı
+            if (hamburgerTrigger) {
+                hamburgerTrigger.addEventListener('click', function (e) {
+                    e.preventDefault(); // Varsayılan davranışı engelle
+                    toggleSidebar();
+                });
+            }
+
+            // 2. Kapat Butonuna Tıklama Olayı
+            if (sidebarClose) {
+                sidebarClose.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    toggleSidebar();
+                });
+            }
+
+            // 3. Overlay'e Tıklama Olayı (Sayfanın dışına tıklama)
+            if (overlay) {
+                overlay.addEventListener('click', function () {
+                    toggleSidebar();
+                });
+            }
+
+            // ESC tuşuna basınca sidebar'ı kapat
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

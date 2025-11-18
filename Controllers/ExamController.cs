@@ -65,7 +65,7 @@ namespace OnlineSinavSistemi.Controllers
             if (ModelState.IsValid || model.CourseId == 0)
             {
                 var dersler = _db.Courses.Where(c => c.TeacherId == user.Id).ToList();
-                ViewBag.Dersler = new SelectList(dersler, "Id", "DersAdi");
+                ViewBag.Dersler = new SelectList(dersler, "Id", "CourseName");
 
                 if (model.CourseId == 0)
                     ModelState.AddModelError("CourseId", "Lütfen bir ders seçin.");
@@ -101,7 +101,7 @@ namespace OnlineSinavSistemi.Controllers
             var exam = await _examService.GetExamByIdAsync(id);
             if (exam == null) return NotFound();
 
-            ViewBag.Dersler = new SelectList(_db.Courses.Where(c => c.TeacherId == exam.TeacherId).ToList(), "Id", "DersAdi", exam.CourseId);
+            ViewBag.Dersler = new SelectList(_db.Courses.Where(c => c.TeacherId == exam.TeacherId).ToList(), "Id", "CourseName", exam.CourseId);
             return View(exam);
         }
 

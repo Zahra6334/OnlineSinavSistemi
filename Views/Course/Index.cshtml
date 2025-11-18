@@ -14,6 +14,7 @@
         <tr>
             <th>Ders Adı</th>
             <th>Toplam Sınav</th>
+            <th>Öğrenci Sayısı</th>
             <th>İşlemler</th>
         </tr>
     </thead>
@@ -21,9 +22,16 @@
         @foreach (var course in Model)
         {
             <tr>
+                
                 <td>@course.CourseName</td>
+
+
                 <td>@(course.Exams?.Count() ?? 0)</td>
                 <td>
+                    @(course.CourseStudents?.Count() ?? 0)
+                </td>
+                <td>
+                    <a asp-action="StudentList" asp-controller="Students" asp-route-id="@course.Id" class="btn btn-primary btn-sm">Öğrenci Listesi</a>
                     <a asp-action="Details" asp-route-id="@course.Id" class="btn btn-info btn-sm">Detay</a>
                     <a asp-action="Delete" asp-route-id="@course.Id" class="btn btn-danger btn-sm">Sil</a>
                 </td>
