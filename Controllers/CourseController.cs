@@ -30,7 +30,7 @@ namespace OnlineSinavSistemi.Controllers
                 return Forbid();
 
             var courses = await _context.Courses
-                .Where(c => c.OgretmenId == user.Id)
+                .Where(c => c.TeacherId == user.Id)
                 .Include(c => c.Exams)
                 .ToListAsync();
 
@@ -66,7 +66,7 @@ namespace OnlineSinavSistemi.Controllers
                 return View(model);
             }
 
-            model.OgretmenId = user.Id;
+            model.TeacherId= user.Id;
             _context.Courses.Add(model);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

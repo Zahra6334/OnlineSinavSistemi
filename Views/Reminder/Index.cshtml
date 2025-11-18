@@ -15,7 +15,7 @@ else
         @foreach(var reminder in Model)
         {
         <li class="list-group-item">
-            <strong>@reminder.Exam.Baslik</strong> - @reminder.Message <br />
+            <strong>@reminder.Exam.Title</strong> - @reminder.Message <br />
             <small>@reminder.Date.ToString("g")</small>
         </li>
         }

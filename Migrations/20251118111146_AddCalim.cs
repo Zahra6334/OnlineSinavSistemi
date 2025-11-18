@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OnlineSinavSistemi.Migrations
 {
     /// <inheritdoc />
-    public partial class FixAnswerCascade : Migration
+    public partial class AddCalim : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,7 +30,7 @@ namespace OnlineSinavSistemi.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AdSoyad = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    full_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Rol = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Numara = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Brans = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -166,15 +166,15 @@ namespace OnlineSinavSistemi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DersAdi = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OgretmenId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CourseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TeacherId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Courses_AspNetUsers_OgretmenId",
-                        column: x => x.OgretmenId,
+                        name: "FK_Courses_AspNetUsers_TeacherId",
+                        column: x => x.TeacherId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -184,14 +184,13 @@ namespace OnlineSinavSistemi.Migrations
                 name: "CourseStudents",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     CourseId = table.Column<int>(type: "int", nullable: false),
-                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CourseStudents", x => x.Id);
+                    table.PrimaryKey("PK_CourseStudents", x => new { x.CourseId, x.StudentId });
                     table.ForeignKey(
                         name: "FK_CourseStudents_AspNetUsers_StudentId",
                         column: x => x.StudentId,
@@ -212,19 +211,19 @@ namespace OnlineSinavSistemi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Baslik = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SureDakika = table.Column<int>(type: "int", nullable: false),
-                    BaslangicTarihi = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Yayinlandi = table.Column<bool>(type: "bit", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DurationMinutes = table.Column<int>(type: "int", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsPublished = table.Column<bool>(type: "bit", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: false),
-                    OgretmenId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    TeacherId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Exams", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Exams_AspNetUsers_OgretmenId",
-                        column: x => x.OgretmenId,
+                        name: "FK_Exams_AspNetUsers_TeacherId",
+                        column: x => x.TeacherId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -243,8 +242,8 @@ namespace OnlineSinavSistemi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ExamId = table.Column<int>(type: "int", nullable: false),
-                    SoruMetni = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Tip = table.Column<int>(type: "int", nullable: false)
+                    QuestionText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -266,7 +265,8 @@ namespace OnlineSinavSistemi.Migrations
                     StudentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ExamId = table.Column<int>(type: "int", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsRead = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -307,7 +307,7 @@ namespace OnlineSinavSistemi.Migrations
                         column: x => x.StudentId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StudentExams_Exams_ExamId",
                         column: x => x.ExamId,
@@ -323,7 +323,7 @@ namespace OnlineSinavSistemi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     QuestionId = table.Column<int>(type: "int", nullable: false),
-                    Metin = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsCorrect = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -432,14 +432,9 @@ namespace OnlineSinavSistemi.Migrations
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_OgretmenId",
+                name: "IX_Courses_TeacherId",
                 table: "Courses",
-                column: "OgretmenId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CourseStudents_CourseId",
-                table: "CourseStudents",
-                column: "CourseId");
+                column: "TeacherId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseStudents_StudentId",
@@ -452,9 +447,9 @@ namespace OnlineSinavSistemi.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Exams_OgretmenId",
+                name: "IX_Exams_TeacherId",
                 table: "Exams",
-                column: "OgretmenId");
+                column: "TeacherId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_ExamId",
@@ -477,9 +472,10 @@ namespace OnlineSinavSistemi.Migrations
                 column: "ExamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StudentExams_StudentId",
+                name: "IX_StudentExams_StudentId_ExamId",
                 table: "StudentExams",
-                column: "StudentId");
+                columns: new[] { "StudentId", "ExamId" },
+                unique: true);
         }
 
         /// <inheritdoc />

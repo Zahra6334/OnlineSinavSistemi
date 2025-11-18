@@ -24,11 +24,11 @@
         @foreach (var exam in Model)
         {
             <tr>
-                <td>@exam.Baslik</td>
-                <td>@exam.Course?.DersAdi</td>
-                <td>@exam.SureDakika</td>
-                <td>@exam.BaslangicTarihi.ToString("g")</td>
-                <td>@(exam.Yayinlandi ? "Yayınlandı" : "Yayınlanmadı")</td>
+                <td>@exam.Title</td>
+                <td>@exam.Course?.CourseName</td>
+                <td>@exam.DurationMinutes</td>
+                <td>@exam.StartDate.ToString("g")</td>
+                <td>@(exam.IsPublished ? "Yayınlandı" : "Yayınlanmadı")</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@exam.Id" class="btn btn-warning btn-sm">Düzenle</a>
                     <a asp-action="Details" asp-route-id="@exam.Id" class="btn btn-info btn-sm">Detay</a>

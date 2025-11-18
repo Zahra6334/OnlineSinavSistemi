@@ -10,8 +10,8 @@
     <div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title">@Model.Course</h5>
-            <p class="card-text"><strong>Ders:</strong> @Model.Course.DersAdi</p>
-            <p class="card-text"><strong>Tarih:</strong> @Model.SureDakika.ToString("dd.MM.yyyy HH:mm")</p>
+            <p class="card-text"><strong>Ders:</strong> @Model.Course.CourseName</p>
+            <p class="card-text"><strong>Tarih:</strong> @Model.DurationMinutes.ToString("dd.MM.yyyy HH:mm")</p>
         </div>
     </div>
 
@@ -29,7 +29,7 @@
                 @foreach (var k in katilimlar)
                 {
                     <tr>
-                        <td>@k.Student.AdSoyad</td>
+                        <td>@k.Student.full_name</td>
                         <td>@(k.Completed ? "Girdi" : "Girmedi")</td>
                     </tr>
                 }

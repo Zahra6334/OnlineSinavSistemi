@@ -5,8 +5,8 @@
     var exam = Model?.Exam;
 }
 
-<h2>@exam?.Baslik</h2>
-<p>Süre: @exam?.SureDakika dakika</p>
+<h2>@exam?.Title</h2>
+<p>Süre: @exam?.DurationMinutes dakika</p>
 
 @if(exam?.Questions != null && exam.Questions.Any())
 {
@@ -18,20 +18,20 @@
             var question = exam.Questions.ElementAt(i);
     <div class="card mb-3">
         <div class="card-header">
-            Soru @(i+1): @question.SoruMetni
+            Soru @(i+1): @question.QuestionText
         </div>
         <div class="card-body">
-            @if(question.Tip == OnlineSinavSistemi.Models.QuestionType.CoktanSecmeli)
+            @if(question.Type == OnlineSinavSistemi.Models.QuestionType.CoktanSecmeli)
                     {
                         foreach(var choice in question.Choices ?? new List<OnlineSinavSistemi.Models.Choice>())
                         {
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="Answers[@i].SecilenChoice" value="@choice.Id" />
-                <label class="form-check-label">@choice.Metin</label>
+                <label class="form-check-label">@choice.Text</label>
             </div>
                         }
                     }
-                    else if(question.Tip == OnlineSinavSistemi.Models.QuestionType.Klasik)
+                    else if(question.Type == OnlineSinavSistemi.Models.QuestionType.Klasik)
                     {
             <div class="mb-2">
                 <label>Dosya Yükle (PDF, DOCX, JPG vb.)</label>

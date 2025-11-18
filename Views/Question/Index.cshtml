@@ -22,12 +22,12 @@
         @foreach (var q in Model)
         {
             <tr>
-                <td>@q.SoruMetni</td>
+                <td>@q.QuestionText</td>
                 <td>
                     <ul>
                         @foreach (var c in q.Choices)
                         {
-                            <li>@c.Metin @(c.IsCorrect ? "(Doðru)" : "")</li>
+                            <li>@c.Text @(c.IsCorrect ? "(Doðru)" : "")</li>
                         }
                     </ul>
                 </td>

@@ -8,10 +8,10 @@ namespace OnlineSinavSistemi.Models
         public int Id { get; set; }
 
         [Required]
-        public string DersAdi { get; set; }
-
-        public string OgretmenId { get; set; }
-        public ApplicationUser Ogretmen { get; set; }
+        public string CourseName { get; set; }
+       
+        public string TeacherId { get; set; }
+        public ApplicationUser Teacher { get; set; }
 
         // Many-to-many öğrenciler için ayrıca junction table/ entity oluşturacağız (CourseStudent)
         public ICollection<CourseStudent> CourseStudents { get; set; }

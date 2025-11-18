@@ -33,10 +33,10 @@ else
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.Exam?.Baslik</td>
-                    <td>@item.Exam?.Course?.DersAdi</td>
-                    <td>@item.Exam?.BaslangicTarihi.ToString("g")</td>
-                    <td>@item.Exam?.SureDakika</td>
+                    <td>@item.Exam?.Title</td>
+                    <td>@item.Exam?.Course?.CourseName</td>
+                    <td>@item.Exam?.StartDate.ToString("g")</td>
+                    <td>@item.Exam?.DurationMinutes</td>
                     <td>@(item.Completed ? "Tamamlandý" : "Bekliyor")</td>
                     <td>
                         @if (!item.Completed)

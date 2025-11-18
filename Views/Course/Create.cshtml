@@ -8,9 +8,11 @@
 
 <form asp-action="Create" method="post">
     <div class="form-group">
-        <label asp-for="DersAdi"></label>
-        <input asp-for="DersAdi" class="form-control" />
-        <span asp-validation-for="DersAdi" class="text-danger"></span>
+        <label asp-for="CourseName"></label>
+        <input asp-for="CourseName" autocomplete="off" class="form-control" />
+      
+ 
+        <span asp-validation-for="CourseName" class="text-danger"></span>
     </div>
 
     

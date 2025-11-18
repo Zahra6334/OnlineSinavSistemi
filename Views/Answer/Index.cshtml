@@ -19,7 +19,7 @@
         @foreach (var a in Model)
         {
             <tr>
-                <td>@a.Question.SoruMetni</td>
+                <td>@a.Question.QuestionText</td>
                 <td>@a.AnswerText</td>
                 <td>@(a.SelectedChoiceId.HasValue ? a.SelectedChoiceId.ToString() : "-")</td>
                 <td>

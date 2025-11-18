@@ -21,7 +21,7 @@
         @foreach (var course in Model)
         {
             <tr>
-                <td>@course.DersAdi</td>
+                <td>@course.CourseName</td>
                 <td>@(course.Exams?.Count() ?? 0)</td>
                 <td>
                     <a asp-action="Details" asp-route-id="@course.Id" class="btn btn-info btn-sm">Detay</a>

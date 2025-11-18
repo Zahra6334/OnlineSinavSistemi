@@ -39,7 +39,7 @@ namespace OnlineSinavSistemi.Services
         public async Task<IEnumerable<Exam>> GetExamsForTeacherAsync(string teacherId)
         {
             return await _db.Exams
-                .Where(e => e.OgretmenId == teacherId)
+                .Where(e => e.TeacherId == teacherId)
                 .Include(e => e.Course)
                 .ToListAsync();
         }
@@ -50,7 +50,7 @@ namespace OnlineSinavSistemi.Services
             var exam = await _db.Exams.FindAsync(examId);
             if (exam != null)
             {
-                exam.Yayinlandi = !exam.Yayinlandi;
+                exam.IsPublished = !exam.IsPublished;
                 await _db.SaveChangesAsync();
             }
         }

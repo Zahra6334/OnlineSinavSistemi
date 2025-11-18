@@ -31,7 +31,7 @@ namespace OnlineSinavSistemi.Controllers
 
             // Öğretmenin sınavlarını getir
             var exams = await _db.Exams
-                                 .Where(e => e.OgretmenId == userId)
+                                 .Where(e => e.TeacherId == userId)
                                  .Include(e => e.Course)
                                  .ToListAsync();
 
@@ -42,12 +42,12 @@ namespace OnlineSinavSistemi.Controllers
         public IActionResult Create()
         {
             var userId = _userManager.GetUserId(User);
-            var dersler = _db.Courses.Where(c => c.OgretmenId == userId).ToList();
+            var dersler = _db.Courses.Where(c => c.TeacherId == userId).ToList();
             ViewBag.Dersler = new SelectList(dersler, "Id", "DersAdi");
 
             var model = new Exam
             {
-                BaslangicTarihi = DateTime.Now // default değer
+                StartDate = DateTime.Now // default değer
             };
 
             return View(model);
@@ -64,7 +64,7 @@ namespace OnlineSinavSistemi.Controllers
 
             if (ModelState.IsValid || model.CourseId == 0)
             {
-                var dersler = _db.Courses.Where(c => c.OgretmenId == user.Id).ToList();
+                var dersler = _db.Courses.Where(c => c.TeacherId == user.Id).ToList();
                 ViewBag.Dersler = new SelectList(dersler, "Id", "DersAdi");
 
                 if (model.CourseId == 0)
@@ -74,9 +74,9 @@ namespace OnlineSinavSistemi.Controllers
             }
 
             // Öğretmen ID ve default başlangıç tarihi
-            model.OgretmenId = user.Id;
-            if (model.BaslangicTarihi == default)
-                model.BaslangicTarihi = DateTime.Now;
+            model.TeacherId = user.Id;
+            if (model.StartDate == default)
+                model.StartDate= DateTime.Now;
 
             await _examService.CreateExamAsync(model);
 
@@ -101,7 +101,7 @@ namespace OnlineSinavSistemi.Controllers
             var exam = await _examService.GetExamByIdAsync(id);
             if (exam == null) return NotFound();
 
-            ViewBag.Dersler = new SelectList(_db.Courses.Where(c => c.OgretmenId == exam.OgretmenId).ToList(), "Id", "DersAdi", exam.CourseId);
+            ViewBag.Dersler = new SelectList(_db.Courses.Where(c => c.TeacherId == exam.TeacherId).ToList(), "Id", "DersAdi", exam.CourseId);
             return View(exam);
         }
 
@@ -115,10 +115,10 @@ namespace OnlineSinavSistemi.Controllers
             var exam = await _examService.GetExamByIdAsync(model.Id);
             if (exam == null) return NotFound();
 
-            exam.Baslik = model.Baslik;
+            exam.Title= model.Title;
             exam.CourseId = model.CourseId;
-            exam.SureDakika = model.SureDakika;
-            exam.BaslangicTarihi = model.BaslangicTarihi;
+            exam.DurationMinutes = model.DurationMinutes;
+            exam.StartDate= model.StartDate;
 
             await _db.SaveChangesAsync();
             return RedirectToAction("Index");

@@ -10,8 +10,8 @@ namespace OnlineSinavSistemi.Models
         public int ExamId { get; set; }
         public Exam Exam { get; set; }
 
-        public string SoruMetni { get; set; }
-        public QuestionType Tip { get; set; }
+        public string QuestionText { get; set; }
+        public QuestionType Type { get; set; }
 
         public ICollection<Choice> Choices { get; set; } // çoktan seçmeli ise
     }

@@ -8,10 +8,10 @@
 <h3>Bu sınavı silmek istediğinize emin misiniz?</h3>
 
 <div>
-    <h4>@Model.Baslik</h4>
-    <p>Ders: @Model.Course?.DersAdi</p>
-    <p>Süre: @Model.SureDakika dakika</p>
-    <p>Başlangıç Tarihi: @Model.BaslangicTarihi.ToString("g")</p>
+    <h4>@Model.Title</h4>
+    <p>Ders: @Model.Course?.CourseName</p>
+    <p>Süre: @Model.DurationMinutes dakika</p>
+    <p>Başlangıç Tarihi: @Model.StartDate.ToString("g")</p>
 </div>
 
 <form asp-action="DeleteConfirmed" method="post">

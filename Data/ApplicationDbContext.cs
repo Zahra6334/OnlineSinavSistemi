@@ -30,18 +30,18 @@ namespace OnlineSinavSistemi.Data
             //  🔹 Course - Teacher (Ogretmen)
             // =============================
             builder.Entity<Course>()
-                .HasOne(c => c.Ogretmen)
+                .HasOne(c => c.Teacher)
                 .WithMany()
-                .HasForeignKey(c => c.OgretmenId)
+                .HasForeignKey(c => c.TeacherId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // =============================
             //  🔹 Exam - Teacher (Ogretmen)
             // =============================
             builder.Entity<Exam>()
-                .HasOne(e => e.Ogretmen)
+                .HasOne(e => e.Teacher)
                 .WithMany()
-                .HasForeignKey(e => e.OgretmenId)
+                .HasForeignKey(e => e.TeacherId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // =============================

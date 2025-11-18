@@ -206,10 +206,6 @@ namespace OnlineSinavSistemi.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("AdSoyad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Brans")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -266,6 +262,10 @@ namespace OnlineSinavSistemi.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("full_name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -290,12 +290,12 @@ namespace OnlineSinavSistemi.Migrations
                     b.Property<bool>("IsCorrect")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Metin")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -312,17 +312,17 @@ namespace OnlineSinavSistemi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("DersAdi")
+                    b.Property<string>("CourseName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OgretmenId")
+                    b.Property<string>("TeacherId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OgretmenId");
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Courses");
                 });
@@ -353,31 +353,31 @@ namespace OnlineSinavSistemi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("BaslangicTarihi")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Baslik")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<string>("OgretmenId")
+                    b.Property<int>("DurationMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TeacherId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("SureDakika")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Yayinlandi")
-                        .HasColumnType("bit");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
-                    b.HasIndex("OgretmenId");
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Exams");
                 });
@@ -393,11 +393,11 @@ namespace OnlineSinavSistemi.Migrations
                     b.Property<int>("ExamId")
                         .HasColumnType("int");
 
-                    b.Property<string>("SoruMetni")
+                    b.Property<string>("QuestionText")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Tip")
+                    b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -421,12 +421,12 @@ namespace OnlineSinavSistemi.Migrations
                     b.Property<int>("ExamId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Okundu")
-                        .HasColumnType("bit");
 
                     b.Property<string>("StudentId")
                         .IsRequired()
@@ -449,12 +449,6 @@ namespace OnlineSinavSistemi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("BaslangicTarihi")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("BitisZamani")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
 
@@ -476,9 +470,6 @@ namespace OnlineSinavSistemi.Migrations
                     b.Property<string>("StudentId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("Tamamlandi")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -577,13 +568,13 @@ namespace OnlineSinavSistemi.Migrations
 
             modelBuilder.Entity("OnlineSinavSistemi.Models.Course", b =>
                 {
-                    b.HasOne("OnlineSinavSistemi.Models.ApplicationUser", "Ogretmen")
+                    b.HasOne("OnlineSinavSistemi.Models.ApplicationUser", "Teacher")
                         .WithMany()
-                        .HasForeignKey("OgretmenId")
+                        .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Ogretmen");
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("OnlineSinavSistemi.Models.CourseStudent", b =>
@@ -613,15 +604,15 @@ namespace OnlineSinavSistemi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OnlineSinavSistemi.Models.ApplicationUser", "Ogretmen")
+                    b.HasOne("OnlineSinavSistemi.Models.ApplicationUser", "Teacher")
                         .WithMany()
-                        .HasForeignKey("OgretmenId")
+                        .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Course");
 
-                    b.Navigation("Ogretmen");
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("OnlineSinavSistemi.Models.Question", b =>

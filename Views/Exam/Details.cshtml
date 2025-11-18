@@ -4,17 +4,17 @@
     var students = ViewBag.Students as IEnumerable<OnlineSinavSistemi.Models.ApplicationUser>;
 }
 
-<h2>@Model.Baslik</h2>
+<h2>@Model.Title</h2>
 
-<p>Ders: @Model.Course?.DersAdi</p>
-<p>Süre: @Model.SureDakika dakika</p>
-<p>Baþlangýç Tarihi: @Model.BaslangicTarihi.ToString("g")</p>
-<p>Yayýn Durumu: @(Model.Yayinlandi ? "Yayýnlandý" : "Yayýnlanmadý")</p>
+<p>Ders: @Model.Course?.CourseName</p>
+<p>Süre: @Model.DurationMinutes dakika</p>
+<p>Baþlangýç Tarihi: @Model.StartDate.ToString("g")</p>
+<p>Yayýn Durumu: @(Model.IsPublished ? "Yayýnlandý" : "Yayýnlanmadý")</p>
 
 <form asp-action="TogglePublish" method="post">
     <input type="hidden" name="id" value="@Model.Id" />
     <button type="submit" class="btn btn-primary">
-        @(Model.Yayinlandi ? "Yayýndan Kaldýr" : "Yayýnla")
+        @(Model.IsPublished ? "Yayýndan Kaldýr" : "Yayýnla")
     </button>
 </form>
 
@@ -39,7 +39,7 @@
                 var studentExam = s.StudentExams.FirstOrDefault(se => se.ExamId == Model.Id);
                 <tr>
                     <td>@s.Numara</td>
-                    <td>@s.AdSoyad</td>
+                    <td>@s.full_name</td>
                     <td>@studentExam?.StartTime.ToString("g")</td>
                     <td>@studentExam?.EndTime?.ToString("g")</td>
                     <td>@(studentExam != null ? (studentExam.Completed ? "Evet" : "Hayýr") : "-")</td>

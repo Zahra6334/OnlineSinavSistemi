@@ -32,12 +32,12 @@ namespace OnlineSinavSistemi.Controllers
 
             // Öğretmenin ders ve sınav istatistiklerini getir
             var dersler = await _context.Courses
-                .Where(c => c.OgretmenId == teacher.Id)
+                .Where(c => c.TeacherId== teacher.Id)
                 .Include(c => c.Exams)
                 .ToListAsync();
 
             var sinavlar = await _context.Exams
-                .Where(e => e.OgretmenId == teacher.Id)
+                .Where(e => e.TeacherId == teacher.Id)
                 .ToListAsync();
 
             ViewBag.DersSayisi = dersler.Count;

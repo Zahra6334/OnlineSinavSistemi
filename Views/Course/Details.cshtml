@@ -4,7 +4,7 @@
     ViewData["Title"] = "Ders Detayları";
 }
 
-<h2>@Model.DersAdi</h2>
+<h2>@Model.CourseName</h2>
 
 <h4>Öğrenciler</h4>
 @if (Model.CourseStudents != null && Model.CourseStudents.Any())
@@ -28,8 +28,8 @@ else
         @foreach (var exam in Model.Exams)
         {
             <li>
-                <a asp-controller="Exam" asp-action="Details" asp-route-id="@exam.Id">@exam.Baslik</a>
-                (@(exam.Yayinlandi ? "Yayınlandı" : "Yayınlanmadı"))
+                <a asp-controller="Exam" asp-action="Details" asp-route-id="@exam.Id">@exam.Title</a>
+                (@(exam.IsPublished ? "Yayınlandı" : "Yayınlanmadı"))
             </li>
         }
     </ul>

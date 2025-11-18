@@ -13,7 +13,7 @@ namespace OnlineSinavSistemi.Services
         public async Task<IEnumerable<Reminder>> GetRemindersForStudentAsync(string studentId)
         {
             return await _db.Reminders
-                .Where(r => r.StudentId == studentId && !r.Okundu)
+                .Where(r => r.StudentId == studentId && !r.IsRead)
                 .ToListAsync();
         }
     }

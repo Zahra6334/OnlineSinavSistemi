@@ -137,7 +137,7 @@ namespace OnlineSinavSistemi.Areas.Identity.Pages.Account
             await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
             await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
-            user.AdSoyad = Input.AdSoyad;
+            user.full_name = Input.AdSoyad;
             user.Rol = Input.Rol;
             user.Numara = Input.Numara;
             user.Brans = Input.Brans; // Öðretmen dolu, öðrenci boþ olacak
