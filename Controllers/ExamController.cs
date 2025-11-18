@@ -43,7 +43,7 @@ namespace OnlineSinavSistemi.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var dersler = _db.Courses.Where(c => c.TeacherId == userId).ToList();
-            ViewBag.Dersler = new SelectList(dersler, "Id", "DersAdi");
+            ViewBag.Dersler = new SelectList(dersler, "Id", "CourseName");
 
             var model = new Exam
             {
