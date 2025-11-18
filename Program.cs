@@ -25,7 +25,25 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IExamService, ExamService>();
 
 var app = builder.Build();
-
+// ------------------------------------------------------------------
+// ROL OLUŞTURMA (SEED DATA) İŞLEMİ BURADA YAPILIYOR
+// ------------------------------------------------------------------
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        // ÖNEMLİ: Bu çağrı, SeedData sınıfınızın ve InitializeRoles metodunuzun
+        // doğru (public static async Task) tanımlanmış olduğunu varsayar.
+        await SeedData.InitializeRoles(services);
+    }
+    catch (Exception ex)
+    {
+        // Hata oluşursa loglama yap
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Rollerin oluşturulması sırasında bir hata oluştu.");
+    }
+}
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
