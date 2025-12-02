@@ -12,15 +12,15 @@ using OnlineSinavSistemi.Data;
 namespace OnlineSinavSistemi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251118111146_AddCalim")]
-    partial class AddCalim
+    [Migration("20251202130941_AddProfileImage")]
+    partial class AddProfileImage
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -250,6 +250,9 @@ namespace OnlineSinavSistemi.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ProfileImage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Rol")
                         .IsRequired()

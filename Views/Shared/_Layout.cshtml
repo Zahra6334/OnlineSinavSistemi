@@ -248,53 +248,9 @@
             </div>
         </nav>
     </header>
+    @await Html.PartialAsync("~/Views/Account/UserMenu.cshtml")
 
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h5 class="sidebar-title"><i class="fas fa-user-circle me-2"></i>Kullanıcı Menüsü</h5>
-                <button class="sidebar-close" id="sidebarClose">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-
-            <ul class="sidebar-menu">
-                <li>
-                    <a asp-controller="Account" asp-action="ProfileDetails">
-                        <i class="fas fa-info-circle"></i> Profil Bilgilerim
-                    </a>
-                </li>
-                <li>
-                    <a asp-controller="Courses" asp-action="MyCourses">
-                        <i class="fas fa-book"></i> Derslerim
-                    </a>
-                </li>
-                <li>
-                    <a asp-controller="Exams" asp-action="MyExams">
-                        <i class="fas fa-graduation-cap"></i> Sınavlarım
-                    </a>
-                </li>
-                <div class="sidebar-divider"></div>
-                <li>
-                    <a asp-controller="Account" asp-action="Profile" title="Yönet">
-                        <i class="fas fa-cog"></i> Hesap Ayarları
-                    </a>
-                </li>
-                <div class="sidebar-divider"></div>
-                <li>
-                    <form class="logout-form" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <button type="submit" class="logout-btn">
-                            <i class="fas fa-sign-out-alt"></i> Çıkış Yap
-                        </button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-
-        <div class="sidebar-overlay" id="sidebarOverlay"></div>
-    }
-
+    
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

@@ -1,0 +1,117 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    var currentUser = await UserManager.GetUserAsync(User);
+    var email = currentUser?.Email ?? "Kullanıcı";
+    var username = email.Split('@')[0];
+    var profileImage = currentUser?.ProfileImage ?? "/images/default-profile.png";
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header d-flex align-items-center">
+            <div style="position: relative;">
+                <img id="profileImagePreview" src="@profileImage"
+                     class="rounded-circle"
+                     style="width:50px; height:50px; object-fit:cover; border:2px solid #dee2e6; cursor:pointer;"
+                     title="Profil Resmini Değiştir" />
+                <div id="profileOverlay" 
+                     style="position:absolute; top:0; left:0; width:100%; height:100%; border-radius:50%; cursor:pointer;"></div>
+            </div>
+            <span class="ms-2">@username</span>
+            <button class="sidebar-close ms-auto" id="sidebarClose"><i class="fas fa-times"></i></button>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li><a asp-controller="Account" asp-action="ProfileDetails"><i class="fas fa-info-circle"></i> Profil Bilgilerim</a></li>
+            <li><a asp-controller="Courses" asp-action="MyCourses"><i class="fas fa-book"></i> Derslerim</a></li>
+            <li><a asp-controller="Exams" asp-action="MyExams"><i class="fas fa-graduation-cap"></i> Sınavlarım</a></li>
+            <div class="sidebar-divider"></div>
+            <li><a asp-controller="Account" asp-action="Profile"><i class="fas fa-cog"></i> Hesap Ayarları</a></li>
+            <div class="sidebar-divider"></div>
+            <li>
+                <form class="logout-form" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(Url.Action("Index","Home"))">
+                    <button type="submit" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <input type="file" id="profileImageInput" accept="image/*" style="display:none;" />
+
+    <!-- Cropper Modal -->
+    <div id="cropModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:1050;">
+        <div style="background:white; padding:20px; border-radius:8px; max-width:500px; width:90%;">
+            <img id="cropperImage" src="" style="max-width:100%;"/>
+            <div class="mt-2 text-end">
+                <button id="cropUploadBtn" class="btn btn-primary">Yükle</button>
+                <button id="cropCancelBtn" class="btn btn-secondary">İptal</button>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+    <script>
+        let cropper;
+
+        document.getElementById('profileOverlay').addEventListener('click', () => {
+            document.getElementById('profileImageInput').click();
+        });
+
+        document.getElementById('profileImageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = document.getElementById('cropperImage');
+                img.src = event.target.result;
+
+                const modal = document.getElementById('cropModal');
+                modal.style.display = 'flex';
+
+                cropper = new Cropper(img, {
+                    aspectRatio: 1,
+                    viewMode: 1
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('cropCancelBtn').addEventListener('click', () => {
+            if(cropper) cropper.destroy();
+            document.getElementById('cropModal').style.display = 'none';
+        });
+
+        document.getElementById('cropUploadBtn').addEventListener('click', async () => {
+            const canvas = cropper.getCroppedCanvas({
+                width: 200,
+                height: 200
+            });
+
+            canvas.toBlob(async (blob) => {
+                const formData = new FormData();
+                formData.append('profilResmi', blob, 'profile.png');
+
+                const response = await fetch('@Url.Action("ProfilResmiDegistir","Account")', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    document.getElementById('profileImagePreview').src = URL.createObjectURL(blob);
+                } else {
+                    alert("Yükleme başarısız!");
+                }
+
+                cropper.destroy();
+                document.getElementById('cropModal').style.display = 'none';
+            });
+        });
+    </script>
+}

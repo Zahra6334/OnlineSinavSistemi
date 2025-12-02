@@ -1,303 +1,300 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\",
+  "WorkspaceRootPath": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\account\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\account\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\areas\\identity\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:areas\\identity\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\course\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\course\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\course\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\course\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\course\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\course\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\studentexam\\takeexam.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\studentexam\\takeexam.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\studentexam\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\studentexam\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\controllers\\studentexamcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\studentexamcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\controllers\\teachercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\teachercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\controllers\\remindercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\remindercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\controllers\\questioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\questioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\controllers\\examcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\examcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\controllers\\answercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\answercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\models\\answer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\answer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\reminder\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\reminder\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\exam\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\exam\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\exam\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\exam\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\exam\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\exam\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\exam\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\exam\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\exam\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\exam\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\services\\examservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\examservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\services\\iexamservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\iexamservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\models\\exam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\exam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\services\\studentexamservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\studentexamservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\services\\reminderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\reminderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\services\\questionservice .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\questionservice .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\services\\istudentexamservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\istudentexamservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\services\\ireminderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\ireminderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\services\\iquestionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\iquestionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\services\\ianswerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\ianswerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\services\\answerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\answerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\models\\choice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\choice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\question\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\question\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\question\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\question\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\teacher\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\teacher\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\teacher\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\teacher\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\teacher\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\teacher\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\teacher\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\teacher\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\answer\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\answer\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\models\\studentexam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\studentexam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\models\\reminder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\reminder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\models\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\models\\coursestudent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\models\\coursestudent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\coursestudent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\shared\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\shared\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\onlinesinavsistemi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:onlinesinavsistemi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\models\\choice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\choice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\shared\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\shared\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\models\\answer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\answer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\exam\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\exam\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\controllers\\examcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\examcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\teacher\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\teacher\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\data\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:data\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\areas\\identity\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:areas\\identity\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\controllers\\studentexamcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\studentexamcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\controllers\\teachercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\teachercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\services\\istudentexamservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\istudentexamservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\reminder\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\reminder\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\exam\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\exam\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\exam\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\exam\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\exam\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\exam\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\exam\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\exam\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\services\\examservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\examservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\services\\iexamservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\iexamservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\models\\exam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\exam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\controllers\\remindercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\remindercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\controllers\\questioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\questioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\controllers\\answercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\answercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\services\\studentexamservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\studentexamservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\services\\reminderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\reminderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\services\\questionservice .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\questionservice .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\services\\ireminderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\ireminderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\services\\iquestionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\iquestionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\services\\ianswerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\ianswerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\services\\answerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:services\\answerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\studentexam\\takeexam.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\studentexam\\takeexam.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\question\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\question\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\question\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\question\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\teacher\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\teacher\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\teacher\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\teacher\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\teacher\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\teacher\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\studentexam\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\studentexam\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\course\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\course\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\course\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\course\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\course\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\course\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\answer\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\answer\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\models\\studentexam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\studentexam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\models\\reminder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\reminder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\models\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\shared\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\shared\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\onlinesinavsistemi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:onlinesinavsistemi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\shared\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\shared\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\TextFile1.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Views\\Course\\TextFile1.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\TextFile1.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Migrations\\20251018122323_FixCascadeError.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Migrations\\20251018122323_FixCascadeError.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20251018122323_FixCascadeError.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Migrations\\20251018122042_FixCascadePaths.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Migrations\\20251018122042_FixCascadePaths.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20251018122042_FixCascadePaths.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\views\\exam\\details.cshtml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\views\\exam\\details.cshtml||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:views\\exam\\details.cshtml||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\senanur\\source\\repos\\onlinesinavsistemi\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
     }
   ],
@@ -318,7 +315,7 @@
         },
         {
           "DockedHeight": 182,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -326,264 +323,196 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Profile.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Account\\Profile.cshtml",
-              "RelativeDocumentMoniker": "Views\\Account\\Profile.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Account\\Profile.cshtml",
-              "RelativeToolTip": "Views\\Account\\Profile.cshtml",
-              "ViewState": "AgIAAFoAAAAAAAAAAAAAAFoAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-18T14:25:30.76Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Course\\Index.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\Index.cshtml",
-              "RelativeToolTip": "Views\\Course\\Index.cshtml",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-19T11:28:12.949Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "TakeExam.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\StudentExam\\TakeExam.cshtml",
-              "RelativeDocumentMoniker": "Views\\StudentExam\\TakeExam.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\StudentExam\\TakeExam.cshtml",
-              "RelativeToolTip": "Views\\StudentExam\\TakeExam.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-18T10:17:50.447Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\Create.cshtml",
-              "RelativeDocumentMoniker": "Views\\Course\\Create.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\Create.cshtml",
-              "RelativeToolTip": "Views\\Course\\Create.cshtml",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-19T11:28:34.59Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\Details.cshtml",
-              "RelativeDocumentMoniker": "Views\\Course\\Details.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\Details.cshtml",
-              "RelativeToolTip": "Views\\Course\\Details.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-19T11:29:28.886Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAACMAAAAAAAAAAAAkwCsAAABeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-03T21:04:43.462Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Register.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
-              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
-              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAABsAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-04T09:35:06.982Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "Controllers\\AccountController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAmwBgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T09:24:08.475Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\StudentExam\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\StudentExam\\Index.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\StudentExam\\Index.cshtml",
-              "RelativeToolTip": "Views\\StudentExam\\Index.cshtml",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAACwAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-03T21:30:40.943Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Course.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\Course.cs",
-              "RelativeDocumentMoniker": "Models\\Course.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\Course.cs",
-              "RelativeToolTip": "Models\\Course.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAxwBAAAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T13:36:39.329Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "StudentExamController.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\StudentExamController.cs",
-              "RelativeDocumentMoniker": "Controllers\\StudentExamController.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\StudentExamController.cs",
-              "RelativeToolTip": "Controllers\\StudentExamController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T10:23:21.843Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "TeacherController.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\TeacherController.cs",
-              "RelativeDocumentMoniker": "Controllers\\TeacherController.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\TeacherController.cs",
-              "RelativeToolTip": "Controllers\\TeacherController.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAuwEYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-19T11:03:36.98Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "ReminderController.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\ReminderController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ReminderController.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\ReminderController.cs",
-              "RelativeToolTip": "Controllers\\ReminderController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABDAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T10:23:25.765Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "QuestionController.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\QuestionController.cs",
-              "RelativeDocumentMoniker": "Controllers\\QuestionController.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\QuestionController.cs",
-              "RelativeToolTip": "Controllers\\QuestionController.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAAwBgAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-19T11:50:35.339Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "Controllers\\HomeController.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAAAAsAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-17T13:42:21.255Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
               "Title": "ExamController.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\ExamController.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\ExamController.cs",
               "RelativeDocumentMoniker": "Controllers\\ExamController.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\ExamController.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\ExamController.cs",
               "RelativeToolTip": "Controllers\\ExamController.cs",
-              "ViewState": "AgIAAIUAAAAAAAAAAADwv2cAAAB+AAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAAYwC0AAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-05T08:39:24.103Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "CourseController.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\CourseController.cs",
-              "RelativeDocumentMoniker": "Controllers\\CourseController.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\CourseController.cs",
-              "RelativeToolTip": "Controllers\\CourseController.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAqwB4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-19T11:11:11.493Z"
+              "DocumentIndex": 5,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Create.cshtml",
+              "RelativeDocumentMoniker": "Views\\Exam\\Create.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Create.cshtml",
+              "RelativeToolTip": "Views\\Exam\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-19T13:26:08.255Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "AnswerController.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\AnswerController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AnswerController.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Controllers\\AnswerController.cs",
-              "RelativeToolTip": "Controllers\\AnswerController.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAgwA4AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-19T11:51:40.168Z"
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Teacher\\Index.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Index.cshtml",
+              "RelativeToolTip": "Views\\Teacher\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-03T22:00:34.853Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 1,
+              "Title": "Course.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Course.cs",
+              "RelativeDocumentMoniker": "Models\\Course.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Course.cs",
+              "RelativeToolTip": "Models\\Course.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-18T13:36:39.329Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Answer.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\Answer.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Answer.cs",
               "RelativeDocumentMoniker": "Models\\Answer.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\Answer.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Answer.cs",
               "RelativeToolTip": "Models\\Answer.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAqwA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T12:25:52.072Z"
+              "WhenOpened": "2025-10-18T12:25:52.072Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "IExamService.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\IExamService.cs",
-              "RelativeDocumentMoniker": "Services\\IExamService.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\IExamService.cs",
-              "RelativeToolTip": "Services\\IExamService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAYAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "ApplicationUser.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\ApplicationUser.cs",
+              "RelativeDocumentMoniker": "Models\\ApplicationUser.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\ApplicationUser.cs",
+              "RelativeToolTip": "Models\\ApplicationUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T13:28:16.445Z"
+              "WhenOpened": "2025-10-19T12:14:28.15Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "ExamService.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\ExamService.cs",
-              "RelativeDocumentMoniker": "Services\\ExamService.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\ExamService.cs",
-              "RelativeToolTip": "Services\\ExamService.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAuwCkAAAA1AAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "Choice.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Choice.cs",
+              "RelativeDocumentMoniker": "Models\\Choice.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Choice.cs",
+              "RelativeToolTip": "Models\\Choice.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T10:05:48.584Z"
+              "WhenOpened": "2025-10-18T13:26:01.698Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 0,
+              "Title": "CourseStudent.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\CourseStudent.cs",
+              "RelativeDocumentMoniker": "Models\\CourseStudent.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\CourseStudent.cs",
+              "RelativeToolTip": "Models\\CourseStudent.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAgwAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-19T11:34:57.621Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-18T12:18:48.841Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAADgAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-18T12:13:35.768Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "SeedData.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Data\\SeedData.cs",
+              "RelativeDocumentMoniker": "Data\\SeedData.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Data\\SeedData.cs",
+              "RelativeToolTip": "Data\\SeedData.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAzwAYAAABRAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T12:26:20.096Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Register.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "ViewState": "AgIAAIUAAAAAAAAAAAAqwJUAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-04T09:35:06.982Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "StudentExamController.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\StudentExamController.cs",
+              "RelativeDocumentMoniker": "Controllers\\StudentExamController.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\StudentExamController.cs",
+              "RelativeToolTip": "Controllers\\StudentExamController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T10:23:21.843Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "IStudentExamService.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\IStudentExamService.cs",
+              "RelativeDocumentMoniker": "Services\\IStudentExamService.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\IStudentExamService.cs",
+              "RelativeToolTip": "Services\\IStudentExamService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-19T11:55:41.772Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "TeacherController.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\TeacherController.cs",
+              "RelativeDocumentMoniker": "Controllers\\TeacherController.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\TeacherController.cs",
+              "RelativeToolTip": "Controllers\\TeacherController.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAYwDQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-19T11:03:36.98Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Reminder\\Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Reminder\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Reminder\\Index.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Reminder\\Index.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Reminder\\Index.cshtml",
               "RelativeToolTip": "Views\\Reminder\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -591,23 +520,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Create.cshtml",
-              "RelativeDocumentMoniker": "Views\\Exam\\Create.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Create.cshtml",
-              "RelativeToolTip": "Views\\Exam\\Create.cshtml",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAACEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-19T13:26:08.255Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 19,
               "Title": "Delete.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Delete.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Delete.cshtml",
               "RelativeDocumentMoniker": "Views\\Exam\\Delete.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Delete.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Delete.cshtml",
               "RelativeToolTip": "Views\\Exam\\Delete.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -615,11 +532,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 18,
               "Title": "Details.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Details.cshtml",
               "RelativeDocumentMoniker": "Views\\Exam\\Details.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Details.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Details.cshtml",
               "RelativeToolTip": "Views\\Exam\\Details.cshtml",
               "ViewState": "AgIAAA8AAAAAAAAAAAAAAB4AAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -627,11 +544,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 16,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Exam\\Index.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Index.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Index.cshtml",
               "RelativeToolTip": "Views\\Exam\\Index.cshtml",
               "ViewState": "AgIAAAwAAAAAAAAAAAAAACMAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -639,11 +556,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 17,
               "Title": "Edit.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Edit.cshtml",
               "RelativeDocumentMoniker": "Views\\Exam\\Edit.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Edit.cshtml",
               "RelativeToolTip": "Views\\Exam\\Edit.cshtml",
               "ViewState": "AgIAAA8AAAAAAAAAAAAAACAAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -651,11 +568,35 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 20,
+              "Title": "ExamService.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\ExamService.cs",
+              "RelativeDocumentMoniker": "Services\\ExamService.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\ExamService.cs",
+              "RelativeToolTip": "Services\\ExamService.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAuwCkAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T10:05:48.584Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "IExamService.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\IExamService.cs",
+              "RelativeDocumentMoniker": "Services\\IExamService.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\IExamService.cs",
+              "RelativeToolTip": "Services\\IExamService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-18T13:28:16.445Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
               "Title": "Exam.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\Exam.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Exam.cs",
               "RelativeDocumentMoniker": "Models\\Exam.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\Exam.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Exam.cs",
               "RelativeToolTip": "Models\\Exam.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAzwA8AAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -663,47 +604,83 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "ApplicationDbContextModelSnapshot.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "RelativeDocumentMoniker": "Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "RelativeToolTip": "Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "ViewState": "AgIAALgAAAAAAAAAAAAQwNAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 23,
+              "Title": "ReminderController.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\ReminderController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ReminderController.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\ReminderController.cs",
+              "RelativeToolTip": "Controllers\\ReminderController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwA0AAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T12:44:09.703Z"
+              "WhenOpened": "2025-11-18T10:23:25.765Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "ApplicationUser.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\ApplicationUser.cs",
-              "RelativeDocumentMoniker": "Models\\ApplicationUser.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\ApplicationUser.cs",
-              "RelativeToolTip": "Models\\ApplicationUser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABKAAAAAAAAAA==",
+              "DocumentIndex": 24,
+              "Title": "QuestionController.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\QuestionController.cs",
+              "RelativeDocumentMoniker": "Controllers\\QuestionController.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\QuestionController.cs",
+              "RelativeToolTip": "Controllers\\QuestionController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAA6wBgAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-19T12:14:28.15Z"
+              "WhenOpened": "2025-10-19T11:50:35.339Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T13:42:21.255Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "Controllers\\AccountController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T09:24:08.475Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "AnswerController.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\AnswerController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AnswerController.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\AnswerController.cs",
+              "RelativeToolTip": "Controllers\\AnswerController.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAmwA4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-19T11:51:40.168Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "CourseController.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\CourseController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CourseController.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\CourseController.cs",
+              "RelativeToolTip": "Controllers\\CourseController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-19T11:11:11.493Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 29,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Data\\ApplicationDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Data\\ApplicationDbContext.cs",
-              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAUwCYAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T12:18:48.841Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 31,
               "Title": "StudentExamService.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\StudentExamService.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\StudentExamService.cs",
               "RelativeDocumentMoniker": "Services\\StudentExamService.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\StudentExamService.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\StudentExamService.cs",
               "RelativeToolTip": "Services\\StudentExamService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -711,23 +688,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
-              "Title": "IStudentExamService.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\IStudentExamService.cs",
-              "RelativeDocumentMoniker": "Services\\IStudentExamService.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\IStudentExamService.cs",
-              "RelativeToolTip": "Services\\IStudentExamService.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-19T11:55:41.772Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 32,
               "Title": "IReminderService.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\IReminderService.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\IReminderService.cs",
               "RelativeDocumentMoniker": "Services\\IReminderService.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\IReminderService.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\IReminderService.cs",
               "RelativeToolTip": "Services\\IReminderService.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -735,11 +700,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 33,
               "Title": "IQuestionService.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\IQuestionService.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\IQuestionService.cs",
               "RelativeDocumentMoniker": "Services\\IQuestionService.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\IQuestionService.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\IQuestionService.cs",
               "RelativeToolTip": "Services\\IQuestionService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -747,11 +712,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 31,
               "Title": "QuestionService .cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\QuestionService .cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\QuestionService .cs",
               "RelativeDocumentMoniker": "Services\\QuestionService .cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\QuestionService .cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\QuestionService .cs",
               "RelativeToolTip": "Services\\QuestionService .cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAC0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -759,11 +724,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 30,
               "Title": "ReminderService.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\ReminderService.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\ReminderService.cs",
               "RelativeDocumentMoniker": "Services\\ReminderService.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\ReminderService.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\ReminderService.cs",
               "RelativeToolTip": "Services\\ReminderService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -771,11 +736,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 34,
               "Title": "IAnswerService.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\IAnswerService.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\IAnswerService.cs",
               "RelativeDocumentMoniker": "Services\\IAnswerService.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\IAnswerService.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\IAnswerService.cs",
               "RelativeToolTip": "Services\\IAnswerService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -783,11 +748,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 35,
               "Title": "AnswerService.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\AnswerService.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\AnswerService.cs",
               "RelativeDocumentMoniker": "Services\\AnswerService.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Services\\AnswerService.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\AnswerService.cs",
               "RelativeToolTip": "Services\\AnswerService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -795,11 +760,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 36,
               "Title": "Login.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
               "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
               "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -807,11 +772,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 37,
               "Title": "Login.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
               "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
               "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
               "ViewState": "AgIAAGsAAAAAAAAAAAAUwGAAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -819,11 +784,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 38,
               "Title": "Register.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
               "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Register.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
               "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Register.cshtml",
               "ViewState": "AgIAAAgAAAAAAAAAAAAAAFUAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -831,11 +796,23 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 39,
+              "Title": "TakeExam.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\StudentExam\\TakeExam.cshtml",
+              "RelativeDocumentMoniker": "Views\\StudentExam\\TakeExam.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\StudentExam\\TakeExam.cshtml",
+              "RelativeToolTip": "Views\\StudentExam\\TakeExam.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-18T10:17:50.447Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
               "Title": "Create.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Question\\Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Question\\Create.cshtml",
               "RelativeDocumentMoniker": "Views\\Question\\Create.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Question\\Create.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Question\\Create.cshtml",
               "RelativeToolTip": "Views\\Question\\Create.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -843,11 +820,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 41,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Question\\Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Question\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Question\\Index.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Question\\Index.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Question\\Index.cshtml",
               "RelativeToolTip": "Views\\Question\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -855,23 +832,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Teacher\\Index.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Index.cshtml",
-              "RelativeToolTip": "Views\\Teacher\\Index.cshtml",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAABAAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-03T22:00:34.853Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 42,
               "Title": "Edit.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Edit.cshtml",
               "RelativeDocumentMoniker": "Views\\Teacher\\Edit.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Edit.cshtml",
               "RelativeToolTip": "Views\\Teacher\\Edit.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -879,11 +844,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 43,
               "Title": "Details.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Details.cshtml",
               "RelativeDocumentMoniker": "Views\\Teacher\\Details.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Details.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Details.cshtml",
               "RelativeToolTip": "Views\\Teacher\\Details.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -891,23 +856,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
-              "Title": "Choice.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\Choice.cs",
-              "RelativeDocumentMoniker": "Models\\Choice.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\Choice.cs",
-              "RelativeToolTip": "Models\\Choice.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T13:26:01.698Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 44,
               "Title": "Delete.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Delete.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Delete.cshtml",
               "RelativeDocumentMoniker": "Views\\Teacher\\Delete.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Delete.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Delete.cshtml",
               "RelativeToolTip": "Views\\Teacher\\Delete.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -915,11 +868,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 47,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Home\\Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Home\\Index.cshtml",
               "RelativeToolTip": "Views\\Home\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -927,11 +880,47 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\StudentExam\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\StudentExam\\Index.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\StudentExam\\Index.cshtml",
+              "RelativeToolTip": "Views\\StudentExam\\Index.cshtml",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAACwAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-03T21:30:40.943Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Course\\Index.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\Index.cshtml",
+              "RelativeToolTip": "Views\\Course\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-19T11:28:12.949Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 49,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\Details.cshtml",
+              "RelativeDocumentMoniker": "Views\\Course\\Details.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\Details.cshtml",
+              "RelativeToolTip": "Views\\Course\\Details.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-19T11:29:28.886Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
               "Title": "Privacy.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Home\\Privacy.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Home\\Privacy.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Privacy.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Home\\Privacy.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Home\\Privacy.cshtml",
               "RelativeToolTip": "Views\\Home\\Privacy.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -939,11 +928,23 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\Create.cshtml",
+              "RelativeDocumentMoniker": "Views\\Course\\Create.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\Create.cshtml",
+              "RelativeToolTip": "Views\\Course\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-19T11:28:34.59Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 51,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Answer\\Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Answer\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Answer\\Index.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Answer\\Index.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Answer\\Index.cshtml",
               "RelativeToolTip": "Views\\Answer\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -953,9 +954,9 @@
               "$type": "Document",
               "DocumentIndex": 52,
               "Title": "StudentExam.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\StudentExam.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\StudentExam.cs",
               "RelativeDocumentMoniker": "Models\\StudentExam.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\StudentExam.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\StudentExam.cs",
               "RelativeToolTip": "Models\\StudentExam.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -965,9 +966,9 @@
               "$type": "Document",
               "DocumentIndex": 54,
               "Title": "Question.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\Question.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Question.cs",
               "RelativeDocumentMoniker": "Models\\Question.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\Question.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Question.cs",
               "RelativeToolTip": "Models\\Question.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -977,9 +978,9 @@
               "$type": "Document",
               "DocumentIndex": 55,
               "Title": "ErrorViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\ErrorViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\ErrorViewModel.cs",
               "RelativeDocumentMoniker": "Models\\ErrorViewModel.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\ErrorViewModel.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\ErrorViewModel.cs",
               "RelativeToolTip": "Models\\ErrorViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -987,23 +988,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
-              "Title": "CourseStudent.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\CourseStudent.cs",
-              "RelativeDocumentMoniker": "Models\\CourseStudent.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\CourseStudent.cs",
-              "RelativeToolTip": "Models\\CourseStudent.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-19T11:34:57.621Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 53,
               "Title": "Reminder.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\Reminder.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Reminder.cs",
               "RelativeDocumentMoniker": "Models\\Reminder.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Models\\Reminder.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Reminder.cs",
               "RelativeToolTip": "Models\\Reminder.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -1011,11 +1000,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 56,
               "Title": "_ValidationScriptsPartial.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
               "RelativeToolTip": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -1023,11 +1012,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 57,
               "Title": "OnlineSinavSistemi.csproj",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\OnlineSinavSistemi.csproj",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\OnlineSinavSistemi.csproj",
               "RelativeDocumentMoniker": "OnlineSinavSistemi.csproj",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\OnlineSinavSistemi.csproj",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\OnlineSinavSistemi.csproj",
               "RelativeToolTip": "OnlineSinavSistemi.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
@@ -1035,11 +1024,23 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAADMAAAAAAAAAAAAAAD8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-03T21:04:43.462Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 59,
               "Title": "Error.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\Error.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\Error.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\Error.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\Error.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\Error.cshtml",
               "RelativeToolTip": "Views\\Shared\\Error.cshtml",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -1049,9 +1050,9 @@
               "$type": "Document",
               "DocumentIndex": 60,
               "Title": "_LoginPartial.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\_LoginPartial.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\_LoginPartial.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_LoginPartial.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\_LoginPartial.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\_LoginPartial.cshtml",
               "RelativeToolTip": "Views\\Shared\\_LoginPartial.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -1061,9 +1062,9 @@
               "$type": "Document",
               "DocumentIndex": 62,
               "Title": "bootstrap-reboot.css",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
               "RelativeToolTip": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
               "ViewState": "AgIAAJ4BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
@@ -1073,9 +1074,9 @@
               "$type": "Document",
               "DocumentIndex": 63,
               "Title": "bootstrap-utilities.css",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
               "RelativeToolTip": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
               "ViewState": "AgIAAFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
@@ -1085,9 +1086,9 @@
               "$type": "Document",
               "DocumentIndex": 64,
               "Title": "bootstrap.js",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
               "RelativeToolTip": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
               "ViewState": "AgIAABwBAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
@@ -1097,9 +1098,9 @@
               "$type": "Document",
               "DocumentIndex": 61,
               "Title": "bootstrap-grid.css",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
               "RelativeToolTip": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
               "ViewState": "AgIAAEcBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
@@ -1109,9 +1110,9 @@
               "$type": "Document",
               "DocumentIndex": 65,
               "Title": "bootstrap.css",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
               "RelativeToolTip": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
               "ViewState": "AgIAAHUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
@@ -1121,9 +1122,9 @@
               "$type": "Document",
               "DocumentIndex": 66,
               "Title": "site.css",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\wwwroot\\css\\site.css",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\css\\site.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\site.css",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\css\\site.css",
               "RelativeToolTip": "wwwroot\\css\\site.css",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
@@ -1133,9 +1134,9 @@
               "$type": "Document",
               "DocumentIndex": 67,
               "Title": "site.js",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\wwwroot\\js\\site.js",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\js\\site.js",
               "RelativeDocumentMoniker": "wwwroot\\js\\site.js",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\wwwroot\\js\\site.js",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\js\\site.js",
               "RelativeToolTip": "wwwroot\\js\\site.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
@@ -1144,22 +1145,10 @@
             {
               "$type": "Document",
               "DocumentIndex": 68,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAYwCcAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T12:13:35.768Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 69,
               "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\appsettings.json",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\appsettings.json",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\appsettings.json",
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
@@ -1167,11 +1156,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 72,
               "Title": "Details.cshtml",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Details.cshtml",
               "RelativeDocumentMoniker": "Views\\Exam\\Details.cshtml",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Details.cshtml",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Details.cshtml",
               "RelativeToolTip": "Views\\Exam\\Details.cshtml",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAABcAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -1179,45 +1168,45 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 69,
               "Title": "TextFile1.txt",
               "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\TextFile1.txt",
-              "RelativeDocumentMoniker": "Views\\Course\\TextFile1.txt",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\TextFile1.txt",
               "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\TextFile1.txt",
-              "RelativeToolTip": "Views\\Course\\TextFile1.txt",
+              "RelativeToolTip": "..\\..\\..\\..\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\TextFile1.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
               "WhenOpened": "2025-10-19T13:17:04.559Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
+              "DocumentIndex": 70,
               "Title": "20251018122323_FixCascadeError.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Migrations\\20251018122323_FixCascadeError.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Migrations\\20251018122323_FixCascadeError.cs",
+              "RelativeDocumentMoniker": "Migrations\\20251018122323_FixCascadeError.cs",
               "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Migrations\\20251018122323_FixCascadeError.cs",
-              "RelativeToolTip": "..\\..\\..\\..\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Migrations\\20251018122323_FixCascadeError.cs",
+              "RelativeToolTip": "Migrations\\20251018122323_FixCascadeError.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-18T12:23:23.415Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 71,
               "Title": "20251018122042_FixCascadePaths.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Migrations\\20251018122042_FixCascadePaths.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Migrations\\20251018122042_FixCascadePaths.cs",
+              "RelativeDocumentMoniker": "Migrations\\20251018122042_FixCascadePaths.cs",
               "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Migrations\\20251018122042_FixCascadePaths.cs",
-              "RelativeToolTip": "..\\..\\..\\..\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Migrations\\20251018122042_FixCascadePaths.cs",
+              "RelativeToolTip": "Migrations\\20251018122042_FixCascadePaths.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-18T12:20:42.373Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 74,
+              "DocumentIndex": 73,
               "Title": ".gitignore",
-              "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\.gitignore",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\.gitignore",
               "RelativeDocumentMoniker": ".gitignore",
-              "ToolTip": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\.gitignore",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\.gitignore",
               "RelativeToolTip": ".gitignore",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
