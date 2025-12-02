@@ -86,7 +86,10 @@ namespace OnlineSinavSistemi.Controllers
         // 🟢 Sınav detayları (öğretmen)
         public async Task<IActionResult> Details(int id)
         {
-            var exam = await _examService.GetExamByIdAsync(id);
+            var exam = await _db.Exams
+                                .Include(e => e.Course) // Course entity'sini de yükle
+                                .FirstOrDefaultAsync(e => e.Id == id);
+
             if (exam == null) return NotFound();
 
             var students = await _examService.GetStudentsForExamAsync(id);
@@ -94,6 +97,7 @@ namespace OnlineSinavSistemi.Controllers
 
             return View(exam);
         }
+
 
         // 🟢 Sınav düzenle (GET)
         public async Task<IActionResult> Edit(int id)

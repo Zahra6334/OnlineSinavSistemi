@@ -6,12 +6,16 @@
 
 <h2>@Model.Title</h2>
 
-<p>Ders: @Model.Course?.CourseName</p>
-<p>Süre: @Model.DurationMinutes dakika</p>
-<p>Baþlangýç Tarihi: @Model.StartDate.ToString("g")</p>
-<p>Yayýn Durumu: @(Model.IsPublished ? "Yayýnlandý" : "Yayýnlanmadý")</p>
 
-<form asp-action="TogglePublish" method="post">
+<div class="mb-3">
+    <p><strong>Ders:</strong> @Model.Course?.CourseName</p>
+    <p><strong>Süre:</strong> @Model.DurationMinutes dakika</p>
+    <p><strong>Baþlangýç Tarihi:</strong> @Model.StartDate.ToString("g")</p>
+    <p><strong>Yayýn Durumu:</strong> @(Model.IsPublished ? "Yayýnlandý" : "Yayýnlanmadý")</p>
+</div>
+
+<!-- Yayýnla / Yayýndan Kaldýr Butonu -->
+<form asp-action="TogglePublish" method="post" class="mb-4">
     <input type="hidden" name="id" value="@Model.Id" />
     <button type="submit" class="btn btn-primary">
         @(Model.IsPublished ? "Yayýndan Kaldýr" : "Yayýnla")
@@ -19,10 +23,11 @@
 </form>
 
 <h3>Öðrenciler ve Sýnav Durumlarý</h3>
+
 @if (students != null && students.Any())
 {
-    <table class="table table-bordered">
-        <thead>
+    <table class="table table-bordered table-striped">
+        <thead class="table-light">
             <tr>
                 <th>Numara</th>
                 <th>Ad Soyad</th>
@@ -54,3 +59,6 @@ else
 {
     <p>Henüz öðrenci yok veya öðrenciler sýnava katýlmadý.</p>
 }
+
+<!-- Sayfa sonundaki geri butonu -->
+<button type="button" class="btn btn-secondary equal-btn" onclick="history.back()">Geri</button>
