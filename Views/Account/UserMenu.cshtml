@@ -24,9 +24,50 @@
         </div>
 
         <ul class="sidebar-menu">
-            <li><a asp-controller="Account" asp-action="ProfileDetails"><i class="fas fa-info-circle"></i> Profil Bilgilerim</a></li>
-            <li><a asp-controller="Courses" asp-action="MyCourses"><i class="fas fa-book"></i> Derslerim</a></li>
-            <li><a asp-controller="Exams" asp-action="MyExams"><i class="fas fa-graduation-cap"></i> Sınavlarım</a></li>
+
+            <li><a asp-controller="Account" asp-action="Profile"><i class="fas fa-info-circle"></i> Profil Bilgilerim</a></li>
+
+
+
+            @if (User.IsInRole("OGRENCI"))
+            {
+                <li>
+                    <a asp-controller="StudentExam" asp-action="Index">
+                        <i class="fas fa-book"></i> Derslerim
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-controller="StudentExam" asp-action="TakeExam">
+                        <i class="fas fa-book"></i> Sınavlarım
+                    </a>
+                </li>
+            }
+
+            @if (User.IsInRole("OGRETMEN"))
+            {
+                <li>
+                    <a asp-controller="Course" asp-action="Index">
+                        <i class="fas fa-book"></i> Derslerim_ogretmen
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-controller="Exam" asp-action="Index">
+                        <i class="fas fa-book"></i> Sınavlarım_ogretmen
+                    </a>
+                </li>
+            }
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+               
+            }
+            else
+            {
+                
+            }
+
             <div class="sidebar-divider"></div>
             <li><a asp-controller="Account" asp-action="Profile"><i class="fas fa-cog"></i> Hesap Ayarları</a></li>
             <div class="sidebar-divider"></div>

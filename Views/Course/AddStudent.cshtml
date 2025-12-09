@@ -1,0 +1,41 @@
+﻿@model List<ApplicationUser>
+
+<h2>Öğrenci Ekle</h2>
+
+<form method="get">
+    <input type="hidden" name="courseId" value="@ViewBag.CourseId" />
+
+    <input type="text"
+           name="search"
+           class="form-control mb-3"
+           placeholder="İsim veya email ara" />
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Email</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.UserName</td>
+                <td>@student.Email</td>
+                <td>
+                    <form asp-action="AddStudentToCourse" method="post">
+                        <input type="hidden" name="courseId" value="@ViewBag.CourseId" />
+                        <input type="hidden" name="studentId" value="@student.Id" />
+
+                        <button class="btn btn-success btn-sm">
+                            Ekle
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

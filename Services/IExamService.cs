@@ -12,7 +12,8 @@ namespace OnlineSinavSistemi.Services
 
         // Yeni metodlar
         Task PublishExamAsync(int examId);
-        Task<IEnumerable<ApplicationUser>> GetStudentsForExamAsync(int examId);
+        Task<List<StudentExam>> GetStudentExamsForExamAsync(int examId);
+
         Task<StudentExam> GetStudentExamByIdAsync(int studentExamId);
         Task GradeStudentExamAsync(StudentExam model);
     }

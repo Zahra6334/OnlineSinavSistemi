@@ -1,7 +1,8 @@
-@model OnlineSinavSistemi.Models.Exam
+ï»¿@model OnlineSinavSistemi.Models.Exam
 @{
-    ViewData["Title"] = "Sınav Detayları";
+    ViewData["Title"] = "SÄ±nav DetaylarÄ±";
     var students = ViewBag.Students as IEnumerable<OnlineSinavSistemi.Models.ApplicationUser>;
+    var studentExams = ViewBag.StudentExams as List<StudentExam>;
 }
 
 <h2>@Model.Title</h2>
@@ -9,55 +10,65 @@
 
 <div class="mb-3">
     <p><strong>Ders:</strong> @Model.Course?.CourseName</p>
-    <p><strong>Süre:</strong> @Model.DurationMinutes dakika</p>
-    <p><strong>Başlangıç Tarihi:</strong> @Model.StartDate.ToString("g")</p>
-    <p><strong>Yayın Durumu:</strong> @(Model.IsPublished ? "Yayınlandı" : "Yayınlanmadı")</p>
+    <p><strong>SÃ¼re:</strong> @Model.DurationMinutes dakika</p>
+    <p><strong>BaÅŸlangÄ±Ã§ Tarihi:</strong> @Model.StartDate.ToString("g")</p>
+    <p><strong>YayÄ±n Durumu:</strong> @(Model.IsPublished ? "YayÄ±nlandÄ±" : "YayÄ±nlanmadÄ±")</p>
 </div>
 
-<!-- Yayınla / Yayından Kaldır Butonu -->
-<form asp-action="TogglePublish" method="post" class="mb-4">
+<form asp-controller="Teacher" asp-action="TogglePublish" method="post" class="mb-4">
     <input type="hidden" name="id" value="@Model.Id" />
     <button type="submit" class="btn btn-primary">
-        @(Model.IsPublished ? "Yayından Kaldır" : "Yayınla")
+        @(Model.IsPublished ? "YayÄ±ndan KaldÄ±r" : "YayÄ±nla")
     </button>
 </form>
 
-<h3>Öğrenciler ve Sınav Durumları</h3>
 
-@if (students != null && students.Any())
+<h3>Ã–ÄŸrenciler ve SÄ±nav DurumlarÄ±</h3>
+
+@if (studentExams != null && studentExams.Any())
 {
-    <table class="table table-bordered table-striped">
-        <thead class="table-light">
+    <table class="table table-bordered">
+        <thead>
             <tr>
                 <th>Numara</th>
                 <th>Ad Soyad</th>
-                <th>Başlangıç Tarihi</th>
-                <th>Bitiş Tarihi</th>
-                <th>Tamamlandı</th>
-                <th>Puan</th>
-                <th>Puan Paylaşıldı</th>
+                <th>BaÅŸlama</th>
+                <th>BitiÅŸ</th>
+                <th>TamamlandÄ±</th>
+                <th>Not</th>
             </tr>
         </thead>
+
         <tbody>
-            @foreach (var s in students)
+            @if (studentExams == null || !studentExams.Any())
             {
-                var studentExam = s.StudentExams.FirstOrDefault(se => se.ExamId == Model.Id);
                 <tr>
-                    <td>@s.Numara</td>
-                    <td>@s.full_name</td>
-                    <td>@studentExam?.StartTime.ToString("g")</td>
-                    <td>@studentExam?.EndTime?.ToString("g")</td>
-                    <td>@(studentExam != null ? (studentExam.Completed ? "Evet" : "Hayır") : "-")</td>
-                    <td>@studentExam?.Score?.ToString("F2")</td>
-                    <td>@(studentExam != null ? (studentExam.ScoreShared ? "Evet" : "Hayır") : "-")</td>
+                    <td colspan="6" class="text-center text-muted">
+                        â— Bu sÄ±nava atanmÄ±ÅŸ Ã¶ÄŸrenci yok
+                    </td>
                 </tr>
+            }
+            else
+            {
+                foreach (var se in studentExams)
+                {
+                    <tr>
+                        <td>@se.Student.Numara</td>
+                        <td>@se.Student.full_name</td>
+                        <td>@se.StartTime.ToString("g")</td>
+                        <td>@se.EndTime?.ToString("g")</td>
+                        <td>@(se.Completed ? "Evet" : "HayÄ±r")</td>
+                        <td>@se.Score?.ToString("F2")</td>
+                    </tr>
+                }
             }
         </tbody>
     </table>
+
 }
 else
 {
-    <p>Henüz öğrenci yok veya öğrenciler sınava katılmadı.</p>
+    <p>HenÃ¼z Ã¶ÄŸrenci yok veya Ã¶ÄŸrenciler sÄ±nava katÄ±lmadÄ±.</p>
 }
 
 <!-- Sayfa sonundaki geri butonu -->

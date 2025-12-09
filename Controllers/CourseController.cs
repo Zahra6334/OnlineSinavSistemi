@@ -71,7 +71,7 @@ namespace OnlineSinavSistemi.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        
         public async Task<IActionResult> Details(int id)
         {
             var course = await _context.Courses
@@ -85,6 +85,73 @@ namespace OnlineSinavSistemi.Controllers
 
             return View(course);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> AddStudent(int courseId, string search)
+        {
+            // Student rolündeki kullanıcılar
+            var students = await _userManager.GetUsersInRoleAsync("OGRENCI");
+
+            // Arama varsa filtrele
+            if (!string.IsNullOrEmpty(search))
+            {
+                students = students
+                    .Where(s =>
+                        s.UserName.Contains(search) ||
+                        s.Email.Contains(search))
+                    .ToList();
+            }
+
+            ViewBag.CourseId = courseId;
+
+            return View(students);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AddStudentToCourse(int courseId, string studentId)
+        {
+            // Aynı öğrenci tekrar eklenmesin
+            bool exists = await _context.CourseStudents
+                .AnyAsync(cs => cs.CourseId == courseId && cs.StudentId == studentId);
+
+            if (!exists)
+            {
+                _context.CourseStudents.Add(new CourseStudent
+                {
+                    CourseId = courseId,
+                    StudentId = studentId
+                });
+            }
+
+            // 🔥 BU DERSE AİT YAYINLI SINAVLAR
+            var exams = await _context.Exams
+                .Where(e => e.CourseId == courseId && e.IsPublished)
+                .ToListAsync();
+
+            foreach (var exam in exams)
+            {
+                bool examExists = await _context.StudentExams
+                    .AnyAsync(se =>
+                        se.ExamId == exam.Id &&
+                        se.StudentId == studentId);
+
+                if (!examExists)
+                {
+                    _context.StudentExams.Add(new StudentExam
+                    {
+                        ExamId = exam.Id,
+                        StudentId = studentId,
+                        Completed = false
+                    });
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = courseId });
+        }
+
 
 
         // 📘 Ders silme

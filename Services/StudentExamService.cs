@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using OnlineSinavSistemi.Data;
 using OnlineSinavSistemi.Models;
 
 namespace OnlineSinavSistemi.Services
 {
+    
+
     public class StudentExamService : IStudentExamService
     {
         private readonly ApplicationDbContext _db;
@@ -20,22 +23,33 @@ namespace OnlineSinavSistemi.Services
 
         public async Task<StudentExam> StartExamAsync(int examId, string studentId)
         {
+            // 🔴 1. EXAM VAR MI?
+            var examExists = await _db.Exams.AnyAsync(e => e.Id == examId);
+            if (!examExists)
+                return null; // ❌ böyle bir sınav yok
+
+            // 🔴 2. DAHA ÖNCE BAŞLATILMIŞ MI?
             var se = await _db.StudentExams
                 .FirstOrDefaultAsync(x => x.ExamId == examId && x.StudentId == studentId);
 
-            if (se != null) return se;
+            if (se != null)
+                return se;
 
+            // 🔴 3. OLUŞTUR
             se = new StudentExam
             {
                 ExamId = examId,
                 StudentId = studentId,
-                StartTime = DateTime.Now
+                StartTime = DateTime.Now,
+                Completed = false
             };
 
             _db.StudentExams.Add(se);
             await _db.SaveChangesAsync();
+
             return se;
         }
+
 
         public async Task SubmitExamAsync(StudentExam model)
         {

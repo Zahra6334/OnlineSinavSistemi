@@ -84,19 +84,56 @@ namespace OnlineSinavSistemi.Controllers
         }
 
         // 🟢 Sınav detayları (öğretmen)
+        // 🟢 Sınav detayları (öğretmen)
         public async Task<IActionResult> Details(int id)
         {
             var exam = await _db.Exams
-                                .Include(e => e.Course) // Course entity'sini de yükle
-                                .FirstOrDefaultAsync(e => e.Id == id);
+                .Include(e => e.Course)
+                .FirstOrDefaultAsync(e => e.Id == id);
 
-            if (exam == null) return NotFound();
+            if (exam == null)
+            {
+                Console.WriteLine("❌ Exam bulunamadı. Id: " + id);
+                return NotFound();
+            }
 
-            var students = await _examService.GetStudentsForExamAsync(id);
-            ViewBag.Students = students;
+            Console.WriteLine($"✅ Exam bulundu → Id: {exam.Id}, CourseId: {exam.CourseId}");
+
+            // ✅ StudentExam tablosundan çek
+            var studentExams = await _examService.GetStudentExamsForExamAsync(id);
+
+            // 🔍 NULL / BOŞ KONTROLÜ
+            if (studentExams == null)
+            {
+                Console.WriteLine("❌ studentExams NULL geliyor!");
+            }
+            else if (!studentExams.Any())
+            {
+                Console.WriteLine("⚠ studentExams boş (kayıt yok). ExamId: " + id);
+            }
+            else
+            {
+                Console.WriteLine($"✅ studentExams dolu → Toplam {studentExams.Count} kayıt");
+
+                foreach (var se in studentExams)
+                {
+                    Console.WriteLine(
+                        $"➡ StudentExamId: {se.Id}, " +
+                        $"ExamId: {se.ExamId}, " +
+                        $"StudentId: {se.StudentId}, " +
+                        $"StudentName: {se.Student?.full_name}, " +
+                        $"Score: {se.Score}, " +
+                        $"Completed: {se.Completed}"
+                    );
+                }
+            }
+
+            ViewBag.StudentExams = studentExams;
 
             return View(exam);
         }
+
+
 
 
         // 🟢 Sınav düzenle (GET)

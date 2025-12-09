@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace OnlineSinavSistemi.Controllers
 {
-    [Authorize(Roles = "Ogrenci")]
+    [Authorize(Roles = "OGRENCI")]
     public class StudentExamController : Controller
     {
         private readonly IStudentExamService _studentExamService;
         private readonly UserManager<ApplicationUser> _userManager;
-
+       
         public StudentExamController(IStudentExamService studentExamService, UserManager<ApplicationUser> userManager)
         {
             _studentExamService = studentExamService;
@@ -24,11 +24,11 @@ namespace OnlineSinavSistemi.Controllers
         // ---------------------------------------------------------------------
         public async Task<IActionResult> Index()
         {
-            var user = await _userManager.GetUserAsync(User); // buradan kullanıcı Id al
+            var user = await _userManager.GetUserAsync(User);
             if (user == null)
                 return RedirectToAction("AccessDenied", "Account");
 
-            var exams = await _studentExamService.GetExamsForStudentAsync(user.Id); // Id kullan
+            var exams = await _studentExamService.GetExamsForStudentAsync(user.Id);
             return View(exams);
         }
 
@@ -38,12 +38,13 @@ namespace OnlineSinavSistemi.Controllers
             if (user == null)
                 return RedirectToAction("AccessDenied", "Account");
 
-            var studentExam = await _studentExamService.StartExamAsync(examId, user.Id); // Id kullan
+            var studentExam = await _studentExamService.StartExamAsync(examId, user.Id);
             if (studentExam == null)
                 return RedirectToAction("Index");
 
             return View(studentExam);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> SubmitExam(StudentExam model)

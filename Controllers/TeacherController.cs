@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlineSinavSistemi.Data;
 using OnlineSinavSistemi.Models;
+using OnlineSinavSistemi.Services;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,11 +15,13 @@ namespace OnlineSinavSistemi.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IExamService _examService;
 
-        public TeacherController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public TeacherController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IExamService examService)
         {
             _context = context;
             _userManager = userManager;
+            _examService = examService;
         }
 
         // ---------------------------------------------------------------------
@@ -66,5 +69,49 @@ namespace OnlineSinavSistemi.Controllers
             ViewBag.Exam = exam;
             return View(students);
         }
+        public async Task PublishExamAsync(int examId)
+        {
+            var exam = await _context.Exams
+                .FirstOrDefaultAsync(e => e.Id == examId);
+
+            if (exam == null) return;
+
+            // ✅ Sınavı yayınla
+            exam.IsPublished = true;
+
+            // ✅ Bu derse kayıtlı öğrencileri al
+            var studentIds = await _context.CourseStudents
+                .Where(cs => cs.CourseId == exam.CourseId)
+                .Select(cs => cs.StudentId)
+                .ToListAsync();
+
+            foreach (var studentId in studentIds)
+            {
+                bool exists = await _context.StudentExams.AnyAsync(se =>
+                    se.ExamId == examId && se.StudentId == studentId);
+
+                if (!exists)
+                {
+                    _context.StudentExams.Add(new StudentExam
+                    {
+                        ExamId = examId,
+                        StudentId = studentId,
+                        Completed = false
+                    });
+                }
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> TogglePublish(int id)
+        {
+            await _examService.PublishExamAsync(id);
+            return RedirectToAction("Index");
+        }
+
+
+
     }
 }

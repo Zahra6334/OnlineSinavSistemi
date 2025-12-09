@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|c:\\users\\zahra\\source\\repos\\onlinesinavsistemi\\models\\coursestudent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F4CD1857-6AEE-40C4-AE6E-1003DA7DD7ED}|OnlineSinavSistemi.csproj|solutionrelative:models\\coursestudent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -315,7 +319,7 @@
         },
         {
           "DockedHeight": 182,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -323,7 +327,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
+              "Title": "ApplicationDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeToolTip": "Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ViewState": "AgIAAIMCAAAAAAAAAAAAwLoCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-01T20:58:53.66Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "ExamController.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\ExamController.cs",
               "RelativeDocumentMoniker": "Controllers\\ExamController.cs",
@@ -335,7 +352,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Create.cshtml",
               "RelativeDocumentMoniker": "Views\\Exam\\Create.cshtml",
@@ -347,7 +364,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Teacher\\Index.cshtml",
@@ -359,7 +376,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Course.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Course.cs",
               "RelativeDocumentMoniker": "Models\\Course.cs",
@@ -367,12 +384,11 @@
               "RelativeToolTip": "Models\\Course.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T13:36:39.329Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T13:36:39.329Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Answer.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Answer.cs",
               "RelativeDocumentMoniker": "Models\\Answer.cs",
@@ -380,12 +396,11 @@
               "RelativeToolTip": "Models\\Answer.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAqwA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T12:25:52.072Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T12:25:52.072Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ApplicationUser.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\ApplicationUser.cs",
               "RelativeDocumentMoniker": "Models\\ApplicationUser.cs",
@@ -393,12 +408,11 @@
               "RelativeToolTip": "Models\\ApplicationUser.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-19T12:14:28.15Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-19T12:14:28.15Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Choice.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Choice.cs",
               "RelativeDocumentMoniker": "Models\\Choice.cs",
@@ -406,25 +420,24 @@
               "RelativeToolTip": "Models\\Choice.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T13:26:01.698Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T13:26:01.698Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "CourseStudent.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\CourseStudent.cs",
               "RelativeDocumentMoniker": "Models\\CourseStudent.cs",
               "ToolTip": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\CourseStudent.cs",
               "RelativeToolTip": "Models\\CourseStudent.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAgwAsAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-19T11:34:57.621Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
@@ -436,7 +449,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -448,7 +461,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "SeedData.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Data\\SeedData.cs",
               "RelativeDocumentMoniker": "Data\\SeedData.cs",
@@ -460,7 +473,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "Register.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
               "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
@@ -472,7 +485,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "StudentExamController.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\StudentExamController.cs",
               "RelativeDocumentMoniker": "Controllers\\StudentExamController.cs",
@@ -484,7 +497,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "IStudentExamService.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\IStudentExamService.cs",
               "RelativeDocumentMoniker": "Services\\IStudentExamService.cs",
@@ -496,7 +509,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "TeacherController.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\TeacherController.cs",
               "RelativeDocumentMoniker": "Controllers\\TeacherController.cs",
@@ -508,7 +521,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Reminder\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Reminder\\Index.cshtml",
@@ -520,7 +533,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Delete.cshtml",
               "RelativeDocumentMoniker": "Views\\Exam\\Delete.cshtml",
@@ -532,7 +545,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Details.cshtml",
               "RelativeDocumentMoniker": "Views\\Exam\\Details.cshtml",
@@ -544,7 +557,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Exam\\Index.cshtml",
@@ -556,7 +569,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Edit.cshtml",
               "RelativeDocumentMoniker": "Views\\Exam\\Edit.cshtml",
@@ -568,7 +581,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "ExamService.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\ExamService.cs",
               "RelativeDocumentMoniker": "Services\\ExamService.cs",
@@ -580,7 +593,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "IExamService.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\IExamService.cs",
               "RelativeDocumentMoniker": "Services\\IExamService.cs",
@@ -592,7 +605,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "Exam.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Exam.cs",
               "RelativeDocumentMoniker": "Models\\Exam.cs",
@@ -604,7 +617,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "ReminderController.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\ReminderController.cs",
               "RelativeDocumentMoniker": "Controllers\\ReminderController.cs",
@@ -616,7 +629,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "QuestionController.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\QuestionController.cs",
               "RelativeDocumentMoniker": "Controllers\\QuestionController.cs",
@@ -628,7 +641,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
@@ -640,7 +653,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "AccountController.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
@@ -652,7 +665,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "AnswerController.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\AnswerController.cs",
               "RelativeDocumentMoniker": "Controllers\\AnswerController.cs",
@@ -664,7 +677,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "CourseController.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Controllers\\CourseController.cs",
               "RelativeDocumentMoniker": "Controllers\\CourseController.cs",
@@ -676,7 +689,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "StudentExamService.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\StudentExamService.cs",
               "RelativeDocumentMoniker": "Services\\StudentExamService.cs",
@@ -688,7 +701,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "IReminderService.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\IReminderService.cs",
               "RelativeDocumentMoniker": "Services\\IReminderService.cs",
@@ -700,7 +713,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "IQuestionService.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\IQuestionService.cs",
               "RelativeDocumentMoniker": "Services\\IQuestionService.cs",
@@ -712,7 +725,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "QuestionService .cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\QuestionService .cs",
               "RelativeDocumentMoniker": "Services\\QuestionService .cs",
@@ -724,7 +737,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "ReminderService.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\ReminderService.cs",
               "RelativeDocumentMoniker": "Services\\ReminderService.cs",
@@ -736,7 +749,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "IAnswerService.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\IAnswerService.cs",
               "RelativeDocumentMoniker": "Services\\IAnswerService.cs",
@@ -748,7 +761,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "AnswerService.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Services\\AnswerService.cs",
               "RelativeDocumentMoniker": "Services\\AnswerService.cs",
@@ -760,7 +773,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "Login.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
               "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
@@ -772,7 +785,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 38,
               "Title": "Login.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
               "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
@@ -784,7 +797,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "Register.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
               "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Register.cshtml",
@@ -796,7 +809,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 40,
               "Title": "TakeExam.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\StudentExam\\TakeExam.cshtml",
               "RelativeDocumentMoniker": "Views\\StudentExam\\TakeExam.cshtml",
@@ -808,7 +821,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 41,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Question\\Create.cshtml",
               "RelativeDocumentMoniker": "Views\\Question\\Create.cshtml",
@@ -820,7 +833,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 42,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Question\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Question\\Index.cshtml",
@@ -832,7 +845,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 43,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Edit.cshtml",
               "RelativeDocumentMoniker": "Views\\Teacher\\Edit.cshtml",
@@ -844,7 +857,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 44,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Details.cshtml",
               "RelativeDocumentMoniker": "Views\\Teacher\\Details.cshtml",
@@ -856,7 +869,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 45,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Teacher\\Delete.cshtml",
               "RelativeDocumentMoniker": "Views\\Teacher\\Delete.cshtml",
@@ -868,7 +881,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 48,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
@@ -880,7 +893,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 46,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\StudentExam\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\StudentExam\\Index.cshtml",
@@ -892,7 +905,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 49,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Course\\Index.cshtml",
@@ -904,7 +917,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 50,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\Details.cshtml",
               "RelativeDocumentMoniker": "Views\\Course\\Details.cshtml",
@@ -916,7 +929,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 47,
               "Title": "Privacy.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Home\\Privacy.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Privacy.cshtml",
@@ -928,7 +941,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 51,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\Create.cshtml",
               "RelativeDocumentMoniker": "Views\\Course\\Create.cshtml",
@@ -940,7 +953,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 52,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Answer\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Answer\\Index.cshtml",
@@ -952,7 +965,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 53,
               "Title": "StudentExam.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\StudentExam.cs",
               "RelativeDocumentMoniker": "Models\\StudentExam.cs",
@@ -964,7 +977,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 55,
               "Title": "Question.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Question.cs",
               "RelativeDocumentMoniker": "Models\\Question.cs",
@@ -976,7 +989,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 56,
               "Title": "ErrorViewModel.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\ErrorViewModel.cs",
               "RelativeDocumentMoniker": "Models\\ErrorViewModel.cs",
@@ -988,7 +1001,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 54,
               "Title": "Reminder.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Models\\Reminder.cs",
               "RelativeDocumentMoniker": "Models\\Reminder.cs",
@@ -1000,7 +1013,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 57,
               "Title": "_ValidationScriptsPartial.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
@@ -1012,7 +1025,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 58,
               "Title": "OnlineSinavSistemi.csproj",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\OnlineSinavSistemi.csproj",
               "RelativeDocumentMoniker": "OnlineSinavSistemi.csproj",
@@ -1024,7 +1037,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 59,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
@@ -1036,7 +1049,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 60,
               "Title": "Error.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\Error.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\Error.cshtml",
@@ -1048,7 +1061,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 61,
               "Title": "_LoginPartial.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Shared\\_LoginPartial.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_LoginPartial.cshtml",
@@ -1060,7 +1073,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 63,
               "Title": "bootstrap-reboot.css",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
@@ -1072,7 +1085,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 64,
               "Title": "bootstrap-utilities.css",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
@@ -1084,7 +1097,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 65,
               "Title": "bootstrap.js",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
@@ -1096,7 +1109,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 62,
               "Title": "bootstrap-grid.css",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
@@ -1108,7 +1121,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 66,
               "Title": "bootstrap.css",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
@@ -1120,7 +1133,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 67,
               "Title": "site.css",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\css\\site.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\site.css",
@@ -1132,7 +1145,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 68,
               "Title": "site.js",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\wwwroot\\js\\site.js",
               "RelativeDocumentMoniker": "wwwroot\\js\\site.js",
@@ -1144,7 +1157,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 69,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -1156,7 +1169,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 73,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Views\\Exam\\Details.cshtml",
               "RelativeDocumentMoniker": "Views\\Exam\\Details.cshtml",
@@ -1168,7 +1181,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 69,
+              "DocumentIndex": 70,
               "Title": "TextFile1.txt",
               "DocumentMoniker": "C:\\Users\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\TextFile1.txt",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\SENANUR\\source\\repos\\OnlineSinavSistemi\\Views\\Course\\TextFile1.txt",
@@ -1180,7 +1193,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 71,
               "Title": "20251018122323_FixCascadeError.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Migrations\\20251018122323_FixCascadeError.cs",
               "RelativeDocumentMoniker": "Migrations\\20251018122323_FixCascadeError.cs",
@@ -1191,7 +1204,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
+              "DocumentIndex": 72,
               "Title": "20251018122042_FixCascadePaths.cs",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\Migrations\\20251018122042_FixCascadePaths.cs",
               "RelativeDocumentMoniker": "Migrations\\20251018122042_FixCascadePaths.cs",
@@ -1202,7 +1215,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 74,
               "Title": ".gitignore",
               "DocumentMoniker": "C:\\Users\\ZAHRA\\source\\repos\\OnlineSinavSistemi\\.gitignore",
               "RelativeDocumentMoniker": ".gitignore",
