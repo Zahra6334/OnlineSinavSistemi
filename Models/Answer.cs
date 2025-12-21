@@ -15,5 +15,6 @@ namespace OnlineSinavSistemi.Models
         public string? AnswerText { get; set; }     // nullable olabilir
         public string? FilePath { get; set; }       // ✅ EN KRİTİK SATIR
         public int? SelectedChoiceId { get; set; } // çoktan seçmeli için seçilen şık Id
+        public Choice? SelectedChoice { get; set; }
     }
 }

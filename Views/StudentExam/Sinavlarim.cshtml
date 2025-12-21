@@ -1,0 +1,87 @@
+﻿@model IEnumerable<OnlineSinavSistemi.Models.StudentExam>
+
+@{
+    ViewBag.Title = "Sınavlarım";
+}
+
+<h2>Yaklaşan / Aktif Sınavlar</h2>
+
+<div class="mb-3">
+    <strong>Toplam Sınav:</strong> @ViewBag.ToplamSinav<br />
+    <strong>Tamamlanan:</strong> @ViewBag.TamamlananSinav<br />
+    <strong>Bekleyen:</strong> @ViewBag.BekleyenSinav
+</div>
+
+@if (!Model.Any())
+{
+    <p>Henüz atanmış bir sınavınız yok.</p>
+}
+else
+{
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Sınav Başlığı</th>
+                <th>Ders</th>
+                <th>Başlangıç</th>
+                <th>Süre (dk)</th>
+                <th>Durum</th>
+                <th>Sonuç</th>
+                <th>İşlem</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Exam?.Title</td>
+                    <td>@item.Exam?.Course?.CourseName</td>
+                    <td>@item.Exam?.StartDate.ToString("g")</td>
+                    <td>@item.Exam?.DurationMinutes</td>
+
+                    <!-- DURUM -->
+                    <td>
+                        @(item.Completed ? "Tamamlandı" : "Bekliyor")
+                    </td>
+
+                    <!-- SONUÇ / NOT -->
+                    <td>
+                        @if (item.Completed && item.ScoreShared)
+                        {
+                            <span class="badge bg-success">
+                                Not: @item.Score
+                            </span>
+                        }
+                        else if (item.Completed && !item.ScoreShared)
+                        {
+                            <span class="badge bg-warning text-dark">
+                                Değerlendiriliyor
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">—</span>
+                        }
+                    </td>
+
+                    <!-- İŞLEM -->
+                    <td>
+                        @if (!item.Completed)
+                        {
+                            <a asp-action="TakeExam"
+                               asp-route-examId="@item.ExamId"
+                               class="btn btn-primary btn-sm">
+                                Sınava Gir
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-success">Tamamlandı</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

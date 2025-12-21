@@ -80,6 +80,14 @@ public class AccountController : Controller
 
         return Ok();
     }
+    public async Task<IActionResult> Profile()
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+            return RedirectToAction("Login", "Account");
+
+        return View(user); // <--- View'a ApplicationUser gönderiyoruz
+    }
 
 
 }

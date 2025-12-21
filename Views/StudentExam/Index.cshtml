@@ -1,53 +1,26 @@
-@model IEnumerable<OnlineSinavSistemi.Models.StudentExam>
+@model IEnumerable<OnlineSinavSistemi.Models.Course>
 
-@{
-    ViewBag.Title = "Sýnavlarým";
-}
-
-<h2>Yaklaþan / Aktif Sýnavlar</h2>
-
-<div class="mb-3">
-    <strong>Toplam Sýnav:</strong> @ViewBag.ToplamSinav<br />
-    <strong>Tamamlanan:</strong> @ViewBag.TamamlananSinav<br />
-    <strong>Bekleyen:</strong> @ViewBag.BekleyenSinav
-</div>
+<h2>Derslerim</h2>
 
 @if (!Model.Any())
 {
-    <p>Henüz atanmýþ bir sýnavýnýz yok.</p>
+    <p>Henüz kayýtlý olduðunuz bir ders yok.</p>
 }
 else
 {
     <table class="table table-bordered mt-3">
         <thead>
             <tr>
-                <th>Sýnav Baþlýðý</th>
-                <th>Ders</th>
-                <th>Baþlangýç</th>
-                <th>Süre (dk)</th>
-                <th>Durum</th>
-                <th>Ýþlem</th>
+                <th>Ders Adý</th>
+                <th>Öðretmen</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var ders in Model)
             {
                 <tr>
-                    <td>@item.Exam?.Title</td>
-                    <td>@item.Exam?.Course?.CourseName</td>
-                    <td>@item.Exam?.StartDate.ToString("g")</td>
-                    <td>@item.Exam?.DurationMinutes</td>
-                    <td>@(item.Completed ? "Tamamlandý" : "Bekliyor")</td>
-                    <td>
-                        @if (!item.Completed)
-                        {
-                            <a asp-action="TakeExam" asp-route-examId="@item.ExamId" class="btn btn-primary">Sýnava Gir</a>
-                        }
-                        else
-                        {
-                            <span class="text-success">Tamamlandý</span>
-                        }
-                    </td>
+                    <td>@ders.CourseName</td>
+                    <td>@ders.Teacher?.UserName ?? "Öðretmen bilgisi yok"</td>
                 </tr>
             }
         </tbody>

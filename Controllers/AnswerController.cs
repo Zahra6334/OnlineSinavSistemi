@@ -32,18 +32,11 @@ namespace OnlineSinavSistemi.Controllers
         {
             var answers = await _answerService.GetAnswersByStudentExamAsync(studentExamId);
 
-            if (!answers.Any())
-            {
-                ViewBag.Message = "Bu öğrenciye ait cevap bulunamadı.";
-            }
-
-            // 🔴 ÖNEMLİ: examId'yi al
-            var examId = answers.FirstOrDefault()?.StudentExam?.ExamId;
-
-            ViewBag.ExamId = examId;
+            ViewBag.StudentExamId = studentExamId;
 
             return View(answers);
         }
+
 
 
     }

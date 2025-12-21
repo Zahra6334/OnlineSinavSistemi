@@ -1,24 +1,17 @@
-@model IEnumerable<OnlineSinavSistemi.Models.Answer>
+﻿@model IEnumerable<OnlineSinavSistemi.Models.Answer>
 
 @{
-    ViewData["Title"] = "��renci Cevaplar�";
+    ViewData["Title"] = "Öğrenci Cevapları";
 }
 
-<h2>��renci Cevaplar�</h2>
-
-@if (ViewBag.Message != null)
-{
-    <div class="alert alert-warning">
-        @ViewBag.Message
-    </div>
-}
+<h2>Öğrenci Cevapları</h2>
 
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>Soru</th>
-            <th>Cevap (Klasik)</th>
-            <th>Se�ilen ��k</th>
+            <th>Klasik Cevap</th>
+            <th>Şıklar ve Seçim</th>
             <th>Dosya</th>
         </tr>
     </thead>
@@ -26,36 +19,133 @@
         @foreach (var a in Model)
         {
             <tr>
-                <td>@a.Question.QuestionText</td>
-
+                <!-- SORU -->
                 <td>
-                    @if (!string.IsNullOrEmpty(a.AnswerText))
+                    @(a.Question != null ? a.Question.QuestionText : "Soru bulunamadı")
+                </td>
+
+                <!-- KLASİK CEVAP -->
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(a.AnswerText))
                     {
                         @a.AnswerText
                     }
                     else
                     {
-                        <span class="text-muted">�</span>
+                        <span class="text-muted">—</span>
                     }
                 </td>
 
+                <!-- ŞIKLAR -->
                 <td>
-                    @(a.SelectedChoiceId.HasValue? a.SelectedChoiceId.ToString() : "�")
-                </td>
-
-                <td>
-                    @if (!string.IsNullOrEmpty(a.FilePath))
+                    @if (a.Question?.Choices != null && a.Question.Choices.Any())
                     {
-                        <a href="@Url.Content(a.FilePath)" target="_blank">Dosya</a>
+                        <ul class="list-unstyled mb-0">
+                            @foreach (var c in a.Question.Choices)
+                            {
+                                <li>
+                                    @c.Text
+
+                                    @* öğrencinin seçtiği şık *@
+                                    @if (a.SelectedChoiceId == c.Id)
+                                    {
+                                        <strong class="ms-2">(Seçildi)</strong>
+
+                                        @if (c.IsCorrect)
+                                        {
+                                            <span class="badge bg-success ms-1">Doğru</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger ms-1">Yanlış</span>
+                                        }
+                                    }
+                                    else if (c.IsCorrect)
+                                    {
+                                        <span class="text-success ms-1">(Doğru Şık)</span>
+                                    }
+                                </li>
+                            }
+                        </ul>
                     }
                     else
                     {
-                        <span class="text-muted">�</span>
+                        <span class="text-muted">Şık yok</span>
+                    }
+                </td>
+
+                <!-- DOSYA -->
+                <td>
+                    @if (!string.IsNullOrEmpty(a.FilePath))
+                    {
+                        <a href="@Url.Content(a.FilePath)"
+                           target="_blank"
+                           class="btn btn-sm btn-outline-primary">
+                            Dosyayı Gör
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">—</span>
                     }
                 </td>
             </tr>
         }
     </tbody>
 </table>
-<button class="btn btn-secondary" onclick="history.back()">Geri</button>
 
+<hr />
+@{
+    var firstAnswer = Model.FirstOrDefault();
+    var isAutoGraded = firstAnswer?.StudentExam?.Exam?.IsAutoGraded ?? false;
+}
+
+@if (isAutoGraded)
+{
+    <div class="alert alert-info">
+        Bu sınav otomatik değerlendirilmiştir.
+        Manuel not verme kapalıdır.
+    </div>
+}
+else
+{
+    <!-- 🔴 NOT VERME -->
+    <h4>Not Ver</h4>
+
+    <form asp-controller="Teacher"
+          asp-action="SaveScore"
+          method="post"
+          class="row g-3">
+
+        <input type="hidden" name="studentExamId" value="@ViewBag.StudentExamId" />
+
+        <div class="col-md-3">
+            <label class="form-label">Not</label>
+            <input type="number"
+                   name="score"
+                   class="form-control"
+                   min="0"
+                   max="100"
+                   step="0.5"
+                   required />
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Notu Öğrenciye Göster</label>
+            <select name="shareScore" class="form-select">
+                <option value="true">Evet</option>
+                <option value="false">Hayır</option>
+            </select>
+        </div>
+
+        <div class="col-md-3 align-self-end">
+            <button type="submit" class="btn btn-success">
+                Notu Kaydet
+            </button>
+        </div>
+    </form>
+
+    <br />
+}
+
+<button class="btn btn-secondary" onclick="history.back()">Geri</button>

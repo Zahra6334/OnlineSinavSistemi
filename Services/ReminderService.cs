@@ -14,9 +14,11 @@ namespace OnlineSinavSistemi.Services
         {
             return await _db.Reminders
                 .Where(r => r.StudentId == studentId && !r.IsRead)
+                .OrderBy(r => r.Date) // en yakın tarih önce
                 .ToListAsync();
         }
+
     }
 
-    
+
 }

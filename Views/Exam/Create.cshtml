@@ -19,6 +19,7 @@
                         <label class="form-label fw-bold">Süre (Dakika)</label>
                         <input asp-for="DurationMinutes" type="number" class="form-control" value="40" required />
                     </div>
+
                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-bold">Ders</label>
                         <select asp-for="CourseId" asp-items="@ViewBag.Dersler" class="form-control" required>

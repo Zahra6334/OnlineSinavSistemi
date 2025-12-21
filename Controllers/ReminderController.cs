@@ -1,26 +1,38 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using OnlineSinavSistemi.Data;
 using OnlineSinavSistemi.Models;
 using OnlineSinavSistemi.Services;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace OnlineSinavSistemi.Controllers
 {
-    [Authorize(Roles = "Ogrenci")]
+    [Authorize(Roles = "OGRENCI")]
     public class ReminderController : Controller
     {
         private readonly IReminderService _reminderService;
-
-        public ReminderController(IReminderService reminderService)
+        private readonly ApplicationDbContext _context;
+        public ReminderController(IReminderService reminderService, ApplicationDbContext context)
         {
             _reminderService = reminderService;
+            _context = context;
+
         }
 
-        // Öğrenciye yaklaşan sınav hatırlatıcıları
         public async Task<IActionResult> Index()
         {
-            var reminders = await _reminderService.GetRemindersForStudentAsync(User.Identity.Name);
+            var studentId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var reminders = await _context.Reminders
+                .Where(r => r.StudentId == studentId && r.Date <= DateTime.Now && !r.IsRead)
+                .Include(r => r.Exam)
+                .ToListAsync();
+
             return View(reminders);
         }
+
+
+
     }
 }

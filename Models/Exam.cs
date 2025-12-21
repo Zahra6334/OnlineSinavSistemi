@@ -20,5 +20,7 @@ namespace OnlineSinavSistemi.Models
 
         public ICollection<Question> Questions { get; set; }
         public ICollection<StudentExam> StudentExams { get; set; }
+        // 🔴 YENİ EKLENDİ (ESKİ SİSTEMİ BOZMAZ)
+        public bool IsAutoGraded { get; set; } = false;
     }
 }

@@ -48,12 +48,13 @@
                 <td>
                     @if (se.Completed)
                     {
-                        <a asp-controller="Answer"
-                           asp-action="Index"
+                        <a asp-controller="Teacher"
+                           asp-action="StudentAnswers"
                            asp-route-studentExamId="@se.Id"
                            class="btn btn-sm btn-primary">
                             Cevapları Gör
                         </a>
+
                     }
                 </td>
             </tr>

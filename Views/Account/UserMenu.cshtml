@@ -38,11 +38,14 @@
                 </li>
 
                 <li>
-                    <a asp-controller="StudentExam" asp-action="TakeExam">
+                    <a asp-controller="StudentExam" asp-action="Sinavlarim">
                         <i class="fas fa-book"></i> Sınavlarım
                     </a>
                 </li>
+                <li><a asp-controller="Reminder" asp-action="Index">Hatırlatıcılar</a></li>
+
             }
+
 
             @if (User.IsInRole("OGRETMEN"))
             {

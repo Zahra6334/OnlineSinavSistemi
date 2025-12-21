@@ -69,40 +69,37 @@ namespace OnlineSinavSistemi.Controllers
             ViewBag.Exam = exam;
             return View(students);
         }
-        public async Task PublishExamAsync(int examId)
+        [HttpPost]
+        public async Task<IActionResult> PublishExam(int examId)
         {
             var exam = await _context.Exams
+                .Include(e => e.Course)
+                .ThenInclude(c => c.CourseStudents)
                 .FirstOrDefaultAsync(e => e.Id == examId);
 
-            if (exam == null) return;
+            if (exam == null) return NotFound();
 
-            // ✅ Sınavı yayınla
             exam.IsPublished = true;
+            _context.Exams.Update(exam);
 
-            // ✅ Bu derse kayıtlı öğrencileri al
-            var studentIds = await _context.CourseStudents
-                .Where(cs => cs.CourseId == exam.CourseId)
-                .Select(cs => cs.StudentId)
-                .ToListAsync();
-
-            foreach (var studentId in studentIds)
+            // Hatırlatıcı oluştur
+            foreach (var student in exam.Course.CourseStudents)
             {
-                bool exists = await _context.StudentExams.AnyAsync(se =>
-                    se.ExamId == examId && se.StudentId == studentId);
-
-                if (!exists)
+                var reminder = new Reminder
                 {
-                    _context.StudentExams.Add(new StudentExam
-                    {
-                        ExamId = examId,
-                        StudentId = studentId,
-                        Completed = false
-                    });
-                }
+                    StudentId = student.StudentId,
+                    ExamId = exam.Id,
+                    Message = $"'{exam.Title}' sınavınız yaklaşıyor!",
+                    Date = exam.StartDate
+                };
+                _context.Reminders.Add(reminder);
             }
 
             await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
         }
+
 
         [HttpPost]
         public async Task<IActionResult> SaveScore(int studentExamId, double score, bool shareScore)
@@ -120,6 +117,47 @@ namespace OnlineSinavSistemi.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction("ExamStudents", new { examId = studentExam.ExamId });
+        }
+
+        // ---------------------------------------------------------------------
+        // 🔹 ÖĞRENCİ CEVAPLARINI GÖSTER (HOCA)
+        // ---------------------------------------------------------------------
+        public async Task<IActionResult> StudentAnswers(int studentExamId)
+        {
+                    // 1️⃣ Öğrencinin cevaplarını al (ŞIKLAR DAHİL)
+                    var answers = await _context.Answers
+             .Where(a => a.StudentExamId == studentExamId)
+             .Include(a => a.Question)
+                 .ThenInclude(q => q.Choices)
+             .Include(a => a.StudentExam)           // EKLENDİ
+                 .ThenInclude(se => se.Exam)       // EKLENDİ
+             .ToListAsync();
+
+
+            // 2️⃣ Cevap yoksa mesaj ver
+            if (!answers.Any())
+            {
+                ViewBag.Message = "Bu sınava ait cevap bulunamadı.";
+            }
+
+            // 3️⃣ View için gerekli id
+            ViewBag.StudentExamId = studentExamId;
+
+            // 4️⃣ VIEW'E GÖNDER
+            return View(answers);
+        }
+
+
+        private double CalculateTestScore(List<Answer> answers)
+        {
+            int correct = answers.Count(a =>
+                a.SelectedChoice != null && a.SelectedChoice.IsCorrect);
+
+            int total = answers.Count(a => a.SelectedChoiceId != null);
+
+            if (total == 0) return 0;
+
+            return (double)correct / total * 100;
         }
 
 

@@ -12,6 +12,7 @@ namespace OnlineSinavSistemi.Models
 
         public string QuestionText { get; set; }
         public QuestionType Type { get; set; }
+        public double? Point { get; set; }
 
         public List<Choice> Choices { get; set; } // çoktan seçmeli ise
     }
