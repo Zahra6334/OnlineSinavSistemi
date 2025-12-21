@@ -8,48 +8,58 @@
 <h2>@exam?.Title</h2>
 <p>Süre: @exam?.DurationMinutes dakika</p>
 
-@if(exam?.Questions != null && exam.Questions.Any())
+@if (exam?.Questions != null && exam.Questions.Any())
 {
-<form asp-action="SubmitExam" method="post" enctype="multipart/form-data">
-    <input type="hidden" asp-for="Id" />
+    <form asp-action="SubmitExam" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
 
-    @for(int i = 0; i < exam.Questions.Count; i++)
+        @for (int i = 0; i < exam.Questions.Count; i++)
         {
             var question = exam.Questions.ElementAt(i);
-    <div class="card mb-3">
-        <div class="card-header">
-            Soru @(i+1): @question.QuestionText
-        </div>
-        <div class="card-body">
-            @if(question.Type == OnlineSinavSistemi.Models.QuestionType.CoktanSecmeli)
+            <div class="card mb-3">
+                <div class="card-header">
+                    <strong>Soru @(i + 1):</strong> @question.QuestionText
+                </div>
+                <div class="card-body">
+                    <input type="hidden" name="Answers[@i].QuestionId" value="@question.Id" />
+
+                    @* Çoktan seçmeli sorular *@
+                    @if (question.Type == OnlineSinavSistemi.Models.QuestionType.CoktanSecmeli)
                     {
-                        foreach(var choice in question.Choices ?? new List<OnlineSinavSistemi.Models.Choice>())
+                        foreach (var choice in question.Choices ?? new List<OnlineSinavSistemi.Models.Choice>())
                         {
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="Answers[@i].SecilenChoice" value="@choice.Id" />
-                <label class="form-check-label">@choice.Text</label>
-            </div>
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       type="radio"
+                                       name="Answers[@i].SelectedChoiceId"
+                                       id="choice-@choice.Id"
+                                       value="@choice.Id" />
+                                <label class="form-check-label" for="choice-@choice.Id">
+                                    @choice.Text
+                                </label>
+                            </div>
                         }
                     }
-                    else if(question.Type == OnlineSinavSistemi.Models.QuestionType.Klasik)
+                    @* Klasik sorular *@
+                    else if (question.Type == OnlineSinavSistemi.Models.QuestionType.Klasik)
                     {
-            <div class="mb-2">
-                <label>Dosya Yükle (PDF, DOCX, JPG vb.)</label>
-                <input type="file" class="form-control" name="Answers[@i].DosyaYolu" />
-            </div>
-            <div class="mb-2">
-                <label>Metin Cevabý</label>
-                <textarea class="form-control" name="Answers[@i].MetinCevap"></textarea>
-            </div>
+                        <div class="mb-2">
+                            <label class="form-label">Dosya Yükle (PDF, DOCX, JPG vb.)</label>
+                            <input type="file" class="form-control" name="Answers[@i].FileUpload" />
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Metin Cevabý</label>
+                            <textarea class="form-control" name="Answers[@i].AnswerText" rows="4"></textarea>
+                        </div>
                     }
-        </div>
-    </div>
+                </div>
+            </div>
         }
 
-    <button type="submit" class="btn btn-success">Sýnavý Bitir</button>
-</form>
+        <button type="submit" class="btn btn-success">Sýnavý Bitir</button>
+    </form>
 }
 else
 {
-<p>Bu sýnavda soru bulunmamaktadýr.</p>
+    <p>Bu sýnavda soru bulunmamaktadýr.</p>
 }

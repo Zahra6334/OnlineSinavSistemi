@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using OnlineSinavSistemi.Data;
 using OnlineSinavSistemi.Models;
 using OnlineSinavSistemi.Services;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OnlineSinavSistemi.Controllers
 {
-    [Authorize] // Login kontrolü
+    [Authorize]
     public class ExamController : Controller
     {
         private readonly IExamService _examService;
@@ -53,37 +54,48 @@ namespace OnlineSinavSistemi.Controllers
             return View(model);
         }
 
-        // 🟢 Yeni sınav oluştur (POST)
+
+
+        // 🟢 ExamController > Create (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Exam model)
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-                return Unauthorized();
+            if (user == null) return Unauthorized();
 
-            if (ModelState.IsValid || model.CourseId == 0)
+            // 🔴 SİHİRLİ KISIM: Gitmemesini sağlayan engelleri kaldırıyoruz.
+            // "StudentExams" hatası yüzünden gitmiyordu, artık gidecek.
+            ModelState.Remove("StudentExams");
+            ModelState.Remove("Questions");
+            ModelState.Remove("TeacherId");
+            ModelState.Remove("Teacher");
+            ModelState.Remove("Course");
+
+            // Validasyon (Ders seçilmemişse uyar)
+            if (model.CourseId == 0) ModelState.AddModelError("CourseId", "Lütfen bir ders seçin.");
+
+            if (ModelState.IsValid)
             {
-                var dersler = _db.Courses.Where(c => c.TeacherId == user.Id).ToList();
-                ViewBag.Dersler = new SelectList(dersler, "Id", "CourseName");
+                // 1. Öğretmen ve Tarih bilgisini ekle
+                model.TeacherId = user.Id;
+                if (model.StartDate == default) model.StartDate = DateTime.Now;
 
-                if (model.CourseId == 0)
-                    ModelState.AddModelError("CourseId", "Lütfen bir ders seçin.");
+                // 2. Veritabanına Kaydet (Sınav ID'si burada oluşur)
+                _db.Exams.Add(model);
+                await _db.SaveChangesAsync();
 
-                return View(model);
+                // 3. 🚀 YÖNLENDİRME: İşlem bitti, Soru Ekleme sayfasına git!
+                return RedirectToAction("Create", "Question", new { examId = model.Id });
             }
 
-            // Öğretmen ID ve default başlangıç tarihi
-            model.TeacherId = user.Id;
-            if (model.StartDate == default)
-                model.StartDate= DateTime.Now;
-
-            await _examService.CreateExamAsync(model);
-
-            return RedirectToAction("Index");
+            // Hata varsa sayfayı yenile (Gitme)
+            var dersler = _db.Courses.Where(c => c.TeacherId == user.Id).ToList();
+            ViewBag.Dersler = new SelectList(dersler, "Id", "CourseName");
+            return View(model);
         }
 
-        // 🟢 Sınav detayları (öğretmen)
+
         // 🟢 Sınav detayları (öğretmen)
         public async Task<IActionResult> Details(int id)
         {

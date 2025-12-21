@@ -93,11 +93,11 @@ namespace OnlineSinavSistemi.Data
                 .HasForeignKey(a => a.StudentExamId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Answer>()
-                .HasOne(a => a.Question)
-                .WithMany()
-                .HasForeignKey(a => a.QuestionId)
-                .OnDelete(DeleteBehavior.Restrict);
+                    builder.Entity<Answer>()
+            .HasOne(a => a.StudentExam)
+            .WithMany(se => se.Answers)   // 🔥 BURASI KRİTİK
+            .HasForeignKey(a => a.StudentExamId)
+            .OnDelete(DeleteBehavior.Restrict);
 
             // =============================
             //  🔹 Reminder - Student

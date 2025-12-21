@@ -1,116 +1,39 @@
 @model OnlineSinavSistemi.Models.Exam
-@using OnlineSinavSistemi.Models
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<h2>Yeni Sýnav Oluþtur</h2>
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Yeni Sýnav Oluþtur</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post">
 
-<form asp-action="Create" method="post" enctype="multipart/form-data">
-    <div>
-        <label>Baþlýk</label>
-        <input asp-for="Title" class="form-control" />
-    </div>
-    <div>
-        <label>Süre (dakika)</label>
-        <input asp-for="DurationMinutes" type="number" class="form-control" />
-    </div>
-    <div>
-        <label>Ders</label>
-        <select asp-for="CourseId" asp-items="@(ViewBag.Dersler)" class="form-control">
-            <option value="">-- Ders Seçin --</option>
-        </select>
-    </div>
-
-    <h3>Sorular</h3>
-    <div id="sorularContainer">
-        <div class="soru-item">
-            <label>Soru Metni</label>
-            <input name="Sorular[0].SoruMetni" class="form-control" />
-
-            <label>Tip</label>
-            <select name="Sorular[0].Tip" class="form-control question-type-select">
-                <option value="0">Çoktan Seçmeli</option>
-                <option value="1">Klasik</option>
-            </select>
-
-            <!-- Çoktan seçmeli þýklar -->
-            <div class="seceneklerContainer">
-                <label>Þýklar (çoktan seçmeli için)</label>
-                <div>
-                    <input name="Sorular[0].Choices[0].Metin" placeholder="Þýk 1" class="form-control" />
-                    <input type="checkbox" name="Sorular[0].Choices[0].IsCorrect" /> Doðru
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Sýnav Baþlýðý</label>
+                    <input asp-for="Title" class="form-control" placeholder="Örn: Matematik Vize Sýnavý" required />
+                    <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
-                <div>
-                    <input name="Sorular[0].Choices[1].Metin" placeholder="Þýk 2" class="form-control" />
-                    <input type="checkbox" name="Sorular[0].Choices[1].IsCorrect" /> Doðru
-                </div>
-                <div>
-                    <input name="Sorular[0].Choices[2].Metin" placeholder="Þýk 3" class="form-control" />
-                    <input type="checkbox" name="Sorular[0].Choices[2].IsCorrect" /> Doðru
-                </div>
-                <div>
-                    <input name="Sorular[0].Choices[3].Metin" placeholder="Þýk 4" class="form-control" />
-                    <input type="checkbox" name="Sorular[0].Choices[3].IsCorrect" /> Doðru
-                </div>
-            </div>
 
-            <!-- Klasik dosya -->
-            <div class="klasikContainer">
-                <label>Klasik soru dosyasý (opsiyonel)</label>
-                <input type="file" name="Sorular[0].KlasikDosya" class="form-control" />
-            </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Süre (Dakika)</label>
+                        <input asp-for="DurationMinutes" type="number" class="form-control" value="40" required />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Ders</label>
+                        <select asp-for="CourseId" asp-items="@ViewBag.Dersler" class="form-control" required>
+                            <option value="">-- Ders Seçiniz --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="fa fa-save"></i> Sýnavý Oluþtur ve Soru Eklemeye Geç
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">Ýptal</a>
+                </div>
+            </form>
         </div>
     </div>
-
-    <button type="button" id="addSoruBtn" class="btn btn-primary equal-btn">Yeni Soru Ekle</button>
-    <button type="submit" class="btn btn-success equal-btn">Sýnavý Kaydet</button>
-    <button type="button" class="btn btn-secondary equal-btn" onclick="history.back()">Geri</button>
-
-
-</form>
-
-@section Scripts {
-    <script>
-        var soruIndex = 1;
-        document.getElementById("addSoruBtn").addEventListener("click", function () {
-            var container = document.getElementById("sorularContainer");
-            var html = `
-            <div class="soru-item">
-                <label>Soru Metni</label>
-                <input name="Sorular[${soruIndex}].SoruMetni" class="form-control" />
-                <label>Tip</label>
-                <select name="Sorular[${soruIndex}].Tip" class="form-control question-type-select">
-                    <option value="0">Çoktan Seçmeli</option>
-                    <option value="1">Klasik</option>
-                </select>
-
-                <div class="seceneklerContainer">
-                    <label>Þýklar (çoktan seçmeli için)</label>
-                    <div>
-                        <input name="Sorular[${soruIndex}].Choices[0].Metin" placeholder="Þýk 1" class="form-control"/>
-                        <input type="checkbox" name="Sorular[${soruIndex}].Choices[0].IsCorrect"/> Doðru
-                    </div>
-                    <div>
-                        <input name="Sorular[${soruIndex}].Choices[1].Metin" placeholder="Þýk 2" class="form-control"/>
-                        <input type="checkbox" name="Sorular[${soruIndex}].Choices[1].IsCorrect"/> Doðru
-                    </div>
-                    <div>
-                        <input name="Sorular[${soruIndex}].Choices[2].Metin" placeholder="Þýk 3" class="form-control"/>
-                        <input type="checkbox" name="Sorular[${soruIndex}].Choices[2].IsCorrect"/> Doðru
-                    </div>
-                    <div>
-                        <input name="Sorular[${soruIndex}].Choices[3].Metin" placeholder="Þýk 4" class="form-control"/>
-                        <input type="checkbox" name="Sorular[${soruIndex}].Choices[3].IsCorrect"/> Doðru
-                    </div>
-                </div>
-
-                <div class="klasikContainer">
-                    <label>Klasik soru dosyasý (opsiyonel)</label>
-                    <input type="file" name="Sorular[${soruIndex}].KlasikDosya" class="form-control"/>
-                </div>
-            </div>
-            `;
-            container.insertAdjacentHTML('beforeend', html);
-            soruIndex++;
-        });
-    </script>
-}
+</div>

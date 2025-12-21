@@ -55,7 +55,7 @@
                     <tr>
                         <td>@se.Student.Numara</td>
                         <td>@se.Student.full_name</td>
-                        <td>@se.StartTime.ToString("g")</td>
+                        <td>@se.StartTime?.ToString("g")</td>
                         <td>@se.EndTime?.ToString("g")</td>
                         <td>@(se.Completed ? "Evet" : "Hayır")</td>
                         <td>@se.Score?.ToString("F2")</td>

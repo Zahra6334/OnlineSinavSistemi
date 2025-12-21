@@ -24,6 +24,7 @@ builder.Services.AddControllersWithViews();
 // Servis kayd� (sonraki ad�mda yazaca��m�z servis)
 builder.Services.AddScoped<IExamService, ExamService>();
 builder.Services.AddScoped<IStudentExamService, StudentExamService>();
+builder.Services.AddScoped<IQuestionService, QuestionService>();
 
 var app = builder.Build();
 // ------------------------------------------------------------------

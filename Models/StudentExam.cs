@@ -13,7 +13,7 @@ namespace OnlineSinavSistemi.Models
         public string StudentId { get; set; }
         public ApplicationUser Student { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
         public bool Completed { get; set; }
         public double? Score { get; set; }

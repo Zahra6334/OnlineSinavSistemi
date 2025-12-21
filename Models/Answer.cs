@@ -12,8 +12,8 @@ namespace OnlineSinavSistemi.Models
         public int StudentExamId { get; set; }
         public StudentExam StudentExam { get; set; }
 
-        public string AnswerText { get; set; } // klasik metin
-        public string FilePath { get; set; } // dosya yolu (varsa)
+        public string? AnswerText { get; set; }     // nullable olabilir
+        public string? FilePath { get; set; }       // ✅ EN KRİTİK SATIR
         public int? SelectedChoiceId { get; set; } // çoktan seçmeli için seçilen şık Id
     }
 }

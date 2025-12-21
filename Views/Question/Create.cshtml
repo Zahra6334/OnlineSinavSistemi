@@ -1,30 +1,84 @@
 @model OnlineSinavSistemi.Models.Question
 
-<h2>Yeni Soru Ekle</h2>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            <h4 class="mb-0">Soru Ekle</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
 
-<form asp-action="Create" method="post">
-    <input type="hidden" asp-for="ExamId" />
+                <input type="hidden" asp-for="ExamId" />
 
-    <div>
-        <label>Soru Metni</label>
-        <input asp-for="QuestionText" />
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Soru Metni</label>
+                    <textarea asp-for="QuestionText" class="form-control" rows="3" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Soru Tipi</label>
+                    <select asp-for="Type" class="form-control" id="questionTypeSelect">
+                        <option value="0">Çoktan Seçmeli</option>
+                        <option value="1">Klasik</option>
+                    </select>
+                </div>
+
+                <div id="choicesArea" class="border p-3 rounded bg-light mb-3">
+                    <h6 class="text-primary">Þýklar</h6>
+                    <small class="text-muted d-block mb-2">Doðru cevabý yanýndaki kutucuðu iþaretleyerek belirtin.</small>
+
+                    <div class="input-group mb-2">
+                        <span class="input-group-text fw-bold">A</span>
+                        <input type="text" name="Choices[0].Text" class="form-control" placeholder="A þýkký metni" />
+                        <div class="input-group-text">
+                            <input type="radio" name="CorrectIndex" value="0" /> Doðru
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <span class="input-group-text fw-bold">B</span>
+                        <input type="text" name="Choices[1].Text" class="form-control" placeholder="B þýkký metni" />
+                        <div class="input-group-text">
+                            <input type="radio" name="CorrectIndex" value="1" /> Doðru
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <span class="input-group-text fw-bold">C</span>
+                        <input type="text" name="Choices[2].Text" class="form-control" placeholder="C þýkký metni" />
+                        <div class="input-group-text">
+                            <input type="radio" name="CorrectIndex" value="2" /> Doðru
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <span class="input-group-text fw-bold">D</span>
+                        <input type="text" name="Choices[3].Text" class="form-control" placeholder="D þýkký metni" />
+                        <div class="input-group-text">
+                            <input type="radio" name="CorrectIndex" value="3" /> Doðru
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-plus"></i> Soruyu Kaydet
+                    </button>
+                    <a href="/Question/Index?examId=@Model.ExamId" class="btn btn-outline-secondary">Geri Dön</a>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
 
-    <div>
-        <label>Tip</label>
-        <select asp-for="Type">
-            <option value="0">Çoktan Seçmeli</option>
-            <option value="1">Klasik</option>
-        </select>
-    </div>
-
-    <div class="seceneklerContainer">
-        <label>Þýklar (çoktan seçmeli için)</label>
-        <input name="Choices[0].Metin" placeholder="Þýk 1" />
-        <input name="Choices[1].Metin" placeholder="Þýk 2" />
-        <input name="Choices[2].Metin" placeholder="Þýk 3" />
-        <input name="Choices[3].Metin" placeholder="Þýk 4" />
-    </div>
-
-    <button type="submit">Soruyu Kaydet</button>
-</form>
+<script>
+    // Basit bir script: Klasik seçilirse þýklarý gizle
+    document.getElementById('questionTypeSelect').addEventListener('change', function() {
+        var area = document.getElementById('choicesArea');
+        if(this.value == "1") { // Klasik
+            area.style.display = 'none';
+        } else {
+            area.style.display = 'block';
+        }
+    });
+</script>
