@@ -25,6 +25,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IExamService, ExamService>();
 builder.Services.AddScoped<IStudentExamService, StudentExamService>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
+builder.Services.AddScoped<IAnswerService, AnswerService>();
 
 var app = builder.Build();
 // ------------------------------------------------------------------

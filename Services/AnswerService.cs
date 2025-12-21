@@ -20,9 +20,11 @@ namespace OnlineSinavSistemi.Services
         public async Task<IEnumerable<Answer>> GetAnswersByStudentExamAsync(int studentExamId)
         {
             return await _db.Answers
-                .Include(a => a.Question)
                 .Where(a => a.StudentExamId == studentExamId)
+                .Include(a => a.Question)          // 🔴 ZORUNLU
+                .ThenInclude(q => q.Choices)       // (opsiyonel)
                 .ToListAsync();
         }
+
     }
 }

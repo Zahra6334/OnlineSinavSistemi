@@ -31,8 +31,20 @@ namespace OnlineSinavSistemi.Controllers
         public async Task<IActionResult> Index(int studentExamId)
         {
             var answers = await _answerService.GetAnswersByStudentExamAsync(studentExamId);
-            ViewBag.StudentExamId = studentExamId;
+
+            if (!answers.Any())
+            {
+                ViewBag.Message = "Bu öğrenciye ait cevap bulunamadı.";
+            }
+
+            // 🔴 ÖNEMLİ: examId'yi al
+            var examId = answers.FirstOrDefault()?.StudentExam?.ExamId;
+
+            ViewBag.ExamId = examId;
+
             return View(answers);
         }
+
+
     }
 }

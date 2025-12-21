@@ -105,6 +105,25 @@ namespace OnlineSinavSistemi.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> SaveScore(int studentExamId, double score, bool shareScore)
+        {
+            var studentExam = await _context.StudentExams
+                .Include(se => se.Exam)
+                .FirstOrDefaultAsync(se => se.Id == studentExamId);
+
+            if (studentExam == null)
+                return NotFound();
+
+            studentExam.Score = score;
+            studentExam.ScoreShared = shareScore;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("ExamStudents", new { examId = studentExam.ExamId });
+        }
+
+
+        [HttpPost]
         public async Task<IActionResult> TogglePublish(int id)
         {
             await _examService.PublishExamAsync(id);

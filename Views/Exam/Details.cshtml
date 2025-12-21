@@ -1,34 +1,43 @@
 ﻿@model OnlineSinavSistemi.Models.Exam
+@using OnlineSinavSistemi.Models
+
 @{
     ViewData["Title"] = "Sınav Detayları";
-    var students = ViewBag.Students as IEnumerable<OnlineSinavSistemi.Models.ApplicationUser>;
     var studentExams = ViewBag.StudentExams as List<StudentExam>;
 }
 
 <h2>@Model.Title</h2>
 
-
 <div class="mb-3">
     <p><strong>Ders:</strong> @Model.Course?.CourseName</p>
     <p><strong>Süre:</strong> @Model.DurationMinutes dakika</p>
     <p><strong>Başlangıç Tarihi:</strong> @Model.StartDate.ToString("g")</p>
-    <p><strong>Yayın Durumu:</strong> @(Model.IsPublished ? "Yayınlandı" : "Yayınlanmadı")</p>
+    <p>
+        <strong>Yayın Durumu:</strong>
+        <span class="badge @(Model.IsPublished ? "bg-success" : "bg-secondary")">
+            @(Model.IsPublished ? "Yayınlandı" : "Yayınlanmadı")
+        </span>
+    </p>
 </div>
 
-<form asp-controller="Teacher" asp-action="TogglePublish" method="post" class="mb-4">
+<form asp-controller="Teacher"
+      asp-action="TogglePublish"
+      method="post"
+      class="mb-4">
     <input type="hidden" name="id" value="@Model.Id" />
     <button type="submit" class="btn btn-primary">
         @(Model.IsPublished ? "Yayından Kaldır" : "Yayınla")
     </button>
 </form>
 
+<hr />
 
 <h3>Öğrenciler ve Sınav Durumları</h3>
 
 @if (studentExams != null && studentExams.Any())
 {
-    <table class="table table-bordered">
-        <thead>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
             <tr>
                 <th>Numara</th>
                 <th>Ad Soyad</th>
@@ -36,40 +45,60 @@
                 <th>Bitiş</th>
                 <th>Tamamlandı</th>
                 <th>Not</th>
+                <th>İşlem</th>
             </tr>
         </thead>
 
         <tbody>
-            @if (studentExams == null || !studentExams.Any())
+            @foreach (var se in studentExams)
             {
                 <tr>
-                    <td colspan="6" class="text-center text-muted">
-                        ❗ Bu sınava atanmış öğrenci yok
+                    <td>@se.Student.Numara</td>
+                    <td>@se.Student.full_name</td>
+                    <td>@se.StartTime?.ToString("g")</td>
+                    <td>@se.EndTime?.ToString("g")</td>
+
+                    <td>
+                        @(se.Completed
+                                        ? "<span class='text-success'>Evet</span>"
+                                        : "<span class='text-danger'>Hayır</span>")
+            </td>
+
+                    <td>
+                        @(se.Score.HasValue? se.Score.Value.ToString("F2") : "-")
+                    </td>
+
+                    <td>
+                @if (se.Completed)
+                        {
+                            <a asp-controller="Answer"
+                               asp-action="Index"
+                               asp-route-studentExamId="@se.Id"
+                               class="btn btn-sm @(se.Score.HasValue ? "btn-success" : "btn-primary")">
+                                Cevapları Gör / Not Ver
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-muted">Sınav bitmedi</span>
+                        }
                     </td>
                 </tr>
             }
-            else
-            {
-                foreach (var se in studentExams)
-                {
-                    <tr>
-                        <td>@se.Student.Numara</td>
-                        <td>@se.Student.full_name</td>
-                        <td>@se.StartTime?.ToString("g")</td>
-                        <td>@se.EndTime?.ToString("g")</td>
-                        <td>@(se.Completed ? "Evet" : "Hayır")</td>
-                        <td>@se.Score?.ToString("F2")</td>
-                    </tr>
-                }
-            }
         </tbody>
     </table>
-
 }
 else
 {
-    <p>Henüz öğrenci yok veya öğrenciler sınava katılmadı.</p>
+    <p class="text-muted">
+        Henüz bu sınava giren öğrenci yok.
+    </p>
 }
 
-<!-- Sayfa sonundaki geri butonu -->
-<button type="button" class="btn btn-secondary equal-btn" onclick="history.back()">Geri</button>
+<hr />
+
+<button type="button"
+        class="btn btn-secondary"
+        onclick="history.back()">
+    Geri
+</button>

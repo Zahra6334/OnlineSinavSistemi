@@ -1,16 +1,23 @@
 @model IEnumerable<OnlineSinavSistemi.Models.Answer>
+
 @{
-    ViewData["Title"] = "Cevaplar";
-    var studentExamId = ViewBag.StudentExamId;
+    ViewData["Title"] = "Öðrenci Cevaplarý";
 }
 
 <h2>Öðrenci Cevaplarý</h2>
 
-<table class="table table-striped">
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-warning">
+        @ViewBag.Message
+    </div>
+}
+
+<table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>Soru</th>
-            <th>Verilen Cevap</th>
+            <th>Cevap (Klasik)</th>
             <th>Seçilen Þýk</th>
             <th>Dosya</th>
         </tr>
@@ -20,15 +27,35 @@
         {
             <tr>
                 <td>@a.Question.QuestionText</td>
-                <td>@a.AnswerText</td>
-                <td>@(a.SelectedChoiceId.HasValue ? a.SelectedChoiceId.ToString() : "-")</td>
+
+                <td>
+                    @if (!string.IsNullOrEmpty(a.AnswerText))
+                    {
+                        @a.AnswerText
+                    }
+                    else
+                    {
+                        <span class="text-muted">—</span>
+                    }
+                </td>
+
+                <td>
+                    @(a.SelectedChoiceId.HasValue? a.SelectedChoiceId.ToString() : "—")
+                </td>
+
                 <td>
                     @if (!string.IsNullOrEmpty(a.FilePath))
                     {
                         <a href="@Url.Content(a.FilePath)" target="_blank">Dosya</a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">—</span>
                     }
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<button class="btn btn-secondary" onclick="history.back()">Geri</button>
+

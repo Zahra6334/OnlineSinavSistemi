@@ -1,0 +1,69 @@
+﻿@model IEnumerable<OnlineSinavSistemi.Models.StudentExam>
+
+@{
+    ViewData["Title"] = "Sınava Giren Öğrenciler";
+    var exam = ViewBag.Exam as OnlineSinavSistemi.Models.Exam;
+}
+
+<h2>@exam.Title - Öğrenci Listesi</h2>
+
+<p>
+    <strong>Ders:</strong> @exam.Course.CourseName <br />
+    <strong>Süre:</strong> @exam.DurationMinutes dakika
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Öğrenci No</th>
+            <th>Ad Soyad</th>
+            <th>Başlama</th>
+            <th>Bitiş</th>
+            <th>Tamamlandı</th>
+            <th>Not</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var se in Model)
+        {
+            <tr>
+                <td>@se.Student.Numara</td>
+                <td>@se.Student.full_name</td>
+                <td>@se.StartTime?.ToString("g")</td>
+                <td>@se.EndTime?.ToString("g")</td>
+                <td>
+                    @if (se.Completed)
+                    {
+                        <span class="badge bg-success">Evet</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning">Hayır</span>
+                    }
+                </td>
+                <td>
+                    @(se.Score.HasValue? se.Score.Value.ToString("F2") : "-")
+                </td>
+                <td>
+                    @if (se.Completed)
+                    {
+                        <a asp-controller="Answer"
+                           asp-action="Index"
+                           asp-route-studentExamId="@se.Id"
+                           class="btn btn-sm btn-primary">
+                            Cevapları Gör
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="Exam"
+   asp-action="Details"
+   asp-route-id="@exam.Id"
+   class="btn btn-secondary">
+    Geri
+</a>
