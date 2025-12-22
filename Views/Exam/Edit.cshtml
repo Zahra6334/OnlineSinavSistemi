@@ -3,37 +3,645 @@
     ViewData["Title"] = "Sınav Düzenle";
 }
 
-<h2>Sınav Düzenle</h2>
+<style>
+    :root {
+        --primary-color: #2c5aa0;
+        --secondary-color: #e9f2f9;
+        --accent-color: #d4af37;
+        --success-color: #28a745;
+        --warning-color: #ffc107;
+        --danger-color: #e74c3c;
+        --text-dark: #333;
+        --text-light: #555;
+        --white: #ffffff;
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+    }
 
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="Id" />
+    .edit-section {
+        background: linear-gradient(135deg, #f8fafc 0%, #e9f2f9 100%);
+        min-height: 100vh;
+        padding: 60px 0;
+    }
 
-    <div class="form-group">
-        <label asp-for="Title"></label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
+    .edit-card {
+        background: var(--white);
+        border-radius: 25px;
+        box-shadow: var(--shadow);
+        border: 2px solid transparent;
+        transition: var(--transition);
+        overflow: hidden;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+        .edit-card:hover {
+            box-shadow: 0 15px 40px rgba(44, 90, 160, 0.15);
+            border-color: var(--primary-color);
+        }
+
+    .edit-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a6d 100%);
+        color: var(--white);
+        padding: 35px 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .edit-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0,0 Q500,100 1000,0 L1000,100 L0,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: 100% 100px;
+            background-position: bottom;
+        }
+
+    .edit-header-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .edit-icon {
+        width: 70px;
+        height: 70px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        flex-shrink: 0;
+    }
+
+    .edit-header-text h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin: 0 0 5px 0;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .edit-header-text p {
+        opacity: 0.9;
+        margin: 0;
+        font-size: 1.1rem;
+    }
+
+    .edit-body {
+        padding: 50px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    .form-group-full {
+        grid-column: 1 / -1;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-bottom: 10px;
+        display: block;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .form-label i {
+            color: var(--accent-color);
+        }
+
+    .form-control, .form-select {
+        border: 2px solid #e1e8f0;
+        border-radius: 12px;
+        padding: 15px 20px;
+        font-size: 1rem;
+        transition: var(--transition);
+        background: var(--white);
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
+            outline: none;
+        }
+
+        .form-control:hover, .form-select:hover {
+            border-color: #b8c4d4;
+        }
+
+    .input-group {
+        position: relative;
+    }
+
+    .input-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--primary-color);
+        font-size: 1.2rem;
+    }
+
+    .required-badge {
+        color: var(--danger-color);
+        font-size: 0.9rem;
+        font-weight: normal;
+    }
+
+    .form-hint {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: block;
+        font-style: italic;
+    }
+
+    .validation-message {
+        color: var(--danger-color);
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: block;
+        animation: slideIn 0.3s ease;
+    }
+
+    .btn-save {
+        background: linear-gradient(135deg, var(--success-color) 0%, #1e7e34 100%);
+        color: white;
+        padding: 16px 40px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border: none;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+    }
+
+        .btn-save:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
+            color: white;
+        }
+
+    .btn-cancel {
+        background: transparent;
+        color: var(--text-light);
+        padding: 16px 40px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border: 2px solid #e1e8f0;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-decoration: none;
+    }
+
+        .btn-cancel:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+    .btn-back {
+        background: transparent;
+        color: var(--text-light);
+        padding: 16px 40px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border: 2px solid #e1e8f0;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+        .btn-back:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+    .button-group {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-top: 40px;
+    }
+
+    @@media (max-width: 992px) {
+        .form-grid
+
+    {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .button-group {
+        grid-template-columns: 1fr;
+    }
+
+    }
+
+    @@media (max-width: 768px) {
+        .edit-header
+
+    {
+        padding: 25px 20px;
+    }
+
+    .edit-header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .edit-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+    }
+
+    .edit-header-text h1 {
+        font-size: 1.8rem;
+    }
+
+    .edit-body {
+        padding: 30px 20px;
+    }
+
+    .button-group {
+        gap: 15px;
+    }
+
+    }
+
+    .datetime-input {
+        position: relative;
+    }
+
+        .datetime-input .form-control {
+            padding-right: 50px;
+        }
+
+    .score-preview {
+        background: var(--secondary-color);
+        border-radius: 15px;
+        padding: 20px;
+        margin-top: 30px;
+        border-left: 5px solid var(--accent-color);
+    }
+
+        .score-preview h4 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+    .preview-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(44, 90, 160, 0.1);
+    }
+
+        .preview-item:last-child {
+            border-bottom: none;
+        }
+
+    .preview-label {
+        color: var(--text-light);
+    }
+
+    .preview-value {
+        color: var(--text-dark);
+        font-weight: 600;
+    }
+
+    @@keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animated-input {
+        opacity: 0;
+        transform: translateY(10px);
+        animation: slideIn 0.5s ease forwards;
+    }
+
+        .animated-input:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .animated-input:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .animated-input:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .animated-input:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+</style>
+
+<div class="edit-section">
+    <div class="edit-card">
+        <div class="edit-header">
+            <div class="edit-header-content">
+                <div class="edit-icon">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <div class="edit-header-text">
+                    <h1>Sınav Düzenle</h1>
+                    <p>"@Model.Title" sınavını güncelleyin</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="edit-body">
+            <form asp-action="Edit" method="post" id="editForm">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-grid">
+                    <div class="form-group form-group-full animated-input">
+                        <label class="form-label">
+                            <i class="fas fa-heading"></i> Sınav Başlığı
+                            <span class="required-badge">*</span>
+                        </label>
+                        <div class="input-group">
+                            <input asp-for="Title"
+                                   class="form-control"
+                                   placeholder="Örn: Matematik Vize Sınavı"
+                                   required />
+                            <div class="input-icon">
+                                <i class="fas fa-pen"></i>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Title" class="validation-message"></span>
+                        <span class="form-hint">Sınavın yeni başlığını giriniz</span>
+                    </div>
+
+                    <div class="form-group animated-input">
+                        <label class="form-label">
+                            <i class="fas fa-book"></i> Ders Seçimi
+                            <span class="required-badge">*</span>
+                        </label>
+                        <div class="input-group">
+                            <select asp-for="CourseId"
+                                    class="form-select"
+                                    asp-items="ViewBag.Dersler"
+                                    required>
+                                <option value="">-- Ders Seçiniz --</option>
+                            </select>
+                            <div class="input-icon">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <span asp-validation-for="CourseId" class="validation-message"></span>
+                        <span class="form-hint">Sınavın bağlı olduğu dersi seçin</span>
+                    </div>
+
+                    <div class="form-group animated-input">
+                        <label class="form-label">
+                            <i class="fas fa-clock"></i> Sınav Süresi
+                            <span class="required-badge">*</span>
+                        </label>
+                        <div class="input-group">
+                            <input asp-for="DurationMinutes"
+                                   type="number"
+                                   class="form-control"
+                                   min="5"
+                                   max="240"
+                                   required />
+                            <div class="input-icon">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                        </div>
+                        <span asp-validation-for="DurationMinutes" class="validation-message"></span>
+                        <span class="form-hint">5-240 dakika arasında bir değer girin</span>
+                    </div>
+
+                    <div class="form-group animated-input">
+                        <label class="form-label">
+                            <i class="fas fa-calendar-alt"></i> Başlangıç Tarihi
+                            <span class="required-badge">*</span>
+                        </label>
+                        <div class="input-group datetime-input">
+                            <input asp-for="StartDate"
+                                   type="datetime-local"
+                                   class="form-control"
+                                   required />
+                            <div class="input-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                        </div>
+                        <span asp-validation-for="StartDate" class="validation-message"></span>
+                        <span class="form-hint">Sınavın başlayacağı tarih ve saat</span>
+                    </div>
+                </div>
+
+                <!-- Mevcut Bilgiler Önizlemesi -->
+                <div class="score-preview animated-input">
+                    <h4><i class="fas fa-info-circle"></i> Mevcut Sınav Bilgileri</h4>
+                    <div class="preview-item">
+                        <span class="preview-label">Orijinal Başlık:</span>
+                        <span class="preview-value">@Model.Title</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">Ders:</span>
+                        <span class="preview-value">@ViewBag.CurrentCourseName</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">Mevcut Süre:</span>
+                        <span class="preview-value">@Model.DurationMinutes dakika</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">Mevcut Başlangıç:</span>
+                        <span class="preview-value">@Model.StartDate.ToString("dd MMMM yyyy HH:mm")</span>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn-save" id="saveButton">
+                        <i class="fas fa-save"></i>
+                        <span>Değişiklikleri Kaydet</span>
+                    </button>
+
+                    <a asp-action="Index" class="btn-cancel">
+                        <i class="fas fa-times"></i>
+                        <span>İptal</span>
+                    </a>
+
+                    <button type="button" class="btn-back" onclick="history.back()">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Geri Dön</span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
 
-    <div class="form-group">
-        <label>Ders</label>
-        <select asp-for="CourseId" class="form-control" asp-items="ViewBag.Dersler"></select>
-        <span asp-validation-for="CourseId" class="text-danger"></span>
-    </div>
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <div class="form-group">
-        <label asp-for="DurationMinutes"></label>
-        <input asp-for="DurationMinutes" class="form-control" />
-        <span asp-validation-for="DurationMinutes" class="text-danger"></span>
-    </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Form animasyonu
+        const editForm = document.getElementById('editForm');
+        const animatedInputs = document.querySelectorAll('.animated-input');
 
-    <div class="form-group">
-        <label asp-for="StartDate"></label>
-        <input asp-for="StartDate" type="datetime-local" class="form-control" />
-        <span asp-validation-for="StartDate" class="text-danger"></span>
-    </div>
+        // Sayfa yüklendiğinde animasyonları başlat
+        setTimeout(() => {
+            animatedInputs.forEach((input, index) => {
+                input.style.animationDelay = `${0.1 + (index * 0.1)}s`;
+                input.classList.add('animated-input');
+            });
+        }, 300);
 
-    <button type="submit" class="btn btn-success">Kaydet</button>
-    <a asp-action="Index" class="btn btn-secondary">İptal</a>
-    <button type="button" class="btn btn-secondary equal-btn" onclick="history.back()">Geri</button>
+        // Form gönderim butonu animasyonu
+        const saveButton = document.getElementById('saveButton');
+        editForm.addEventListener('submit', function(e) {
+            if (editForm.checkValidity()) {
+                saveButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Kaydediliyor...</span>';
+                saveButton.disabled = true;
+            }
+        });
 
-</form>
+        // Tarih input'u için bugünün tarihini minimum değer olarak ayarla
+        const startDateInput = document.querySelector('input[type="datetime-local"]');
+        if (startDateInput) {
+            const now = new Date();
+            const localDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+                .toISOString()
+                .slice(0, 16);
+            startDateInput.min = localDateTime;
+
+            // Eğer tarih bugünden önceyse, bugüne ayarla
+            const currentValue = startDateInput.value;
+            if (currentValue && new Date(currentValue) < now) {
+                startDateInput.value = localDateTime;
+            }
+        }
+
+        // Süre input'u için real-time değer gösterimi
+        const durationInput = document.querySelector('input[name="DurationMinutes"]');
+        if (durationInput) {
+            const durationPreview = document.createElement('div');
+            durationPreview.className = 'form-hint';
+            durationPreview.id = 'durationPreview';
+            durationPreview.style.marginTop = '5px';
+            durationInput.parentNode.appendChild(durationPreview);
+
+            function updateDurationPreview() {
+                const minutes = parseInt(durationInput.value) || 0;
+                const hours = Math.floor(minutes / 60);
+                const remainingMinutes = minutes % 60;
+
+                let previewText = '';
+                if (hours > 0) {
+                    previewText = `${hours} saat`;
+                    if (remainingMinutes > 0) {
+                        previewText += ` ${remainingMinutes} dakika`;
+                    }
+                } else {
+                    previewText = `${minutes} dakika`;
+                }
+
+                durationPreview.textContent = `Toplam: ${previewText}`;
+            }
+
+            durationInput.addEventListener('input', updateDurationPreview);
+            updateDurationPreview(); // İlk yüklemede göster
+        }
+
+        // Başlık input'u için karakter sayacı
+        const titleInput = document.querySelector('input[name="Title"]');
+        if (titleInput) {
+            const charCounter = document.createElement('div');
+            charCounter.className = 'form-hint';
+            charCounter.id = 'charCounter';
+            charCounter.style.marginTop = '5px';
+            titleInput.parentNode.appendChild(charCounter);
+
+            function updateCharCounter() {
+                const maxLength = 100; // Varsayılan maksimum uzunluk
+                const currentLength = titleInput.value.length;
+                const remaining = maxLength - currentLength;
+
+                if (remaining < 0) {
+                    charCounter.style.color = 'var(--danger-color)';
+                    charCounter.textContent = `Maksimum karakter aşıldı! (${currentLength}/${maxLength})`;
+                } else if (remaining < 20) {
+                    charCounter.style.color = 'var(--warning-color)';
+                    charCounter.textContent = `${remaining} karakter kaldı (${currentLength}/${maxLength})`;
+                } else {
+                    charCounter.style.color = 'var(--text-light)';
+                    charCounter.textContent = `${remaining} karakter kaldı (${currentLength}/${maxLength})`;
+                }
+            }
+
+            titleInput.addEventListener('input', updateCharCounter);
+            updateCharCounter(); // İlk yüklemede göster
+
+            // Maksimum uzunluk sınırı koy
+            titleInput.maxLength = 100;
+        }
+    });
+</script>
+
+<!-- SweetAlert2 için CDN (Opsiyonel) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    // Form değişikliklerini kontrol et
+    window.addEventListener('beforeunload', function (e) {
+        const form = document.getElementById('editForm');
+        const isDirty = Array.from(form.querySelectorAll('input, select'))
+            .some(input => input.defaultValue !== input.value);
+
+        if (isDirty) {
+            e.preventDefault();
+            e.returnValue = 'Yapılan değişiklikler kaydedilmemiş olabilir. Sayfadan ayrılmak istediğinize emin misiniz?';
+        }
+    });
+</script>

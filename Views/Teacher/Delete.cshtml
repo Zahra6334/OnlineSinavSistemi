@@ -1,19 +1,459 @@
 ﻿@model OnlineSinavSistemi.Models.Exam
-
 @{
     ViewData["Title"] = "Sınav Sil";
 }
 
-<div class="container mt-4">
-    <h2>@ViewData["Title"]</h2>
+<style>
+    :root {
+        --primary-color: #2c5aa0;
+        --secondary-color: #e9f2f9;
+        --accent-color: #d4af37;
+        --warning-color: #e74c3c;
+        --warning-light: #ffebee;
+        --text-dark: #333;
+        --text-light: #555;
+        --white: #ffffff;
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+    }
 
-    <div class="alert alert-danger">
-        <p>“<strong>@Model.Course</strong>” isimli sınavı silmek istediğinizden emin misiniz?</p>
+    .delete-section {
+        background: linear-gradient(135deg, #f8fafc 0%, #fef5f7 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+    }
+
+    .delete-card {
+        background: var(--white);
+        border-radius: 25px;
+        box-shadow: var(--shadow);
+        border: 2px solid transparent;
+        transition: var(--transition);
+        overflow: hidden;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        border-top: 6px solid var(--warning-color);
+        position: relative;
+    }
+
+        .delete-card:hover {
+            box-shadow: 0 15px 40px rgba(231, 76, 60, 0.15);
+            border-color: var(--warning-color);
+        }
+
+    .warning-icon {
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 60px;
+        background: var(--warning-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: white;
+        box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        z-index: 10;
+    }
+
+    .delete-header {
+        background: linear-gradient(135deg, #ffefee 0%, #ffdbd9 100%);
+        color: var(--warning-color);
+        padding: 40px 30px 30px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .delete-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0,0 Q500,100 1000,0 L1000,100 L0,100 Z" fill="rgba(255,255,255,0.3)"/></svg>');
+            background-size: 100% 100px;
+            background-position: bottom;
+        }
+
+        .delete-header h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .delete-header h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+    .delete-body {
+        padding: 40px;
+    }
+
+    .exam-details {
+        background: var(--warning-light);
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+        border-left: 5px solid var(--warning-color);
+    }
+
+    .detail-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(231, 76, 60, 0.1);
+    }
+
+        .detail-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+    .detail-icon {
+        width: 40px;
+        height: 40px;
+        background: rgba(231, 76, 60, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        color: var(--warning-color);
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
+
+    .detail-content {
+        flex: 1;
+    }
+
+    .detail-label {
+        display: block;
+        color: var(--text-light);
+        font-size: 0.9rem;
+        margin-bottom: 2px;
+    }
+
+    .detail-value {
+        display: block;
+        color: var(--text-dark);
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .warning-message {
+        background: rgba(231, 76, 60, 0.05);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 30px;
+        border: 1px solid rgba(231, 76, 60, 0.2);
+        display: flex;
+        align-items: flex-start;
+    }
+
+        .warning-message i {
+            color: var(--warning-color);
+            font-size: 1.4rem;
+            margin-right: 15px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .warning-message p {
+            color: var(--warning-color);
+            margin: 0;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+    .btn-danger-custom {
+        background: linear-gradient(135deg, var(--warning-color) 0%, #c0392b 100%);
+        color: white;
+        padding: 16px 40px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border: none;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        margin-bottom: 15px;
+        cursor: pointer;
+    }
+
+        .btn-danger-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+            color: white;
+        }
+
+    .btn-secondary-custom {
+        background: transparent;
+        color: var(--text-light);
+        padding: 16px 40px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border: 2px solid #e1e8f0;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        text-decoration: none;
+        text-align: center;
+    }
+
+        .btn-secondary-custom:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+    .button-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 40px;
+    }
+
+    @@media (max-width: 768px) {
+        .delete-card
+
+    {
+        margin: 20px;
+    }
+
+    .delete-header {
+        padding: 40px 20px 30px;
+    }
+
+        .delete-header h2 {
+            font-size: 1.8rem;
+        }
+
+        .delete-header h3 {
+            font-size: 1.2rem;
+        }
+
+    .delete-body {
+        padding: 30px 20px;
+    }
+
+    .button-group {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .exam-details {
+        padding: 20px;
+    }
+
+    }
+
+    .pulse-animation {
+        animation: pulse 2s infinite;
+    }
+
+    @@keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4);
+        }
+
+        70% {
+            box-shadow: 0 0 0 15px rgba(231, 76, 60, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
+        }
+    }
+</style>
+
+<div class="delete-section">
+    <div class="warning-icon pulse-animation">
+        <i class="fas fa-exclamation-triangle"></i>
     </div>
 
-    <form asp-action="Delete" method="post">
-        <input type="hidden" asp-for="Id" />
-        <button type="submit" class="btn btn-danger">Sil</button>
-        <a asp-action="Index" class="btn btn-secondary">Geri</a>
-    </form>
+    <div class="delete-card">
+        <div class="delete-header">
+            <h2>Sınav Sil</h2>
+            <h3>Bu işlem geri alınamaz!</h3>
+        </div>
+
+        <div class="delete-body">
+            <div class="warning-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>
+                    <strong>Dikkat!</strong> Bu sınavı silmek istediğinize emin misiniz?
+                    Bu işlem geri alınamaz ve sınava ait tüm sorular, cevaplar ve sonuçlar kalıcı olarak silinecektir.
+                </p>
+            </div>
+
+            <div class="exam-details">
+                <h4 class="text-center mb-4" style="color: var(--warning-color);">SİLİNECEK SINAV BİLGİLERİ</h4>
+
+                <div class="detail-item">
+                    <div class="detail-icon">
+                        <i class="fas fa-heading"></i>
+                    </div>
+                    <div class="detail-content">
+                        <span class="detail-label">Sınav Adı</span>
+                        <span class="detail-value">@Model.Title</span>
+                    </div>
+                </div>
+
+                <div class="detail-item">
+                    <div class="detail-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="detail-content">
+                        <span class="detail-label">Ders</span>
+                        <span class="detail-value">@(Model.Course?.CourseName ?? "Bilinmiyor")</span>
+                    </div>
+                </div>
+
+                <div class="detail-item">
+                    <div class="detail-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="detail-content">
+                        <span class="detail-label">Sınav Süresi</span>
+                        <span class="detail-value">@Model.DurationMinutes dakika</span>
+                    </div>
+                </div>
+
+                @if (Model.StartDate != default)
+                {
+                    <div class="detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="detail-content">
+                            <span class="detail-label">Başlangıç Tarihi</span>
+                            <span class="detail-value">@Model.StartDate.ToString("dd MMMM yyyy HH:mm")</span>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <form asp-action="Delete" method="post" id="deleteForm">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="button-group">
+                    <button type="submit" class="btn-danger-custom" id="deleteButton">
+                        <i class="fas fa-trash-alt"></i>
+                        <span>SİL</span>
+                    </button>
+
+                    <a asp-action="Index" class="btn-secondary-custom">
+                        <i class="fas fa-times"></i>
+                        <span>VAZGEÇ</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Form gönderim animasyonu
+        const deleteForm = document.getElementById('deleteForm');
+        const deleteButton = document.getElementById('deleteButton');
+
+        deleteForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Onay dialog'u göster
+            Swal.fire({
+                title: 'Son Uyarı!',
+                html: `
+                    <div style="text-align: left; padding: 15px;">
+                        <p><strong>"@Model.Title"</strong> adlı sınavı silmek üzeresiniz.</p>
+                        <p style="color: #e74c3c; font-weight: bold;">
+                            <i class="fas fa-exclamation-triangle"></i> Bu işlem geri alınamaz!
+                        </p>
+                        <p>Silmeyi onaylamak için aşağıya "<strong>@Model.Title</strong>" yazın.</p>
+                        <input type="text" id="confirmInput" class="form-control" placeholder="Sınav adını yazın">
+                    </div>
+                `,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e74c3c',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Evet, Sil!',
+                cancelButtonText: 'İptal',
+                preConfirm: () => {
+                    const inputValue = document.getElementById('confirmInput').value;
+                    if (inputValue !== "@Model.Title") {
+                        Swal.showValidationMessage('Sınav adı doğru yazılmadı!');
+                        return false;
+                    }
+                    return true;
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Buton durumunu değiştir
+                    deleteButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>SİLİNİYOR...</span>';
+                    deleteButton.disabled = true;
+
+                    // Formu gönder
+                    deleteForm.submit();
+                }
+            });
+        });
+
+        // Kart animasyonu
+        const deleteCard = document.querySelector('.delete-card');
+        deleteCard.style.opacity = '0';
+        deleteCard.style.transform = 'translateY(20px)';
+
+        setTimeout(() => {
+            deleteCard.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            deleteCard.style.opacity = '1';
+            deleteCard.style.transform = 'translateY(0)';
+        }, 300);
+
+        // Detay öğeleri animasyonu
+        const detailItems = document.querySelectorAll('.detail-item');
+        detailItems.forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(-20px)';
+
+            setTimeout(() => {
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                item.style.opacity = '1';
+                item.style.transform = 'translateX(0)';
+            }, 400 + (index * 100));
+        });
+    });
+</script>
+
+<!-- SweetAlert2 için CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

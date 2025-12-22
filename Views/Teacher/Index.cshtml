@@ -1,6 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Öğretmen Paneli";
     var userName = User.Identity?.Name?.Split('@')[0] ?? "Öğretmen";
+    // ViewBag değerlerini güvenli şekilde alalım
+    var dersSayisi = ViewBag.DersSayisi ?? 0;
+    var sinavSayisi = ViewBag.SinavSayisi ?? 0;
+    var ogrenciSayisi = ViewBag.OgrenciSayisi ?? 0;
+    var tamamlananSinavSayisi = ViewBag.TamamlananSinavSayisi ?? 0;
 }
 
 <style>
@@ -12,6 +17,7 @@
         --success-color: #28a745;
         --info-color: #17a2b8;
         --warning-color: #ffc107;
+        --danger-color: #e74c3c;
         --text-dark: #333;
         --text-light: #555;
         --white: #ffffff;
@@ -326,6 +332,134 @@
             box-shadow: 0 5px 15px rgba(44, 90, 160, 0.2);
         }
 
+    /* Yeni Eklenen Özellikler */
+    .date-time-widget {
+        position: absolute;
+        right: 30px;
+        top: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 10px 20px;
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+        .date-time-widget .time {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .date-time-widget .date {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+    .recent-activities {
+        margin-top: 40px;
+    }
+
+    .activities-list {
+        background: var(--white);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: var(--shadow);
+    }
+
+    .activity-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        transition: var(--transition);
+    }
+
+        .activity-item:hover {
+            background: var(--secondary-color);
+            border-radius: 10px;
+        }
+
+    .activity-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--secondary-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-color);
+    }
+
+    .activity-content h4 {
+        margin: 0;
+        color: var(--text-dark);
+        font-weight: 600;
+    }
+
+    .activity-content p {
+        margin: 5px 0 0;
+        color: var(--text-light);
+        font-size: 0.9rem;
+    }
+
+    .activity-time {
+        margin-left: auto;
+        color: var(--text-light);
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .progress-section {
+        margin-top: 40px;
+    }
+
+    .progress-card {
+        background: var(--white);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: var(--shadow);
+        margin-bottom: 20px;
+    }
+
+    .progress-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .progress-bar {
+        height: 10px;
+        background: #e9ecef;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-top: 10px;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        border-radius: 5px;
+        transition: width 1s ease-in-out;
+    }
+
+    .notification-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: var(--danger-color);
+        color: white;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: bold;
+    }
+
     /* Responsive */
     @@media (max-width: 992px) {
         .dashboard-actions
@@ -346,6 +480,15 @@
 
     .welcome-text h1 {
         font-size: 1.8rem;
+    }
+
+    .date-time-widget {
+        position: relative;
+        right: auto;
+        top: auto;
+        margin-top: 20px;
+        width: 100%;
+        text-align: center;
     }
 
     }
@@ -381,6 +524,10 @@
         justify-content: center;
     }
 
+    .date-time-widget .time {
+        font-size: 1.3rem;
+    }
+
     }
 
     @@media (max-width: 480px) {
@@ -404,22 +551,49 @@
 
     /* Animations */
     @@keyframes fadeInUp {
-        from
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
 
-    {
-        opacity: 0;
-        transform: translateY(20px);
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    @@keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+
+        100% {
+            transform: scale(1);
+        }
     }
 
+    @@keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
     }
 
     .animated {
         animation: fadeInUp 0.6s ease-out;
+    }
+
+    .pulse {
+        animation: pulse 2s infinite;
     }
 </style>
 
@@ -427,9 +601,13 @@
     <div class="container">
         <!-- Header -->
         <div class="dashboard-header">
+            <div class="date-time-widget">
+                <div class="time" id="currentTime"></div>
+                <div class="date" id="currentDate"></div>
+            </div>
             <div class="welcome-section">
                 <div class="teacher-avatar">
-                    👨‍🏫
+                    <i class="fas fa-user-tie"></i>
                 </div>
                 <div class="welcome-text">
                     <h1>Hoş Geldiniz, @userName!</h1>
@@ -446,6 +624,7 @@
         <div class="dashboard-actions">
             <!-- Ders Ekle -->
             <a asp-controller="Course" asp-action="Index" class="action-card animated">
+                <span class="notification-badge">@dersSayisi</span>
                 <div class="action-icon">
                     <i class="fas fa-book-open"></i>
                 </div>
@@ -461,6 +640,7 @@
 
             <!-- Sınav Oluştur -->
             <a asp-controller="Exam" asp-action="Create" class="action-card animated">
+                <span class="notification-badge">@sinavSayisi</span>
                 <div class="action-icon">
                     <i class="fas fa-file-signature"></i>
                 </div>
@@ -476,6 +656,7 @@
 
             <!-- Sınavları Listele -->
             <a asp-controller="Exam" asp-action="Index" class="action-card animated">
+                <span class="notification-badge pulse">@tamamlananSinavSayisi</span>
                 <div class="action-icon">
                     <i class="fas fa-list-alt"></i>
                 </div>
@@ -504,7 +685,7 @@
                     </div>
                     <div class="stat-content">
                         <h3>Toplam Ders Sayısı</h3>
-                        <div class="stat-number">@ViewBag.DersSayisi</div>
+                        <div class="stat-number" id="dersCount">@dersSayisi</div>
                         <span class="stat-trend trend-up">
                             <i class="fas fa-arrow-up"></i>
                             Aktif
@@ -518,7 +699,7 @@
                     </div>
                     <div class="stat-content">
                         <h3>Toplam Sınav Sayısı</h3>
-                        <div class="stat-number">@ViewBag.SinavSayisi</div>
+                        <div class="stat-number" id="examCount">@sinavSayisi</div>
                         <span class="stat-trend trend-up">
                             <i class="fas fa-chart-line"></i>
                             Aktif
@@ -532,7 +713,7 @@
                     </div>
                     <div class="stat-content">
                         <h3>Öğrenci Sayısı</h3>
-                        <div class="stat-number">@ViewBag.OgrenciSayisi</div>
+                        <div class="stat-number" id="studentCount">@ogrenciSayisi</div>
                         <span class="stat-trend trend-up">
                             <i class="fas fa-user-plus"></i>
                             Kayıtlı
@@ -546,7 +727,7 @@
                     </div>
                     <div class="stat-content">
                         <h3>Tamamlanan Sınavlar</h3>
-                        <div class="stat-number">@ViewBag.TamamlananSinavSayisi</div>
+                        <div class="stat-number" id="completedCount">@tamamlananSinavSayisi</div>
                         <span class="stat-trend trend-up">
                             <i class="fas fa-check"></i>
                             Başarılı
@@ -556,19 +737,105 @@
             </div>
         </div>
 
+        <!-- Progress Section -->
+        <div class="progress-section animated" style="animation-delay: 0.8s;">
+            <h2 class="stats-title">
+                <i class="fas fa-tasks"></i>
+                Sınav İstatistikleri
+            </h2>
+
+            <div class="progress-card">
+                <div class="progress-header">
+                    <h3 style="color: var(--primary-color); margin: 0;">Tamamlanma Oranı</h3>
+                    <span style="font-weight: 600; color: var(--primary-color);" id="completionRate">
+                        @if (sinavSayisi > 0)
+                        {
+                            @((tamamlananSinavSayisi * 100 / sinavSayisi).ToString("F1"))
+                        
+                            <span>%</span>
+                        }
+                        else
+                        {
+                            <text>0%</text>
+                        }
+                    </span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: @if(sinavSayisi > 0) {
+                    @((tamamlananSinavSayisi * 100 / sinavSayisi).ToString("F1"))
+                                        } else
+                    {
+
+                        <text>0</text>
+                    }
+%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activities -->
+        <div class="recent-activities animated" style="animation-delay: 1s;">
+            <h2 class="stats-title">
+                <i class="fas fa-history"></i>
+                Son Aktiviteler
+            </h2>
+            <div class="activities-list">
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Öğrenci Kaydı</h4>
+                        <p>Yeni öğrenci sisteme kaydedildi</p>
+                    </div>
+                    <div class="activity-time">10 dk önce</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Sınav Oluşturuldu</h4>
+                        <p>"Matematik Vize Sınavı" oluşturuldu</p>
+                    </div>
+                    <div class="activity-time">1 saat önce</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Sınav Tamamlandı</h4>
+                        <p>15 öğrenci sınavı tamamladı</p>
+                    </div>
+                    <div class="activity-time">3 saat önce</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Yeni Ders Eklendi</h4>
+                        <p>"Fizik 101" dersi sisteme eklendi</p>
+                    </div>
+                    <div class="activity-time">1 gün önce</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Quick Actions -->
-        <div class="quick-actions animated" style="animation-delay: 0.8s;">
+        <div class="quick-actions animated" style="animation-delay: 1.2s;">
             <h3 class="quick-actions-title">Hızlı Erişim</h3>
             <div class="quick-buttons">
                 <a asp-controller="Course" asp-action="Create" class="quick-btn">
                     <i class="fas fa-plus"></i>
                     Hızlı Ders Ekle
                 </a>
-                <a asp-controller="Exam" asp-action="CreateSimple" class="quick-btn">
+                <a asp-controller="Exam" asp-action="Create" class="quick-btn">
                     <i class="fas fa-plus-square"></i>
                     Hızlı Sınav Oluştur
                 </a>
-                <a asp-controller="Exam" asp-action="Results" class="quick-btn">
+                <a asp-controller="Exam" asp-action="Index" class="quick-btn">
                     <i class="fas fa-chart-pie"></i>
                     Sınav Sonuçları
                 </a>
@@ -580,6 +847,9 @@
         </div>
     </div>
 </div>
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -618,9 +888,103 @@
             });
         });
 
-        // Sayfa yüklendiğinde istatistikleri güncelle (simülasyon)
+        // Gerçek zamanlı saat ve tarih güncellemesi
+        function updateDateTime() {
+            const now = new Date();
+
+            // Saati formatla
+            const time = now.toLocaleTimeString('tr-TR', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+
+            // Tarihi formatla
+            const date = now.toLocaleDateString('tr-TR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            document.getElementById('currentTime').textContent = time;
+            document.getElementById('currentDate').textContent = date;
+        }
+
+        // İlk güncelleme
+        updateDateTime();
+
+        // Her saniye güncelle
+        setInterval(updateDateTime, 1000);
+
+        // Sayıları animasyonlu şekilde artır (isteğe bağlı)
+        function animateCounter(element, targetValue, duration = 2000) {
+            const startValue = 0;
+            const increment = targetValue / (duration / 16); // 60fps
+            let currentValue = startValue;
+
+            const timer = setInterval(() => {
+                currentValue += increment;
+                if (currentValue >= targetValue) {
+                    element.textContent = Math.round(targetValue);
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.round(currentValue);
+                }
+            }, 16);
+        }
+
+        // İstatistik sayılarını animasyonlu göster
+        const statNumbers = document.querySelectorAll('.stat-number');
+        statNumbers.forEach(stat => {
+            const targetValue = parseInt(stat.textContent);
+            if (!isNaN(targetValue) && targetValue > 0) {
+                animateCounter(stat, targetValue);
+            }
+        });
+
+        // Progress bar animasyonu
+        const progressFill = document.getElementById('progressFill');
+        if (progressFill) {
+            const targetWidth = parseFloat(progressFill.style.width);
+            progressFill.style.width = '0%';
+
+            setTimeout(() => {
+                progressFill.style.transition = 'width 1.5s ease-in-out';
+                progressFill.style.width = targetWidth + '%';
+            }, 500);
+        }
+
+        // Aktivite öğelerine tıklama efekti
+        const activityItems = document.querySelectorAll('.activity-item');
+        activityItems.forEach(item => {
+            item.addEventListener('click', function() {
+                this.style.transform = 'translateX(5px)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 300);
+            });
+        });
+
+        // Sayfa yüklendiğinde hoş geldiniz mesajı
         setTimeout(() => {
-            console.log('Öğretmen paneli yüklendi. Hoş geldiniz!');
+            console.log(`Öğretmen paneli yüklendi. Hoş geldiniz, ${'@userName'}!`);
         }, 1000);
+
+        // Sistem durumu kontrolü
+        function checkSystemStatus() {
+            const stats = {
+                ders: parseInt(document.getElementById('dersCount').textContent),
+                sinav: parseInt(document.getElementById('examCount').textContent),
+                ogrenci: parseInt(document.getElementById('studentCount').textContent)
+            };
+
+            if (stats.ders === 0 || stats.sinav === 0) {
+                console.warn('Sistemde ders veya sınav bulunmamaktadır.');
+            }
+        }
+
+        // Sistem durumunu kontrol et
+        setTimeout(checkSystemStatus, 2000);
     });
 </script>

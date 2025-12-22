@@ -1,95 +1,821 @@
 @model OnlineSinavSistemi.Models.Question
 
-<div class="container mt-4">
-    <div class="card">
-        <div class="card-header bg-secondary text-white">
-            <h4 class="mb-0">Soru Ekle</h4>
-        </div>
-        <div class="card-body">
-            <form asp-action="Create" method="post" enctype="multipart/form-data">
+<style>
+    :root {
+        --primary-color: #2c5aa0;
+        --secondary-color: #e9f2f9;
+        --accent-color: #d4af37;
+        --success-color: #28a745;
+        --warning-color: #ffc107;
+        --danger-color: #e74c3c;
+        --text-dark: #333;
+        --text-light: #555;
+        --white: #ffffff;
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+    }
 
+    .question-create-section {
+        background: linear-gradient(135deg, #f8fafc 0%, #e9f2f9 100%);
+        min-height: 100vh;
+        padding: 60px 0;
+    }
+
+    .question-card {
+        background: var(--white);
+        border-radius: 25px;
+        box-shadow: var(--shadow);
+        border: 2px solid transparent;
+        transition: var(--transition);
+        overflow: hidden;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+        .question-card:hover {
+            box-shadow: 0 15px 40px rgba(44, 90, 160, 0.15);
+            border-color: var(--primary-color);
+        }
+
+    .question-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a6d 100%);
+        color: var(--white);
+        padding: 35px 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .question-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0,0 Q500,100 1000,0 L1000,100 L0,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: 100% 100px;
+            background-position: bottom;
+        }
+
+    .question-header-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .question-icon {
+        width: 70px;
+        height: 70px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        flex-shrink: 0;
+    }
+
+    .question-header-text h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin: 0 0 5px 0;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .question-header-text p {
+        opacity: 0.9;
+        margin: 0;
+        font-size: 1.1rem;
+    }
+
+    .question-body {
+        padding: 50px;
+    }
+
+    .form-group {
+        margin-bottom: 30px;
+    }
+
+    .form-label {
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-bottom: 10px;
+        display: block;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .form-label i {
+            color: var(--accent-color);
+        }
+
+    .required-badge {
+        color: var(--danger-color);
+        font-size: 0.9rem;
+        font-weight: normal;
+    }
+
+    .form-control, .form-select {
+        border: 2px solid #e1e8f0;
+        border-radius: 12px;
+        padding: 15px 20px;
+        font-size: 1rem;
+        transition: var(--transition);
+        background: var(--white);
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
+            outline: none;
+        }
+
+        .form-control:hover, .form-select:hover {
+            border-color: #b8c4d4;
+        }
+
+        .form-control[type="number"] {
+            max-width: 200px;
+        }
+
+    textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .choices-area {
+        background: var(--secondary-color);
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: 20px;
+        border: 2px solid rgba(44, 90, 160, 0.1);
+        transition: var(--transition);
+    }
+
+        .choices-area.show {
+            display: block;
+        }
+
+        .choices-area.hide {
+            display: none;
+        }
+
+    .choices-title {
+        color: var(--primary-color);
+        font-weight: 700;
+        margin-bottom: 20px;
+        font-size: 1.3rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .choices-hint {
+        color: var(--text-light);
+        font-size: 0.95rem;
+        margin-bottom: 25px;
+        line-height: 1.6;
+        background: rgba(255, 255, 255, 0.7);
+        padding: 15px;
+        border-radius: 10px;
+        border-left: 4px solid var(--accent-color);
+    }
+
+    .choice-item {
+        margin-bottom: 20px;
+        transition: var(--transition);
+    }
+
+        .choice-item:hover {
+            transform: translateX(5px);
+        }
+
+    .choice-input-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--white);
+        border-radius: 12px;
+        padding: 5px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .choice-letter {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a6d 100%);
+        color: var(--white);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
+
+    .choice-text-input {
+        flex: 1;
+        border: 2px solid #e1e8f0;
+        border-radius: 10px;
+        padding: 14px 18px;
+        font-size: 1rem;
+        transition: var(--transition);
+    }
+
+        .choice-text-input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
+        }
+
+    .correct-choice-radio {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 20px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        cursor: pointer;
+        transition: var(--transition);
+        flex-shrink: 0;
+    }
+
+        .correct-choice-radio:hover {
+            background: rgba(44, 90, 160, 0.05);
+        }
+
+        .correct-choice-radio input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .correct-choice-radio label {
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .correct-choice-radio input[type="radio"]:checked + label {
+            color: var(--success-color);
+        }
+
+    .question-type-selector {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .type-option {
+        border: 2px solid #e1e8f0;
+        border-radius: 15px;
+        padding: 25px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: var(--transition);
+        background: var(--white);
+    }
+
+        .type-option:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .type-option.selected {
+            border-color: var(--primary-color);
+            background: rgba(44, 90, 160, 0.05);
+            box-shadow: 0 5px 15px rgba(44, 90, 160, 0.1);
+        }
+
+    .type-icon {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+    }
+
+    .type-title {
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+        font-size: 1.2rem;
+    }
+
+    .type-description {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .point-input-container {
+        position: relative;
+        max-width: 200px;
+    }
+
+        .point-input-container::after {
+            content: "puan";
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .point-input-container input {
+            padding-right: 60px;
+        }
+
+    .button-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 40px;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, var(--success-color) 0%, #1e7e34 100%);
+        color: white;
+        padding: 16px 40px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border: none;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+    }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
+            color: white;
+        }
+
+    .btn-back {
+        background: transparent;
+        color: var(--text-light);
+        padding: 16px 40px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border: 2px solid #e1e8f0;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-decoration: none;
+    }
+
+        .btn-back:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+    @@media (max-width: 768px) {
+        .question-header
+
+    {
+        padding: 25px 20px;
+    }
+
+    .question-header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .question-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+    }
+
+    .question-header-text h1 {
+        font-size: 1.8rem;
+    }
+
+    .question-body {
+        padding: 30px 20px;
+    }
+
+    .question-type-selector {
+        grid-template-columns: 1fr;
+    }
+
+    .choice-input-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .correct-choice-radio {
+        justify-content: center;
+    }
+
+    .button-group {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    }
+
+    .char-counter {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        margin-top: 5px;
+        text-align: right;
+    }
+
+        .char-counter.warning {
+            color: var(--warning-color);
+        }
+
+        .char-counter.danger {
+            color: var(--danger-color);
+        }
+
+    .form-hint {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: block;
+        font-style: italic;
+    }
+
+    .validation-message {
+        color: var(--danger-color);
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: block;
+        animation: slideIn 0.3s ease;
+    }
+
+    @@keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animated-element {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.6s ease forwards;
+    }
+
+    @@keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<div class="question-create-section">
+    <div class="question-card">
+        <div class="question-header">
+            <div class="question-header-content">
+                <div class="question-icon">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="question-header-text">
+                    <h1>Soru Ekle</h1>
+                    <p>Yeni soru oluþtur ve sýnavýna ekle</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-body">
+            <form asp-action="Create" method="post" enctype="multipart/form-data" id="questionForm">
                 <input type="hidden" asp-for="ExamId" />
 
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Soru Metni</label>
-                    <textarea asp-for="QuestionText" class="form-control" rows="3" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Soru Puaný</label>
-                    <input asp-for="Point"
-                           type="number"
-                           class="form-control"
-                           min="0"
-                           step="1"
-                           required />
-                    <span asp-validation-for="Point" class="text-danger"></span>
-                </div>
+                <!-- Soru Tipi Seçimi -->
+                <div class="form-group animated-element" style="animation-delay: 0.1s;">
+                    <label class="form-label">
+                        <i class="fas fa-tag"></i> Soru Tipi
+                        <span class="required-badge">*</span>
+                    </label>
 
+                    <div class="question-type-selector">
+                        <div class="type-option @(Model.Type == 0 ? "selected" : "")" data-type="0">
+                            <div class="type-icon">
+                                <i class="fas fa-list-ol"></i>
+                            </div>
+                            <div class="type-title">Çoktan Seçmeli</div>
+                            <div class="type-description">
+                                Öðrenci verilen þýklardan birini seçer
+                            </div>
+                        </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Soru Tipi</label>
-                    <select asp-for="Type" class="form-control" id="questionTypeSelect">
-                        <option value="0">Çoktan Seçmeli</option>
-                        <option value="1">Klasik</option>
-                    </select>
-                </div>
-
-                <div id="choicesArea" class="border p-3 rounded bg-light mb-3">
-                    <h6 class="text-primary">Þýklar</h6>
-                    <small class="text-muted d-block mb-2">Doðru cevabý yanýndaki kutucuðu iþaretleyerek belirtin.</small>
-
-                    <div class="input-group mb-2">
-                        <span class="input-group-text fw-bold">A</span>
-                        <input type="text" name="Choices[0].Text" class="form-control" placeholder="A þýkký metni" />
-                        <div class="input-group-text">
-                            <input type="radio" name="CorrectIndex" value="0" /> Doðru
+                        <div class="type-option @(Model.Type.ToString() == "1" ? "selected" : "")" data-type="1">
+                            <div class="type-icon">
+                                <i class="fas fa-keyboard"></i>
+                            </div>
+                            <div class="type-title">Klasik</div>
+                            <div class="type-description">
+                                Öðrenci açýk uçlu cevap yazar
+                            </div>
                         </div>
                     </div>
 
-                    <div class="input-group mb-2">
-                        <span class="input-group-text fw-bold">B</span>
-                        <input type="text" name="Choices[1].Text" class="form-control" placeholder="B þýkký metni" />
-                        <div class="input-group-text">
-                            <input type="radio" name="CorrectIndex" value="1" /> Doðru
-                        </div>
-                    </div>
-
-                    <div class="input-group mb-2">
-                        <span class="input-group-text fw-bold">C</span>
-                        <input type="text" name="Choices[2].Text" class="form-control" placeholder="C þýkký metni" />
-                        <div class="input-group-text">
-                            <input type="radio" name="CorrectIndex" value="2" /> Doðru
-                        </div>
-                    </div>
-
-                    <div class="input-group mb-2">
-                        <span class="input-group-text fw-bold">D</span>
-                        <input type="text" name="Choices[3].Text" class="form-control" placeholder="D þýkký metni" />
-                        <div class="input-group-text">
-                            <input type="radio" name="CorrectIndex" value="3" /> Doðru
-                        </div>
-                    </div>
+                    <input type="hidden" asp-for="Type" id="questionTypeInput" />
+                    <span asp-validation-for="Type" class="validation-message"></span>
                 </div>
 
-                <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fa fa-plus"></i> Soruyu Kaydet
+                <!-- Soru Metni -->
+                <div class="form-group animated-element" style="animation-delay: 0.2s;">
+                    <label class="form-label">
+                        <i class="fas fa-question"></i> Soru Metni
+                        <span class="required-badge">*</span>
+                    </label>
+                    <textarea asp-for="QuestionText"
+                              class="form-control"
+                              rows="4"
+                              placeholder="Sorunuzu buraya yazýn..."
+                              maxlength="1000"
+                              required></textarea>
+                    <div class="char-counter" id="questionCharCounter">1000 karakter kaldý</div>
+                    <span asp-validation-for="QuestionText" class="validation-message"></span>
+                    <span class="form-hint">Öðrencinin göreceði soru metnini girin</span>
+                </div>
+
+                <!-- Soru Puaný -->
+                <div class="form-group animated-element" style="animation-delay: 0.3s;">
+                    <label class="form-label">
+                        <i class="fas fa-star"></i> Soru Puaný
+                        <span class="required-badge">*</span>
+                    </label>
+                    <div class="point-input-container">
+                        <input asp-for="Point"
+                               type="number"
+                               class="form-control"
+                               min="0"
+                               max="100"
+                               step="1"
+                               value="10"
+                               required />
+                    </div>
+                    <span asp-validation-for="Point" class="validation-message"></span>
+                    <span class="form-hint">Bu sorunun sýnavdaki deðerini belirtin</span>
+                </div>
+
+                <!-- Þýklar Alaný (Çoktan Seçmeli için) -->
+                <div id="choicesArea" class="choices-area @(Model.Type == 0 ? "show" : "hide") animated-element" style="animation-delay: 0.4s;">
+                    <div class="choices-title">
+                        <i class="fas fa-list-check"></i> Þýklar
+                    </div>
+
+                    <div class="choices-hint">
+                        <strong>Doðru cevabý iþaretleyin:</strong> Her soru için yalnýzca bir doðru þýk seçebilirsiniz.
+                        Tüm þýklarý doldurmanýz önerilir.
+                    </div>
+
+                    @{
+                        var choiceLetters = new string[] { "A", "B", "C", "D" };
+                    }
+
+                    @for (int i = 0; i < 4; i++)
+                    {
+                        <div class="choice-item">
+                            <div class="choice-input-group">
+                                <div class="choice-letter">@choiceLetters[i]</div>
+                                <input type="text"
+                                       name="Choices[@i].Text"
+                                       class="choice-text-input"
+                                       placeholder="@choiceLetters[i] þýkký metni"
+                                       maxlength="500"
+                                       data-choice-index="@i" />
+                                <div class="correct-choice-radio">
+                                    <input type="radio"
+                                           name="CorrectIndex"
+                                           value="@i"
+                                           id="correctChoice@i"
+                                           @(i == 0 ? "checked" : "") />
+                                    <label for="correctChoice@i">Doðru Cevap</label>
+                                </div>
+                            </div>
+                            <div class="char-counter choice-char-counter" id="choiceCharCounter@i">500 karakter kaldý</div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Butonlar -->
+                <div class="button-group animated-element" style="animation-delay: 0.5s;">
+                    <button type="submit" class="btn-submit" id="submitButton">
+                        <i class="fas fa-save"></i>
+                        <span>Soruyu Kaydet</span>
                     </button>
-                    <a href="/Question/Index?examId=@Model.ExamId" class="btn btn-outline-secondary">Geri Dön</a>
+
+                    <a href="/Question/Index?examId=@Model.ExamId" class="btn-back">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Geri Dön</span>
+                    </a>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <script>
-    // Basit bir script: Klasik seçilirse þýklarý gizle
-    document.getElementById('questionTypeSelect').addEventListener('change', function() {
-        var area = document.getElementById('choicesArea');
-        if(this.value == "1") { // Klasik
-            area.style.display = 'none';
-        } else {
-            area.style.display = 'block';
+    document.addEventListener('DOMContentLoaded', function() {
+        // Element animasyonlarý
+        const animatedElements = document.querySelectorAll('.animated-element');
+        animatedElements.forEach((element, index) => {
+            element.style.animationDelay = `${0.1 + (index * 0.1)}s`;
+        });
+
+        // Soru tipi seçimi
+        const typeOptions = document.querySelectorAll('.type-option');
+        const questionTypeInput = document.getElementById('questionTypeInput');
+        const choicesArea = document.getElementById('choicesArea');
+
+        typeOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // Seçili sýnýfýný güncelle
+                typeOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+
+                // Input deðerini güncelle
+                const selectedType = this.dataset.type;
+                questionTypeInput.value = selectedType;
+
+                // Þýklar alanýný göster/gizle
+                if (selectedType === '0') { // Çoktan seçmeli
+                    choicesArea.classList.remove('hide');
+                    choicesArea.classList.add('show');
+
+                    // Þýklarý zorunlu yap
+                    const choiceInputs = document.querySelectorAll('.choice-text-input');
+                    choiceInputs.forEach(input => {
+                        input.required = true;
+                    });
+                } else { // Klasik
+                    choicesArea.classList.remove('show');
+                    choicesArea.classList.add('hide');
+
+                    // Þýklarý zorunlu olmaktan çýkar
+                    const choiceInputs = document.querySelectorAll('.choice-text-input');
+                    choiceInputs.forEach(input => {
+                        input.required = false;
+                    });
+                }
+            });
+        });
+
+        // Soru metni karakter sayacý
+        const questionTextArea = document.querySelector('textarea[name="QuestionText"]');
+        const questionCharCounter = document.getElementById('questionCharCounter');
+
+        function updateQuestionCharCounter() {
+            const maxLength = 1000;
+            const currentLength = questionTextArea.value.length;
+            const remaining = maxLength - currentLength;
+
+            questionCharCounter.textContent = `${remaining} karakter kaldý`;
+
+            if (remaining < 0) {
+                questionCharCounter.classList.add('danger');
+                questionCharCounter.classList.remove('warning');
+                questionCharCounter.textContent = `${Math.abs(remaining)} karakter fazla!`;
+            } else if (remaining < 100) {
+                questionCharCounter.classList.add('warning');
+                questionCharCounter.classList.remove('danger');
+            } else {
+                questionCharCounter.classList.remove('warning', 'danger');
+            }
         }
+
+        questionTextArea.addEventListener('input', updateQuestionCharCounter);
+        updateQuestionCharCounter();
+
+        // Þýk karakter sayaçlarý
+        const choiceInputs = document.querySelectorAll('.choice-text-input');
+        choiceInputs.forEach((input, index) => {
+            const counter = document.getElementById(`choiceCharCounter${index}`);
+
+            function updateChoiceCharCounter() {
+                const maxLength = 500;
+                const currentLength = input.value.length;
+                const remaining = maxLength - currentLength;
+
+                counter.textContent = `${remaining} karakter kaldý`;
+
+                if (remaining < 0) {
+                    counter.classList.add('danger');
+                    counter.classList.remove('warning');
+                    counter.textContent = `${Math.abs(remaining)} karakter fazla!`;
+                } else if (remaining < 50) {
+                    counter.classList.add('warning');
+                    counter.classList.remove('danger');
+                } else {
+                    counter.classList.remove('warning', 'danger');
+                }
+            }
+
+            input.addEventListener('input', updateChoiceCharCounter);
+            updateChoiceCharCounter();
+        });
+
+        // Form gönderimi
+        const questionForm = document.getElementById('questionForm');
+        const submitButton = document.getElementById('submitButton');
+
+        questionForm.addEventListener('submit', function(e) {
+            // Çoktan seçmeli soru için doðru þýk seçilmiþ mi kontrol et
+            const questionType = document.getElementById('questionTypeInput').value;
+
+            if (questionType === '0') {
+                // Þýklarýn doldurulduðunu kontrol et
+                let allChoicesFilled = true;
+                const choiceTextInputs = document.querySelectorAll('.choice-text-input');
+
+                choiceTextInputs.forEach(input => {
+                    if (input.value.trim() === '') {
+                        allChoicesFilled = false;
+                        input.style.borderColor = 'var(--danger-color)';
+                    } else {
+                        input.style.borderColor = '';
+                    }
+                });
+
+                if (!allChoicesFilled) {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Eksik Þýk',
+                        text: 'Lütfen tüm þýklarý doldurun.',
+                        confirmButtonColor: 'var(--danger-color)'
+                    });
+                    return;
+                }
+            }
+
+            // Form geçerliyse buton durumunu deðiþtir
+            if (questionForm.checkValidity()) {
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Kaydediliyor...</span>';
+                submitButton.disabled = true;
+            }
+        });
+
+        // Þýk doldurulduðunda border rengini sýfýrla
+        choiceInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value.trim() !== '') {
+                    this.style.borderColor = '';
+                }
+            });
+        });
+
+        // Puan input'u için real-time güncelleme
+        const pointInput = document.querySelector('input[name="Point"]');
+        const pointPreview = document.createElement('div');
+        pointPreview.className = 'form-hint';
+        pointPreview.id = 'pointPreview';
+        pointInput.parentNode.parentNode.appendChild(pointPreview);
+
+        function updatePointPreview() {
+            const point = parseInt(pointInput.value) || 0;
+            pointPreview.textContent = `Bu soru ${point} puan deðerindedir.`;
+
+            if (point > 50) {
+                pointPreview.style.color = 'var(--warning-color)';
+                pointPreview.textContent += ' (Yüksek puanlý soru)';
+            } else if (point > 20) {
+                pointPreview.style.color = 'var(--success-color)';
+                pointPreview.textContent += ' (Orta puanlý soru)';
+            } else {
+                pointPreview.style.color = 'var(--text-light)';
+                pointPreview.textContent += ' (Düþük puanlý soru)';
+            }
+        }
+
+        pointInput.addEventListener('input', updatePointPreview);
+        updatePointPreview();
     });
 </script>
+
+<!-- SweetAlert2 için CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -1,70 +1,628 @@
 ﻿@model IEnumerable<OnlineSinavSistemi.Models.StudentExam>
-
 @{
     ViewData["Title"] = "Sınava Giren Öğrenciler";
     var exam = ViewBag.Exam as OnlineSinavSistemi.Models.Exam;
 }
 
-<h2>@exam.Title - Öğrenci Listesi</h2>
+<style>
+    :root {
+        --primary-color: #2c5aa0;
+        --secondary-color: #e9f2f9;
+        --accent-color: #d4af37;
+        --success-color: #28a745;
+        --warning-color: #ffc107;
+        --danger-color: #e74c3c;
+        --text-dark: #333;
+        --text-light: #555;
+        --white: #ffffff;
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+    }
 
-<p>
-    <strong>Ders:</strong> @exam.Course.CourseName <br />
-    <strong>Süre:</strong> @exam.DurationMinutes dakika
-</p>
+    .student-list-section {
+        background: linear-gradient(135deg, #f8fafc 0%, #e9f2f9 100%);
+        min-height: 100vh;
+        padding: 60px 0;
+    }
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Öğrenci No</th>
-            <th>Ad Soyad</th>
-            <th>Başlama</th>
-            <th>Bitiş</th>
-            <th>Tamamlandı</th>
-            <th>Not</th>
-            <th>İşlem</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var se in Model)
-        {
-            <tr>
-                <td>@se.Student.Numara</td>
-                <td>@se.Student.full_name</td>
-                <td>@se.StartTime?.ToString("g")</td>
-                <td>@se.EndTime?.ToString("g")</td>
-                <td>
-                    @if (se.Completed)
-                    {
-                        <span class="badge bg-success">Evet</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-warning">Hayır</span>
-                    }
-                </td>
-                <td>
-                    @(se.Score.HasValue? se.Score.Value.ToString("F2") : "-")
-                </td>
-                <td>
-                    @if (se.Completed)
-                    {
-                        <a asp-controller="Teacher"
-                           asp-action="StudentAnswers"
-                           asp-route-studentExamId="@se.Id"
-                           class="btn btn-sm btn-primary">
-                            Cevapları Gör
-                        </a>
+    .student-list-card {
+        background: var(--white);
+        border-radius: 25px;
+        box-shadow: var(--shadow);
+        border: 2px solid transparent;
+        transition: var(--transition);
+        overflow: hidden;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 
-                    }
-                </td>
-            </tr>
+        .student-list-card:hover {
+            box-shadow: 0 15px 40px rgba(44, 90, 160, 0.15);
+            border-color: var(--primary-color);
         }
-    </tbody>
-</table>
 
-<a asp-controller="Exam"
-   asp-action="Details"
-   asp-route-id="@exam.Id"
-   class="btn btn-secondary">
-    Geri
-</a>
+    .student-list-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a6d 100%);
+        color: var(--white);
+        padding: 35px 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .student-list-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0,0 Q500,100 1000,0 L1000,100 L0,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: 100% 100px;
+            background-position: bottom;
+        }
+
+    .student-list-header-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .student-list-icon {
+        width: 70px;
+        height: 70px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        flex-shrink: 0;
+    }
+
+    .student-list-header-text h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin: 0 0 5px 0;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .student-list-header-text p {
+        opacity: 0.9;
+        margin: 0;
+        font-size: 1.1rem;
+    }
+
+    .student-list-body {
+        padding: 40px;
+    }
+
+    .exam-info-card {
+        background: linear-gradient(135deg, #f8fafc 0%, #e9f2f9 100%);
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+        border-left: 5px solid var(--accent-color);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        animation: slideIn 0.5s ease;
+    }
+
+    .exam-info-item {
+        background: var(--white);
+        border-radius: 10px;
+        padding: 15px 20px;
+        border: 1px solid rgba(44, 90, 160, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .exam-info-label {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .exam-info-value {
+        color: var(--primary-color);
+        font-weight: 700;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .exam-info-value i {
+            color: var(--accent-color);
+        }
+
+    .student-table-container {
+        background: var(--white);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        animation: slideIn 0.6s ease 0.1s forwards;
+        opacity: 0;
+    }
+
+    .table-header {
+        background: linear-gradient(135deg, #f8fafc 0%, #e1e8f0 100%);
+        padding: 20px 25px;
+        border-bottom: 2px solid var(--secondary-color);
+    }
+
+        .table-header h3 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+    .student-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+    }
+
+        .student-table thead {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a6d 100%);
+            color: white;
+        }
+
+        .student-table th {
+            padding: 18px 20px;
+            text-align: left;
+            font-weight: 600;
+            border: none;
+            font-size: 1rem;
+        }
+
+            .student-table th:first-child {
+                border-radius: 10px 0 0 0;
+            }
+
+            .student-table th:last-child {
+                border-radius: 0 10px 0 0;
+            }
+
+        .student-table tbody tr {
+            border-bottom: 1px solid #e1e8f0;
+            transition: var(--transition);
+        }
+
+            .student-table tbody tr:hover {
+                background: #f8fafc;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            }
+
+        .student-table td {
+            padding: 18px 20px;
+            color: var(--text-dark);
+            border: none;
+        }
+
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .status-completed {
+        background: rgba(40, 167, 69, 0.1);
+        color: var(--success-color);
+        border: 1px solid rgba(40, 167, 69, 0.2);
+    }
+
+    .status-not-completed {
+        background: rgba(255, 193, 7, 0.1);
+        color: var(--warning-color);
+        border: 1px solid rgba(255, 193, 7, 0.2);
+    }
+
+    .score-display {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .score-na {
+        color: var(--text-light);
+        font-style: italic;
+    }
+
+    .action-btn {
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        border: none;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a6d 100%);
+        color: white;
+    }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(44, 90, 160, 0.2);
+            color: white;
+        }
+
+    .btn-secondary {
+        background: transparent;
+        color: var(--primary-color);
+        border: 2px solid var(--primary-color);
+    }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(44, 90, 160, 0.2);
+        }
+
+    .button-group {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .no-students {
+        text-align: center;
+        padding: 50px;
+        color: var(--text-light);
+    }
+
+        .no-students i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #e1e8f0;
+        }
+
+    .student-count {
+        background: var(--accent-color);
+        color: white;
+        border-radius: 50px;
+        padding: 8px 16px;
+        font-weight: 600;
+        margin-left: 10px;
+    }
+
+    @@keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animated-row {
+        opacity: 0;
+        transform: translateY(10px);
+        animation: slideIn 0.5s ease forwards;
+    }
+
+    @@media (max-width: 992px) {
+        .student-table {
+            display: block;
+            overflow-x: auto;
+        }
+
+        .student-list-header {
+            padding: 25px 20px;
+        }
+
+        .student-list-header-content {
+            flex-direction: column;
+            text-align: center;
+            gap: 15px;
+        }
+
+        .student-list-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.8rem;
+        }
+
+        .student-list-header-text h1 {
+            font-size: 1.8rem;
+        }
+
+        .student-list-body {
+            padding: 20px;
+        }
+
+        .exam-info-card {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .student-table th,
+        .student-table td {
+            padding: 12px 15px;
+        }
+
+        .button-group {
+            flex-direction: column;
+        }
+
+        .action-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+<div class="student-list-section">
+    <div class="student-list-card">
+        <div class="student-list-header">
+            <div class="student-list-header-content">
+                <div class="student-list-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="student-list-header-text">
+                    <h1>Sınava Giren Öğrenciler <span class="student-count">@Model.Count()</span></h1>
+                    <p>"@exam.Title" sınavına kayıtlı öğrenci listesi</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="student-list-body">
+            <!-- Sınav Bilgileri -->
+            <div class="exam-info-card">
+                <div class="exam-info-item">
+                    <span class="exam-info-label">Sınav Adı</span>
+                    <span class="exam-info-value">
+                        <i class="fas fa-file-alt"></i>
+                        @exam.Title
+                    </span>
+                </div>
+                <div class="exam-info-item">
+                    <span class="exam-info-label">Ders</span>
+                    <span class="exam-info-value">
+                        <i class="fas fa-book"></i>
+                        @exam.Course.CourseName
+                    </span>
+                </div>
+                <div class="exam-info-item">
+                    <span class="exam-info-label">Süre</span>
+                    <span class="exam-info-value">
+                        <i class="fas fa-clock"></i>
+                        @exam.DurationMinutes dakika
+                    </span>
+                </div>
+                <div class="exam-info-item">
+                    <span class="exam-info-label">Kayıtlı Öğrenci</span>
+                    <span class="exam-info-value">
+                        <i class="fas fa-user-graduate"></i>
+                        @Model.Count() öğrenci
+                    </span>
+                </div>
+            </div>
+
+            <!-- Öğrenci Listesi Tablosu -->
+            <div class="student-table-container">
+                <div class="table-header">
+                    <h3>
+                        <i class="fas fa-list"></i>
+                        Öğrenci Listesi
+                    </h3>
+                </div>
+
+                @if (Model.Any())
+                {
+                    <table class="student-table">
+                        <thead>
+                            <tr>
+                                <th>Öğrenci No</th>
+                                <th>Ad Soyad</th>
+                                <th>Başlama Tarihi</th>
+                                <th>Bitiş Tarihi</th>
+                                <th>Durum</th>
+                                <th>Not</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var se in Model)
+                            {
+                                <tr class="animated-row" style="animation-delay: @(0.05 * Model.ToList().IndexOf(se))s">
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <div style="width: 30px; height: 30px; background: #e9f2f9; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                                <i class="fas fa-id-card" style="color: var(--primary-color); font-size: 0.9rem;"></i>
+                                            </div>
+                                            <span style="font-weight: 600;">@se.Student.Numara</span>
+                                        </div>
+                                    </td>
+                                    <td style="font-weight: 500;">@se.Student.full_name</td>
+                                    <td>
+                                        @if (se.StartTime.HasValue)
+                                        {
+                                            <div style="display: flex; flex-direction: column; gap: 3px;">
+                                                <span>@se.StartTime.Value.ToString("dd MMM")</span>
+                                                <span style="color: var(--text-light); font-size: 0.9rem;">@se.StartTime.Value.ToString("HH:mm")</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: var(--text-light); font-style: italic;">Başlamadı</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (se.EndTime.HasValue)
+                                        {
+                                            <div style="display: flex; flex-direction: column; gap: 3px;">
+                                                <span>@se.EndTime.Value.ToString("dd MMM")</span>
+                                                <span style="color: var(--text-light); font-size: 0.9rem;">@se.EndTime.Value.ToString("HH:mm")</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: var(--text-light); font-style: italic;">-</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (se.Completed)
+                                        {
+                                            <span class="status-badge status-completed">
+                                                <i class="fas fa-check-circle"></i>
+                                                Tamamlandı
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="status-badge status-not-completed">
+                                                <i class="fas fa-clock"></i>
+                                                Devam Ediyor
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (se.Score.HasValue)
+                                        {
+                                            <span class="score-display">
+                                                <i class="fas fa-star" style="color: var(--accent-color);"></i>
+                                                @se.Score.Value.ToString("F2")
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="score-na">-</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (se.Completed)
+                                        {
+                                            <a asp-controller="Teacher"
+                                               asp-action="StudentAnswers"
+                                               asp-route-studentExamId="@se.Id"
+                                               class="action-btn btn-primary">
+                                                <i class="fas fa-eye"></i>
+                                                Cevapları Gör
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: var(--text-light); font-size: 0.9rem; font-style: italic;">Sınav devam ediyor</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="no-students">
+                        <i class="fas fa-user-slash"></i>
+                        <h3 style="color: var(--text-light); margin-bottom: 10px;">Kayıtlı Öğrenci Bulunamadı</h3>
+                        <p style="color: var(--text-light); opacity: 0.7;">Bu sınava henüz hiç öğrenci kaydolmamış.</p>
+                    </div>
+                }
+            </div>
+
+            <!-- Butonlar -->
+            <div class="button-group">
+                <a asp-controller="Exam"
+                   asp-action="Details"
+                   asp-route-id="@exam.Id"
+                   class="action-btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Sınav Detayına Dön
+                </a>
+
+                <a asp-controller="Exam"
+                   asp-action="Index"
+                   class="action-btn btn-secondary">
+                    <i class="fas fa-list"></i>
+                    Tüm Sınavlar
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Satır animasyonları
+        const rows = document.querySelectorAll('.animated-row');
+        rows.forEach((row, index) => {
+            row.style.animationDelay = `${0.05 * index}s`;
+        });
+
+        // Tablo hover efekti
+        const tableRows = document.querySelectorAll('.student-table tbody tr');
+        tableRows.forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.08)';
+            });
+
+            row.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Durum badge'leri için tooltip
+        const statusBadges = document.querySelectorAll('.status-badge');
+        statusBadges.forEach(badge => {
+            if (badge.classList.contains('status-completed')) {
+                badge.title = 'Öğrenci sınavı tamamladı';
+            } else {
+                badge.title = 'Öğrenci sınavı henüz tamamlamadı';
+            }
+        });
+
+        // Mobil görünümde tablo scroll animasyonu
+        const tableContainer = document.querySelector('.student-table-container');
+        if (tableContainer && window.innerWidth < 992) {
+            tableContainer.addEventListener('scroll', function() {
+                const scrollPercent = this.scrollLeft / (this.scrollWidth - this.clientWidth) * 100;
+                this.style.boxShadow = `0 4px 15px rgba(0, 0, 0, 0.1), inset ${scrollPercent > 0 ? '5px' : '0'} 0 0 rgba(44, 90, 160, 0.1)`;
+            });
+        }
+
+        // Tamamlanan öğrenci sayısını hesapla
+        const completedCount = document.querySelectorAll('.status-completed').length;
+        const totalCount = @Model.Count();
+
+        if (totalCount > 0) {
+            const completionRate = Math.round((completedCount / totalCount) * 100);
+            const headerText = document.querySelector('.student-list-header-text p');
+            if (headerText) {
+                headerText.innerHTML += ` <span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; margin-left: 5px;">%${completionRate} tamamlandı</span>`;
+            }
+        }
+    });
+</script>
