@@ -1,44 +1,685 @@
 ﻿@model OnlineSinavSistemi.Models.Course
-
 @{
     ViewData["Title"] = "Ders Detayları";
+
+    var studentCount = Model.CourseStudents?.Count() ?? 0;
+    var examCount = Model.Exams?.Count() ?? 0;
+    var activeExamCount = Model.Exams?.Count(e => e.IsPublished) ?? 0;
 }
 
-<h2>@Model.CourseName</h2>
+<style>
+    :root {
+        --primary-color: #2c5aa0;
+        --primary-dark: #1a3a6d;
+        --secondary-color: #e9f2f9;
+        --accent-color: #d4af37;
+        --success-color: #28a745;
+        --info-color: #17a2b8;
+        --warning-color: #ffc107;
+        --text-dark: #333;
+        --text-light: #555;
+        --white: #ffffff;
+        --gray-light: #f8f9fa;
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        --shadow-hover: 0 15px 40px rgba(44, 90, 160, 0.15);
+        --transition: all 0.3s ease;
+        --border-radius: 12px;
+    }
 
-<h4>Öğrenciler</h4>
-@if (Model.CourseStudents != null && Model.CourseStudents.Any())
-{
-    <ul>
-        @foreach (var cs in Model.CourseStudents)
-        {
-            <li>@cs.Student?.UserName</li>
+    .course-detail-container {
+        min-height: 70vh;
+        padding: 30px 20px;
+        background: linear-gradient(135deg, var(--gray-light) 0%, #eef2f7 100%);
+    }
+
+    .course-detail-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        color: var(--white);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        margin-bottom: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .course-detail-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 Q50,40 100,0 L100,100 L0,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: 100% 120px;
+            background-position: top;
         }
-    </ul>
-}
-else
-{
-    <p>Bu derse kayıtlı öğrenci bulunmamaktadır.</p>
-}
 
-<h4>Sınavlar</h4>
-@if (Model.Exams != null && Model.Exams.Any())
-{
-    <ul>
-        @foreach (var exam in Model.Exams)
-        {
-            <li>
-                <a asp-controller="Exam" asp-action="Details" asp-route-id="@exam.Id">@exam.Title</a>
-                (@(exam.IsPublished ? "Yayınlandı" : "Yayınlanmadı"))
-            </li>
+    .course-title-section {
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .course-icon-large {
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        margin-right: 25px;
+        border: 3px solid var(--accent-color);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .course-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+        color: var(--white);
+    }
+
+    .course-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 0;
+    }
+
+    .course-stats-section {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .course-stat-card {
+        flex: 1;
+        min-width: 200px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        padding: 20px;
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        text-align: center;
+        transition: var(--transition);
+    }
+
+        .course-stat-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-5px);
         }
-    </ul>
-}
-else
-{
-    <p>Bu derse ait sınav bulunmamaktadır.</p>
-}
 
-<p>
-    <button type="button" class="btn btn-secondary equal-btn" onclick="history.back()">Geri</button>
-</p>
+    .course-stat-value {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: var(--white);
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .course-stat-label {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .detail-sections {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    .detail-section {
+        background: var(--white);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        transition: var(--transition);
+    }
+
+        .detail-section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+    .section-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        color: var(--white);
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+        .section-header i {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .section-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--white);
+        }
+
+    .section-content {
+        padding: 25px;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--text-light);
+    }
+
+    .empty-icon {
+        font-size: 3rem;
+        color: var(--primary-color);
+        opacity: 0.3;
+        margin-bottom: 15px;
+    }
+
+    .empty-text {
+        font-size: 1.1rem;
+        margin-bottom: 0;
+    }
+
+    .students-list, .exams-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+        .students-list li, .exams-list li {
+            padding: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+            .students-list li:last-child, .exams-list li:last-child {
+                border-bottom: none;
+            }
+
+            .students-list li:hover, .exams-list li:hover {
+                background-color: var(--secondary-color);
+                border-radius: var(--border-radius);
+            }
+
+    .student-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .student-avatar {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        font-weight: 600;
+    }
+
+    .student-name {
+        font-weight: 600;
+        color: var(--text-dark);
+    }
+
+    .exam-info {
+        flex: 1;
+    }
+
+    .exam-title {
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 5px;
+        display: block;
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+        .exam-title:hover {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+    .exam-meta {
+        display: flex;
+        gap: 15px;
+        font-size: 0.85rem;
+        color: var(--text-light);
+    }
+
+    .exam-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .status-published {
+        background: rgba(40, 167, 69, 0.1);
+        color: var(--success-color);
+    }
+
+    .status-draft {
+        background: rgba(108, 117, 125, 0.1);
+        color: #6c757d;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 40px;
+        padding-top: 40px;
+        border-top: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .btn-action {
+        padding: 14px 35px;
+        border-radius: var(--border-radius);
+        font-weight: 700;
+        font-size: 1.1rem;
+        transition: var(--transition);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-back {
+        background: linear-gradient(135deg, #6c757d, #5a6268);
+        color: var(--white);
+    }
+
+        .btn-back:hover {
+            background: linear-gradient(135deg, #5a6268, #4e555b);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(108, 117, 125, 0.3);
+            color: var(--white);
+            text-decoration: none;
+        }
+
+    .btn-add-exam {
+        background: linear-gradient(135deg, var(--success-color), #1e7e34);
+        color: var(--white);
+    }
+
+        .btn-add-exam:hover {
+            background: linear-gradient(135deg, #1e7e34, #155724);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(40, 167, 69, 0.3);
+            color: var(--white);
+            text-decoration: none;
+        }
+
+    .btn-add-student {
+        background: linear-gradient(135deg, var(--accent-color), #c69500);
+        color: var(--white);
+    }
+
+        .btn-add-student:hover {
+            background: linear-gradient(135deg, #c69500, #b38600);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+            color: var(--white);
+            text-decoration: none;
+        }
+
+    .course-meta {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.95rem;
+    }
+
+        .meta-item i {
+            color: var(--accent-color);
+        }
+
+    @@media (max-width: 992px) {
+        .detail-sections
+
+    {
+        grid-template-columns: 1fr;
+    }
+
+    .course-title-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .course-icon-large {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .course-stats-section {
+        justify-content: center;
+    }
+
+    }
+
+    @@media (max-width: 768px) {
+        .course-detail-container
+
+    {
+        padding: 20px 15px;
+    }
+
+    .course-detail-header {
+        padding: 30px 20px;
+    }
+
+    .course-title {
+        font-size: 2rem;
+    }
+
+    .course-stat-card {
+        min-width: 150px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .btn-action {
+        width: 100%;
+        justify-content: center;
+    }
+
+    }
+
+    @@media (max-width: 576px) {
+        .course-title
+
+    {
+        font-size: 1.7rem;
+    }
+
+    .course-stats-section {
+        flex-direction: column;
+    }
+
+    .course-stat-card {
+        width: 100%;
+    }
+
+    .exams-list li, .students-list li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    }
+
+    /* Custom scrollbar for lists */
+    .students-list::-webkit-scrollbar,
+    .exams-list::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .students-list::-webkit-scrollbar-track,
+    .exams-list::-webkit-scrollbar-track {
+        background: var(--secondary-color);
+        border-radius: 3px;
+    }
+
+    .students-list::-webkit-scrollbar-thumb,
+    .exams-list::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 3px;
+    }
+
+    /* Animation */
+    @@keyframes slideIn {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    .animated-section {
+        animation: slideIn 0.6s ease-out;
+    }
+</style>
+
+<div class="course-detail-container">
+    <!-- Header -->
+    <div class="course-detail-header">
+        <div class="course-title-section">
+            <div class="course-icon-large">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+                <h1 class="course-title">@Model.CourseName</h1>
+                <p class="course-subtitle">Ders Detayları ve İstatistikler</p>
+
+                <div class="course-meta">
+                    <span class="meta-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        @DateTime.Now.ToString("dd MMMM yyyy")
+                    </span>
+                    <span class="meta-item">
+                        <i class="fas fa-hashtag"></i>
+                        ID: @Model.Id.ToString().Substring(0, Math.Min(8, Model.Id.ToString().Length))
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="course-stats-section">
+            <div class="course-stat-card">
+                <span class="course-stat-value">@studentCount</span>
+                <span class="course-stat-label">Öğrenci</span>
+            </div>
+            <div class="course-stat-card">
+                <span class="course-stat-value">@examCount</span>
+                <span class="course-stat-label">Toplam Sınav</span>
+            </div>
+            <div class="course-stat-card">
+                <span class="course-stat-value">@activeExamCount</span>
+                <span class="course-stat-label">Aktif Sınav</span>
+            </div>
+            <div class="course-stat-card">
+                <span class="course-stat-value">
+                    @if (examCount > 0)
+                    {
+                        <text>@((activeExamCount * 100 / examCount).ToString("0"))%</text>
+                    }
+                    else
+                    {
+                        <text>0%</text>
+                    }
+                </span>
+                <span class="course-stat-label">Aktiflik Oranı</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Sections -->
+    <div class="detail-sections">
+        <!-- Öğrenciler -->
+        <div class="detail-section animated-section">
+            <div class="section-header">
+                <i class="fas fa-user-graduate"></i>
+                <h3>Dersin Öğrencileri</h3>
+            </div>
+            <div class="section-content">
+                @if (Model.CourseStudents != null && Model.CourseStudents.Any())
+                {
+                    <ul class="students-list">
+                        @foreach (var cs in Model.CourseStudents)
+                        {
+                            <li>
+                                <div class="student-info">
+                                    <div class="student-avatar">
+                                        @cs.Student?.UserName?[0]
+                                    </div>
+                                    <div>
+                                        <div class="student-name">@cs.Student?.UserName</div>
+                                        <small class="text-muted">@cs.Student?.Email</small>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-user-slash"></i>
+                        </div>
+                        <p class="empty-text">Bu derse kayıtlı öğrenci bulunmamaktadır.</p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Sınavlar -->
+        <div class="detail-section animated-section">
+            <div class="section-header">
+                <i class="fas fa-file-alt"></i>
+                <h3>Dersin Sınavları</h3>
+            </div>
+            <div class="section-content">
+                @if (Model.Exams != null && Model.Exams.Any())
+                {
+                    <ul class="exams-list">
+                        @foreach (var exam in Model.Exams)
+                        {
+                            <li>
+                                <div class="exam-info">
+                                    <a asp-controller="Exam" asp-action="Details" asp-route-id="@exam.Id"
+                                       class="exam-title">
+                                        @exam.Title
+                                    </a>
+                                    <div class="exam-meta">
+                                        <span class="meta-item">
+                                            <i class="fas fa-calendar-alt"></i>
+                                            @DateTime.Now.ToString("dd MMMM yyyy")
+                                        </span>
+                                        <span>
+                                            <i class="fas fa-question-circle"></i>
+                                            @exam.Questions?.Count() Soru
+                                        </span>
+                                    </div>
+                                </div>
+                                <span class="exam-status @(exam.IsPublished ? "status-published" : "status-draft")">
+                                    <i class="fas fa-circle"></i>
+                                    @(exam.IsPublished ? "Yayınlandı" : "Taslak")
+                                </span>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-file-excel"></i>
+                        </div>
+                        <p class="empty-text">Bu derse ait sınav bulunmamaktadır.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // List hover effects
+        const listItems = document.querySelectorAll('.students-list li, .exams-list li');
+        listItems.forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(5px)';
+            });
+
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+
+        // Section animations
+        const sections = document.querySelectorAll('.animated-section');
+        sections.forEach((section, index) => {
+            section.style.animationDelay = `${index * 0.2}s`;
+        });
+
+        // Stat card animations
+        const statCards = document.querySelectorAll('.course-stat-card');
+        statCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+
+            card.addEventListener('mouseenter', function() {
+                const value = this.querySelector('.course-stat-value');
+                if (value) {
+                    value.style.transform = 'scale(1.1)';
+                    value.style.transition = 'transform 0.3s ease';
+                }
+            });
+
+            card.addEventListener('mouseleave', function() {
+                const value = this.querySelector('.course-stat-value');
+                if (value) {
+                    value.style.transform = 'scale(1)';
+                }
+            });
+        });
+
+        // Smooth scroll for long lists
+        const lists = document.querySelectorAll('.students-list, .exams-list');
+        lists.forEach(list => {
+            if (list.scrollHeight > 400) {
+                list.style.maxHeight = '400px';
+                list.style.overflowY = 'auto';
+            }
+        });
+    });
+</script>

@@ -1,40 +1,626 @@
 ﻿@{
     ViewData["Title"] = "Öğretmen Paneli";
+    var userName = User.Identity?.Name?.Split('@')[0] ?? "Öğretmen";
 }
 
-<h2>👨‍🏫 Hoş geldiniz, @User.Identity.Name</h2>
-
-<div class="dashboard">
-    <a asp-controller="Course" asp-action="Index" class="btn btn-primary btn-lg">📘 Ders Ekle</a>
-    <a asp-controller="Exam" asp-action="Create" class="btn btn-success btn-lg">🧾 Sınav Oluştur</a>
-    <a asp-controller="Exam" asp-action="Index" class="btn btn-info btn-lg">📋 Sınavları Listele</a>
-  
-</div>
-
-<div class="stats">
-    <p><strong>Ders Sayısı:</strong> @ViewBag.DersSayisi</p>
-    <p><strong>Sınav Sayısı:</strong> @ViewBag.SinavSayisi</p>
-</div>
-
 <style>
-    .dashboard {
+    :root {
+        --primary-color: #2c5aa0;
+        --primary-dark: #1a3a6d;
+        --secondary-color: #e9f2f9;
+        --accent-color: #d4af37;
+        --success-color: #28a745;
+        --info-color: #17a2b8;
+        --warning-color: #ffc107;
+        --text-dark: #333;
+        --text-light: #555;
+        --white: #ffffff;
+        --gray-light: #f8f9fa;
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        --shadow-hover: 0 15px 40px rgba(44, 90, 160, 0.15);
+        --transition: all 0.3s ease;
+        --border-radius: 12px;
+    }
+
+    .teacher-dashboard {
+        min-height: 80vh;
+        padding: 40px 20px;
+        background: linear-gradient(135deg, var(--gray-light) 0%, #eef2f7 100%);
+    }
+
+    .dashboard-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        color: var(--white);
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        margin-bottom: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .dashboard-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,30 Q50,0 100,30 L100,100 L0,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: 100% 100px;
+            background-position: top;
+        }
+
+    .welcome-section {
+        display: flex;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .teacher-avatar {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--accent-color), #c69500);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        font-size: 2.5rem;
+        margin-right: 25px;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .welcome-text h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+        color: var(--white);
+    }
+
+    .welcome-text p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 0;
+    }
+
+    .role-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 6px 15px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+
+    .dashboard-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    .action-card {
+        background: var(--white);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: var(--shadow);
+        border: 1px solid transparent;
+        transition: var(--transition);
+        text-decoration: none;
         display: flex;
         flex-direction: column;
-        gap: 10px;
-        width: 250px;
-        margin-top: 20px;
-    }
-
-    .btn {
-        padding: 10px;
-        border-radius: 5px;
+        align-items: center;
         text-align: center;
-        color: white;
-        font-weight: bold;
-        text-decoration: none;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
     }
 
-    .stats {
-        margin-top: 30px;
+        .action-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .action-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 5px 5px 0 0;
+        }
+
+    .action-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--secondary-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        font-size: 2.2rem;
+        color: var(--primary-color);
+        transition: var(--transition);
+    }
+
+    .action-card:hover .action-icon {
+        background: var(--primary-color);
+        color: var(--white);
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .action-title {
+        color: var(--primary-color);
+        font-weight: 700;
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+    }
+
+    .action-description {
+        color: var(--text-light);
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+
+    .action-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 25px;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: var(--white);
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: var(--transition);
+        border: none;
+        cursor: pointer;
+    }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(44, 90, 160, 0.3);
+            color: var(--white);
+            text-decoration: none;
+        }
+
+    .stats-section {
+        margin-top: 40px;
+    }
+
+    .stats-title {
+        color: var(--primary-color);
+        font-weight: 700;
+        font-size: 1.6rem;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .stats-title i {
+            color: var(--accent-color);
+        }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .stat-card {
+        background: var(--white);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: var(--shadow);
+        border-left: 5px solid var(--primary-color);
+        transition: var(--transition);
+    }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        background: rgba(44, 90, 160, 0.1);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+        color: var(--primary-color);
+        font-size: 1.8rem;
+    }
+
+    .stat-content h3 {
+        color: var(--text-dark);
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+    }
+
+    .stat-number {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: var(--primary-color);
+        margin: 10px 0;
+    }
+
+    .stat-trend {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+
+    .trend-up {
+        background: rgba(40, 167, 69, 0.1);
+        color: var(--success-color);
+    }
+
+    .trend-down {
+        background: rgba(220, 53, 69, 0.1);
+        color: var(--danger-color);
+    }
+
+    .quick-actions {
+        margin-top: 50px;
+        padding: 30px;
+        background: linear-gradient(135deg, var(--secondary-color) 0%, #e1ebf5 100%);
+        border-radius: 20px;
+        border: 2px dashed var(--primary-color);
+    }
+
+    .quick-actions-title {
+        color: var(--primary-color);
+        font-weight: 700;
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .quick-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+    }
+
+    .quick-btn {
+        padding: 12px 25px;
+        border-radius: 50px;
+        background: var(--white);
+        color: var(--primary-color);
+        font-weight: 600;
+        text-decoration: none;
+        border: 2px solid var(--primary-color);
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .quick-btn:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-3px);
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(44, 90, 160, 0.2);
+        }
+
+    /* Responsive */
+    @@media (max-width: 992px) {
+        .dashboard-actions
+
+    {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .welcome-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .teacher-avatar {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .welcome-text h1 {
+        font-size: 1.8rem;
+    }
+
+    }
+
+    @@media (max-width: 768px) {
+        .teacher-dashboard
+
+    {
+        padding: 20px 15px;
+    }
+
+    .dashboard-header {
+        padding: 20px;
+    }
+
+    .action-card {
+        padding: 20px;
+    }
+
+    .action-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 2rem;
+    }
+
+    .quick-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .quick-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    }
+
+    @@media (max-width: 480px) {
+        .dashboard-actions
+
+    {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .teacher-avatar {
+        width: 70px;
+        height: 70px;
+        font-size: 2.2rem;
+    }
+
+    }
+
+    /* Animations */
+    @@keyframes fadeInUp {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    .animated {
+        animation: fadeInUp 0.6s ease-out;
     }
 </style>
+
+<div class="teacher-dashboard">
+    <div class="container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <div class="welcome-section">
+                <div class="teacher-avatar">
+                    👨‍🏫
+                </div>
+                <div class="welcome-text">
+                    <h1>Hoş Geldiniz, @userName!</h1>
+                    <p>Öğretmen Panelinize erişiminiz sağlandı.</p>
+                    <div class="role-badge">
+                        <i class="fas fa-user-tie"></i>
+                        Öğretmen Paneli
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Actions -->
+        <div class="dashboard-actions">
+            <!-- Ders Ekle -->
+            <a asp-controller="Course" asp-action="Index" class="action-card animated">
+                <div class="action-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3 class="action-title">Ders Yönetimi</h3>
+                <p class="action-description">
+                    Yeni dersler ekleyin, mevcut dersleri düzenleyin ve öğrencilerinizi yönetin.
+                </p>
+                <span class="action-btn">
+                    <i class="fas fa-plus-circle"></i>
+                    Dersleri Yönet
+                </span>
+            </a>
+
+            <!-- Sınav Oluştur -->
+            <a asp-controller="Exam" asp-action="Create" class="action-card animated">
+                <div class="action-icon">
+                    <i class="fas fa-file-signature"></i>
+                </div>
+                <h3 class="action-title">Sınav Oluştur</h3>
+                <p class="action-description">
+                    Yeni sınavlar oluşturun, soru bankanızı kullanın ve sınav ayarlarınızı yapılandırın.
+                </p>
+                <span class="action-btn">
+                    <i class="fas fa-plus-circle"></i>
+                    Sınav Oluştur
+                </span>
+            </a>
+
+            <!-- Sınavları Listele -->
+            <a asp-controller="Exam" asp-action="Index" class="action-card animated">
+                <div class="action-icon">
+                    <i class="fas fa-list-alt"></i>
+                </div>
+                <h3 class="action-title">Sınavları Görüntüle</h3>
+                <p class="action-description">
+                    Oluşturduğunuz sınavları listeleyin, düzenleyin ve öğrenci sonuçlarını inceleyin.
+                </p>
+                <span class="action-btn">
+                    <i class="fas fa-eye"></i>
+                    Sınavları Listele
+                </span>
+            </a>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-section">
+            <h2 class="stats-title">
+                <i class="fas fa-chart-bar"></i>
+                İstatistikler
+            </h2>
+
+            <div class="stats-grid">
+                <div class="stat-card animated">
+                    <div class="stat-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Toplam Ders Sayısı</h3>
+                        <div class="stat-number">@ViewBag.DersSayisi</div>
+                        <span class="stat-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            Aktif
+                        </span>
+                    </div>
+                </div>
+
+                <div class="stat-card animated" style="animation-delay: 0.2s;">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Toplam Sınav Sayısı</h3>
+                        <div class="stat-number">@ViewBag.SinavSayisi</div>
+                        <span class="stat-trend trend-up">
+                            <i class="fas fa-chart-line"></i>
+                            Aktif
+                        </span>
+                    </div>
+                </div>
+
+                <div class="stat-card animated" style="animation-delay: 0.4s;">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Öğrenci Sayısı</h3>
+                        <div class="stat-number">@ViewBag.OgrenciSayisi</div>
+                        <span class="stat-trend trend-up">
+                            <i class="fas fa-user-plus"></i>
+                            Kayıtlı
+                        </span>
+                    </div>
+                </div>
+
+                <div class="stat-card animated" style="animation-delay: 0.6s;">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Tamamlanan Sınavlar</h3>
+                        <div class="stat-number">@ViewBag.TamamlananSinavSayisi</div>
+                        <span class="stat-trend trend-up">
+                            <i class="fas fa-check"></i>
+                            Başarılı
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions animated" style="animation-delay: 0.8s;">
+            <h3 class="quick-actions-title">Hızlı Erişim</h3>
+            <div class="quick-buttons">
+                <a asp-controller="Course" asp-action="Create" class="quick-btn">
+                    <i class="fas fa-plus"></i>
+                    Hızlı Ders Ekle
+                </a>
+                <a asp-controller="Exam" asp-action="CreateSimple" class="quick-btn">
+                    <i class="fas fa-plus-square"></i>
+                    Hızlı Sınav Oluştur
+                </a>
+                <a asp-controller="Exam" asp-action="Results" class="quick-btn">
+                    <i class="fas fa-chart-pie"></i>
+                    Sınav Sonuçları
+                </a>
+                <a asp-controller="Student" asp-action="Index" class="quick-btn">
+                    <i class="fas fa-user-graduate"></i>
+                    Öğrencileri Görüntüle
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animasyonları sırayla başlat
+        const animatedItems = document.querySelectorAll('.animated');
+        animatedItems.forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.1}s`;
+        });
+
+        // Card hover efektleri
+        const actionCards = document.querySelectorAll('.action-card');
+        actionCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.action-icon');
+                icon.style.transform = 'scale(1.1) rotate(5deg)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.action-icon');
+                icon.style.transform = '';
+            });
+        });
+
+        // Stat card hover efekti
+        const statCards = document.querySelectorAll('.stat-card');
+        statCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.stat-icon');
+                icon.style.transform = 'scale(1.1)';
+                icon.style.transition = 'transform 0.3s ease';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.stat-icon');
+                icon.style.transform = '';
+            });
+        });
+
+        // Sayfa yüklendiğinde istatistikleri güncelle (simülasyon)
+        setTimeout(() => {
+            console.log('Öğretmen paneli yüklendi. Hoş geldiniz!');
+        }, 1000);
+    });
+</script>

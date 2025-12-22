@@ -2,39 +2,435 @@
     ViewData["Title"] = "Gizlilik Politikası";
 }
 
-<div class="container mt-5">
-    <h2 class="text-center text-primary mb-4">Gizlilik Politikası</h2>
+<style>
+    :root {
+        --primary-color: #2c5aa0;
+        --secondary-color: #e9f2f9;
+        --accent-color: #d4af37;
+        --text-dark: #333;
+        --text-light: #555;
+        --white: #ffffff;
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+        --border-radius: 15px;
+    }
 
-    <p>
-        Online Sınav Sistemi olarak, kullanıcı bilgilerinizin gizliliğini önemsiyoruz. Bu politika,
-        kişisel verilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu açıklar.
-    </p>
+    .privacy-hero {
+        background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a6d 100%);
+        color: var(--white);
+        padding: 80px 0 60px;
+        border-radius: 0 0 30px 30px;
+        margin-bottom: 50px;
+        position: relative;
+        overflow: hidden;
+    }
 
-    <h4 class="mt-4">1. Veri Toplama</h4>
-    <p>
-        Sistemde sadece kayıt işlemleri sırasında paylaştığınız bilgiler (ad, e-posta, kullanıcı adı vb.)
-        toplanmaktadır.
-    </p>
+        .privacy-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0,0 Q250,80 500,50 Q750,20 1000,50 L1000,100 L0,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: 100% 100%;
+        }
 
-    <h4 class="mt-4">2. Veri Kullanımı</h4>
-    <p>
-        Toplanan bilgiler yalnızca sistemde oturum açma, sınav yönetimi ve sonuç görüntüleme işlemleri
-        için kullanılmaktadır.
-    </p>
+    .privacy-title {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        display: inline-block;
+    }
 
-    <h4 class="mt-4">3. Güvenlik</h4>
-    <p>
-        Kullanıcı verileri, yalnızca yetkili kişiler tarafından erişilebilir güvenli bir ortamda saklanır.
-    </p>
+        .privacy-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
 
-    <h4 class="mt-4">4. İletişim</h4>
-    <p>
-        Gizlilik politikamızla ilgili sorularınız için bizimle iletişime geçebilirsiniz:
-        <strong>destek@onlinesinavsistemi.com</strong>
-    </p>
+    .privacy-subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        max-width: 800px;
+        margin: 0 auto;
+    }
 
-    <hr />
-    <p class="text-muted text-center mt-4">
-        &copy; @DateTime.Now.Year Online Sınav Sistemi. Tüm hakları saklıdır.
-    </p>
+    .privacy-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .privacy-section {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        padding: 50px;
+        box-shadow: var(--shadow);
+        margin-bottom: 60px;
+        border: 1px solid rgba(44, 90, 160, 0.1);
+    }
+
+    .section-icon {
+        width: 70px;
+        height: 70px;
+        background: var(--secondary-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 25px;
+        font-size: 1.8rem;
+        color: var(--primary-color);
+        border: 3px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .policy-item {
+        background: rgba(233, 242, 249, 0.3);
+        border-radius: var(--border-radius);
+        padding: 30px;
+        margin-bottom: 25px;
+        border-left: 5px solid var(--primary-color);
+        transition: var(--transition);
+    }
+
+        .policy-item:hover {
+            background: rgba(233, 242, 249, 0.5);
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+    .policy-number {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background: var(--primary-color);
+        color: var(--white);
+        border-radius: 50%;
+        text-align: center;
+        line-height: 40px;
+        font-weight: 700;
+        margin-right: 15px;
+        font-size: 1.2rem;
+    }
+
+    .policy-title {
+        color: var(--primary-color);
+        font-weight: 700;
+        margin-bottom: 15px;
+        font-size: 1.4rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .policy-content {
+        color: var(--text-light);
+        line-height: 1.8;
+        padding-left: 55px;
+    }
+
+    .contact-box {
+        background: linear-gradient(135deg, var(--secondary-color) 0%, #d8e6f3 100%);
+        border-radius: var(--border-radius);
+        padding: 40px;
+        text-align: center;
+        border: 2px dashed var(--primary-color);
+        margin: 40px 0;
+    }
+
+    .contact-icon {
+        font-size: 3rem;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+    }
+
+    .contact-email {
+        display: inline-block;
+        background: var(--white);
+        padding: 15px 30px;
+        border-radius: 50px;
+        color: var(--primary-color);
+        font-weight: 700;
+        text-decoration: none;
+        margin-top: 15px;
+        transition: var(--transition);
+        border: 2px solid transparent;
+    }
+
+        .contact-email:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(44, 90, 160, 0.2);
+            text-decoration: none;
+        }
+
+    .footer-note {
+        text-align: center;
+        padding: 30px;
+        color: var(--text-light);
+        background: var(--secondary-color);
+        border-radius: var(--border-radius);
+        margin-top: 50px;
+        border-top: 3px solid var(--accent-color);
+    }
+
+        .footer-note strong {
+            color: var(--primary-color);
+        }
+
+    .highlight-text {
+        background: linear-gradient(120deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.2) 100%);
+        padding: 20px;
+        border-radius: var(--border-radius);
+        margin: 30px 0;
+        border-left: 4px solid var(--accent-color);
+    }
+
+        .highlight-text p {
+            color: var(--text-dark);
+            font-weight: 500;
+            margin: 0;
+        }
+
+    @@media (max-width: 768px) {
+        .privacy-hero
+
+    {
+        padding: 60px 0 40px;
+    }
+
+    .privacy-title {
+        font-size: 2.2rem;
+    }
+
+    .privacy-section {
+        padding: 30px 20px;
+    }
+
+    .policy-content {
+        padding-left: 0;
+    }
+
+    .policy-title {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .policy-number {
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="privacy-hero">
+    <div class="container text-center">
+        <h1 class="privacy-title">Gizlilik Politikası</h1>
+        <p class="privacy-subtitle">
+            Online Sınav Sistemi olarak, kişisel verilerinizin güvenliği ve gizliliği bizim için en yüksek önceliktir.
+        </p>
+    </div>
 </div>
+
+<!-- Privacy Content -->
+<div class="privacy-container">
+    <div class="privacy-section">
+        <div class="text-center mb-5">
+            <div class="section-icon mx-auto">
+                🔒
+            </div>
+            <h2 class="text-primary fw-bold mb-3">Veri Güvenliği Taahhüdümüz</h2>
+            <p class="lead" style="color: var(--text-light);">
+                Bu politika, kişisel verilerinizi nasıl topladığımızı, işlediğimizi, koruduğumuzu ve
+                hangi haklara sahip olduğunuzu açıklar.
+            </p>
+        </div>
+
+        <!-- Highlight Box -->
+        <div class="highlight-text">
+            <p>
+                📢 <strong>Önemli:</strong> 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) ve
+                Avrupa Birliği Genel Veri Koruma Tüzüğü (GDPR) kapsamında verileriniz güvence altındadır.
+            </p>
+        </div>
+
+        <!-- Privacy Policies -->
+        <div class="policy-item">
+            <div class="policy-title">
+                <span class="policy-number">1</span>
+                <span>Veri Toplama ve İşleme</span>
+            </div>
+            <div class="policy-content">
+                <p>
+                    Sistemimizde yalnızca kayıt işlemleri sırasında paylaştığınız temel bilgiler
+                    (ad, soyad, e-posta adresi, kullanıcı adı vb.) toplanmaktadır. Sınav performans
+                    verileriniz anonimleştirilerek istatistiksel amaçlarla kullanılabilir.
+                </p>
+                <ul class="mt-3" style="padding-left: 20px; color: var(--text-light);">
+                    <li>Zorunlu bilgiler: Kimlik doğrulama için gerekli veriler</li>
+                    <li>İsteğe bağlı bilgiler: Profil geliştirme için ek veriler</li>
+                    <li>Otomatik toplanan veriler: Sistem kullanım analitikleri</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="policy-item">
+            <div class="policy-title">
+                <span class="policy-number">2</span>
+                <span>Veri Kullanım Amaçları</span>
+            </div>
+            <div class="policy-content">
+                <p>
+                    Toplanan bilgiler yalnızca belirli amaçlar için kullanılmaktadır:
+                </p>
+                <div class="row mt-3">
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-start">
+                            <span class="badge bg-primary me-2 p-2">✓</span>
+                            <span>Sistemde oturum açma ve kimlik doğrulama</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-start">
+                            <span class="badge bg-primary me-2 p-2">✓</span>
+                            <span>Sınav yönetimi ve değerlendirme süreçleri</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-start">
+                            <span class="badge bg-primary me-2 p-2">✓</span>
+                            <span>Sonuç görüntüleme ve performans analizi</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-start">
+                            <span class="badge bg-primary me-2 p-2">✓</span>
+                            <span>Sistem geliştirme ve iyileştirme çalışmaları</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="policy-item">
+            <div class="policy-title">
+                <span class="policy-number">3</span>
+                <span>Veri Güvenliği ve Koruma</span>
+            </div>
+            <div class="policy-content">
+                <p>
+                    Kullanıcı verileriniz, en son güvenlik standartlarına uygun şekilde korunmaktadır:
+                </p>
+                <div class="alert alert-primary mt-3" role="alert" style="background: rgba(44, 90, 160, 0.1); border-color: var(--primary-color);">
+                    <div class="d-flex">
+                        <div class="me-3">🛡️</div>
+                        <div>
+                            <strong>Güvenlik Önlemlerimiz:</strong><br>
+                            • SSL/TLS şifreleme<br>
+                            • Güvenlik duvarı ve DDoS koruması<br>
+                            • Düzenli güvenlik denetimleri<br>
+                            • Veri yedekleme ve felaket kurtarma planları
+                        </div>
+                    </div>
+                </div>
+                <p class="mt-3">
+                    Verileriniz yalnızca yetkili personelimiz tarafından erişilebilir güvenli sunucularda
+                    saklanmakta ve üçüncü şahıslarla kesinlikle paylaşılmamaktadır.
+                </p>
+            </div>
+        </div>
+
+        <div class="policy-item">
+            <div class="policy-title">
+                <span class="policy-number">4</span>
+                <span>Veri Saklama ve Silme</span>
+            </div>
+            <div class="policy-content">
+                <p>
+                    Kişisel verileriniz, hesabınız aktif olduğu sürece saklanır. Hesabınızı
+                    kapattığınızda, verileriniz 30 gün içinde sistemimizden tamamen silinir.
+                </p>
+                <p class="mt-3">
+                    <strong>Veri Silme Hakkı:</strong> KVKK Madde 11 kapsamında, kişisel verilerinizin
+                    silinmesini talep etme hakkınız bulunmaktadır. Bu talebinizi aşağıdaki iletişim
+                    bilgilerinden bize ulaştırabilirsiniz.
+                </p>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-box">
+            <div class="contact-icon">📧</div>
+            <h3 class="text-primary mb-3">İletişim ve Destek</h3>
+            <p class="mb-4" style="color: var(--text-light);">
+                Gizlilik politikamızla ilgili her türlü soru, görüş ve talebiniz için
+                bizimle iletişime geçebilirsiniz:
+            </p>
+            <a href="mailto:destek@onlinesinavsistemi.com" class="contact-email">
+                destek@onlinesinavsistemi.com
+            </a>
+            <p class="mt-4 mb-0" style="color: var(--text-light); font-size: 0.9rem;">
+                ⏰ Yanıt süresi: En geç 2 iş günü içinde
+            </p>
+        </div>
+
+        <!-- Last Update -->
+        <div class="text-center mt-5 pt-4" style="border-top: 1px solid rgba(0,0,0,0.1);">
+            <p class="text-muted">
+                <strong>Son Güncelleme:</strong> @DateTime.Now.ToString("dd MMMM yyyy")
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer Note -->
+    <div class="footer-note">
+        <p class="mb-2">
+            <strong>Online Sınav Sistemi</strong> olarak, gizliliğinize ve veri güvenliğinize
+            büyük önem veriyoruz.
+        </p>
+        <p class="mb-0">
+            &copy; @DateTime.Now.Year Online Sınav Sistemi. Tüm hakları saklıdır.
+        </p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Policy items animasyonu
+        const policyItems = document.querySelectorAll('.policy-item');
+        policyItems.forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(-20px)';
+
+            setTimeout(() => {
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                item.style.opacity = '1';
+                item.style.transform = 'translateX(0)';
+            }, 200 + (index * 100));
+        });
+
+        // Contact box hover efekti
+        const contactBox = document.querySelector('.contact-box');
+        if (contactBox) {
+            contactBox.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+
+            contactBox.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        }
+    });
+</script>
