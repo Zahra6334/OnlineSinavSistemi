@@ -2,805 +2,186 @@
 @{
     ViewData["Title"] = "Sorular";
     var examId = ViewBag.ExamId;
-    var examTitle = ViewBag.ExamTitle ?? "Sýnav";
 }
 
-<style>
-    :root {
-        --primary-color: #2c5aa0;
-        --secondary-color: #e9f2f9;
-        --accent-color: #d4af37;
-        --success-color: #28a745;
-        --warning-color: #ffc107;
-        --danger-color: #e74c3c;
-        --text-dark: #333;
-        --text-light: #555;
-        --white: #ffffff;
-        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-        --transition: all 0.3s ease;
-    }
-
-    .questions-section {
-        background: linear-gradient(135deg, #f8fafc 0%, #e9f2f9 100%);
-        min-height: 100vh;
-        padding: 60px 0;
-    }
-
-    .page-header {
-        margin-bottom: 40px;
-    }
-
-    .page-title {
-        color: var(--primary-color);
-        font-weight: 800;
-        font-size: 2.5rem;
-        margin-bottom: 10px;
-        position: relative;
-        display: inline-block;
-    }
-
-    .page-title::after {
-        content: "";
-        position: absolute;
-        bottom: -10px;
-        left: 0;
-        width: 80px;
-        height: 4px;
-        background: var(--accent-color);
-        border-radius: 2px;
-    }
-
-    .page-subtitle {
-        color: var(--text-light);
-        font-size: 1.1rem;
-        margin-top: 20px;
-    }
-
-    .exam-info-card {
-        background: var(--white);
-        border-radius: 20px;
-        padding: 25px;
-        margin-bottom: 30px;
-        box-shadow: var(--shadow);
-        border-left: 5px solid var(--primary-color);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
-
-    .exam-info-content {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .exam-icon {
-        width: 70px;
-        height: 70px;
-        background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a6d 100%);
-        border-radius: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.8rem;
-        color: var(--white);
-        flex-shrink: 0;
-    }
-
-    .exam-details h3 {
-        color: var(--primary-color);
-        font-weight: 700;
-        margin: 0 0 5px 0;
-        font-size: 1.5rem;
-    }
-
-    .exam-details p {
-        color: var(--text-light);
-        margin: 0;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .create-question-btn {
-        background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a6d 100%);
-        color: white;
-        padding: 16px 35px;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 1.1rem;
-        border: none;
-        transition: var(--transition);
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        text-decoration: none;
-        box-shadow: 0 5px 15px rgba(44, 90, 160, 0.2);
-        white-space: nowrap;
-    }
-
-    .create-question-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 25px rgba(44, 90, 160, 0.3);
-        color: white;
-    }
-
-    .questions-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-        gap: 25px;
-        margin-top: 30px;
-    }
-
-    .question-card {
-        background: var(--white);
-        border-radius: 20px;
-        box-shadow: var(--shadow);
-        border: 2px solid transparent;
-        transition: var(--transition);
-        overflow: hidden;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .question-card:hover {
-        transform: translateY(-8px);
-        border-color: var(--primary-color);
-        box-shadow: 0 15px 40px rgba(44, 90, 160, 0.15);
-    }
-
-    .question-card-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a6d 100%);
-        color: var(--white);
-        padding: 25px;
-        position: relative;
-        overflow: hidden;
-        min-height: 80px;
-    }
-
-    .question-card-header::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0,0 Q500,100 1000,0 L1000,100 L0,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
-        background-size: 100% 100px;
-        background-position: bottom;
-    }
-
-    .question-number {
-        position: absolute;
-        top: 20px;
-        right: 25px;
-        background: rgba(255, 255, 255, 0.2);
-        color: var(--white);
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 800;
-        font-size: 1.2rem;
-    }
-
-    .question-point {
-        position: absolute;
-        bottom: 15px;
-        right: 25px;
-        background: rgba(212, 175, 55, 0.9);
-        color: var(--white);
-        padding: 5px 15px;
-        border-radius: 20px;
-        font-weight: 700;
-        font-size: 1rem;
-    }
-
-    .question-card-body {
-        padding: 25px;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .question-text {
-        color: var(--text-dark);
-        font-weight: 600;
-        line-height: 1.6;
-        margin-bottom: 20px;
-        font-size: 1.1rem;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        flex-grow: 1;
-    }
-
-    .choices-container {
-        margin-top: 15px;
-    }
-
-    .choices-title {
-        color: var(--primary-color);
-        font-weight: 600;
-        margin-bottom: 15px;
-        font-size: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .choices-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .choice-item {
-        padding: 12px 15px;
-        margin-bottom: 8px;
-        border-radius: 10px;
-        background: #f8f9fa;
-        border: 1px solid #e9ecef;
-        position: relative;
-        padding-left: 45px;
-        transition: var(--transition);
-    }
-
-    .choice-item:hover {
-        transform: translateX(5px);
-        background: var(--secondary-color);
-    }
-
-    .choice-letter {
-        position: absolute;
-        left: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 25px;
-        height: 25px;
-        background: var(--primary-color);
-        color: var(--white);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 0.9rem;
-    }
-
-    .choice-text {
-        color: var(--text-dark);
-        line-height: 1.5;
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    .choice-status {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 0.85rem;
-        font-weight: 500;
-        padding: 3px 10px;
-        border-radius: 15px;
-    }
-
-    .correct-choice {
-        background: rgba(40, 167, 69, 0.1);
-        color: var(--success-color);
-    }
-
-    .question-card-footer {
-        padding: 0 25px 25px 25px;
-        margin-top: auto;
-    }
-
-    .action-buttons {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-
-    .btn-delete {
-        background: rgba(231, 76, 60, 0.1);
-        color: var(--danger-color);
-        padding: 12px 25px;
-        border-radius: 10px;
-        font-weight: 600;
-        font-size: 0.95rem;
-        border: 1px solid rgba(231, 76, 60, 0.2);
-        transition: var(--transition);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        text-decoration: none;
-        flex: 1;
-        min-width: 100px;
-    }
-
-    .btn-delete:hover {
-        background: var(--danger-color);
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
-    }
-
-    .empty-state {
-        grid-column: 1 / -1;
-        text-align: center;
-        padding: 80px 20px;
-        background: rgba(233, 242, 249, 0.5);
-        border-radius: 20px;
-        border: 2px dashed #c0d4e8;
-    }
-
-    .empty-state-icon {
-        font-size: 4rem;
-        color: #c0d4e8;
-        margin-bottom: 20px;
-    }
-
-    .empty-state h3 {
-        color: var(--text-light);
-        margin-bottom: 15px;
-        font-size: 1.5rem;
-    }
-
-    .empty-state p {
-        color: var(--text-light);
-        max-width: 500px;
-        margin: 0 auto 30px;
-        font-size: 1.1rem;
-    }
-
-    .stats-bar {
-        background: var(--white);
-        border-radius: 15px;
-        padding: 20px;
-        margin-bottom: 30px;
-        box-shadow: var(--shadow);
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-    }
-
-    .stat-item {
-        text-align: center;
-        padding: 15px;
-    }
-
-    .stat-number {
-        font-size: 2.2rem;
-        font-weight: 800;
-        color: var(--primary-color);
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    .stat-label {
-        color: var(--text-light);
-        font-weight: 600;
-        font-size: 0.95rem;
-    }
-
-    .back-button {
-        background: transparent;
-        color: var(--text-light);
-        padding: 12px 30px;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 1rem;
-        border: 2px solid #e1e8f0;
-        transition: var(--transition);
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-        margin-top: 30px;
-    }
-
-    .back-button:hover {
-        border-color: var(--primary-color);
-        color: var(--primary-color);
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    }
-
-    .question-type-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        padding: 5px 12px;
-        border-radius: 15px;
-        font-weight: 500;
-        font-size: 0.85rem;
-        margin-top: 10px;
-        background: rgba(44, 90, 160, 0.1);
-        color: var(--primary-color);
-        border: 1px solid rgba(44, 90, 160, 0.2);
-    }
-
-    @@media (max-width: 768px) {
-        .questions-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .exam-info-card {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .create-question-btn {
-            width: 100%;
-            justify-content: center;
-        }
-
-        .page-title {
-            font-size: 2rem;
-        }
-
-        .stats-bar {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .action-buttons {
-            flex-direction: column;
-        }
-
-        .btn-delete {
-            width: 100%;
-        }
-    }
-
-    @@media (max-width: 480px) {
-        .stats-bar {
-            grid-template-columns: 1fr;
-        }
-
-        .exam-info-content {
-            flex-direction: column;
-            text-align: center;
-            gap: 15px;
-        }
-
-        .exam-icon {
-            width: 60px;
-            height: 60px;
-            font-size: 1.5rem;
-        }
-    }
-
-    /* Animasyonlar */
-    .question-card {
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeInUp 0.6s ease forwards;
-    }
-
-    @@keyframes fadeInUp {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .choice-letter {
-        transition: var(--transition);
-    }
-
-    .choice-item:hover .choice-letter {
-        transform: translateY(-50%) scale(1.1);
-    }
-</style>
-
-<div class="questions-section">
-    <div class="container">
-        <!-- Sayfa Baþlýðý -->
-        <div class="page-header">
-            <h1 class="page-title">Sýnav Sorularý</h1>
-            <p class="page-subtitle">Sýnavdaki tüm sorularý buradan yönetebilirsiniz.</p>
-        </div>
-
-        <!-- Sýnav Bilgileri -->
-        <div class="exam-info-card">
-            <div class="exam-info-content">
-                <div class="exam-icon">
-                    <i class="fas fa-file-alt"></i>
+<div class="container-fluid py-5">
+    <!-- Baþlýk -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="display-5 fw-bold text-dark mb-1">
+                        <i class="bi bi-question-circle text-primary me-2"></i>Sýnav Sorularý
+                    </h1>
+                    <p class="text-muted mb-0">Tüm sorularý buradan yönetebilirsiniz</p>
                 </div>
-                <div class="exam-details">
-                    <h3>@examTitle</h3>
-                    <p>
-                        <i class="fas fa-hashtag"></i>
-                        <span>Sýnav ID: @examId</span>
-                    </p>
-                </div>
+                <a asp-action="Create" asp-route-examId="@examId" class="btn btn-primary btn-lg">
+                    <i class="bi bi-plus-circle me-2"></i>Yeni Soru Ekle
+                </a>
             </div>
-            
-            <a asp-action="Create" asp-route-examId="@examId" class="create-question-btn">
-                <i class="fas fa-plus-circle"></i>
-                <span>Yeni Soru Ekle</span>
-            </a>
+            <div class="border-bottom mt-4"></div>
         </div>
+    </div>
 
-        <!-- Ýstatistikler -->
-        @{
-            var totalQuestions = Model.Count();
-            var multipleChoiceCount = Model.Count(q => q.Choices != null && q.Choices.Any());
-            var classicCount = totalQuestions - multipleChoiceCount;
-            var totalPoints = Model.Sum(q => q.Point);
-        }
-        
-        @if (totalQuestions > 0)
+    <!-- Soru Kartlarý -->
+    <div class="row g-4">
+        @foreach (var q in Model)
         {
-            <div class="stats-bar">
-                <div class="stat-item">
-                    <span class="stat-number">@totalQuestions</span>
-                    <span class="stat-label">Toplam Soru</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">@multipleChoiceCount</span>
-                    <span class="stat-label">Çoktan Seçmeli</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">@classicCount</span>
-                    <span class="stat-label">Klasik</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">@totalPoints</span>
-                    <span class="stat-label">Toplam Puan</span>
-                </div>
-            </div>
-        }
-
-        <!-- Soru Kartlarý Grid -->
-        <div class="questions-grid">
-            @if (Model.Any())
-            {
-               
-                    int questionIndex = 1;
-                
-                
-                @foreach (var q in Model)
-                {
-                    <div class="question-card" style="animation-delay: @(questionIndex * 0.1)s">
-                        <div class="question-card-header">
-                            <div class="question-number">@questionIndex</div>
-                            <div class="question-point">@q.Point puan</div>
+            <div class="col-xl-6 col-lg-12">
+                <div class="card border-0 shadow-lg h-100 hover-shadow" style="transition: all 0.3s;">
+                    <div class="card-header bg-primary text-white py-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0 fw-bold">
+                                <i class="bi bi-question-square me-2"></i>Soru @(Model.ToList().IndexOf(q) + 1)
+                            </h5>
+                            <span class="badge bg-light text-dark">
+                                @q.Point Puan
+                            </span>
                         </div>
+                    </div>
 
-                        <div class="question-card-body">
-                            <div class="question-text">
+                    <div class="card-body p-4">
+                        <!-- Soru Metni -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold text-dark mb-2">Soru Metni:</h6>
+                            <div class="border-start border-3 border-primary ps-3 py-2 bg-light rounded-2">
                                 @q.QuestionText
                             </div>
-
-                            @if (q.Choices != null && q.Choices.Any())
-                            {
-                                <div class="question-type-badge">
-                                    <i class="fas fa-list-ol"></i>
-                                    Çoktan Seçmeli
-                                </div>
-                                
-                                <div class="choices-container">
-                                    <div class="choices-title">
-                                        <i class="fas fa-list-check"></i>
-                                        Þýklar
-                                    </div>
-                                    
-                                    <ul class="choices-list">
-                                        @{
-                                            var choiceLetters = new string[] { "A", "B", "C", "D" };
-                                            int choiceIndex = 0;
-                                        }
-                                        
-                                        @foreach (var c in q.Choices.Take(4))
-                                        {
-                                            <li class="choice-item">
-                                                <div class="choice-letter">@choiceLetters[choiceIndex]</div>
-                                                <span class="choice-text">@c.Text</span>
-                                                @if (c.IsCorrect)
-                                                {
-                                                    <span class="choice-status correct-choice">
-                                                        <i class="fas fa-check"></i>
-                                                        Doðru Cevap
-                                                    </span>
-                                                }
-                                            </li>
-                                            choiceIndex++;
-                                        }
-                                        
-                                        @if (q.Choices.Count > 4)
-                                        {
-                                            <li class="choice-item">
-                                                <div class="choice-letter">+@(q.Choices.Count - 4)</div>
-                                                <span class="choice-text">@(q.Choices.Count - 4) þýk daha</span>
-                                            </li>
-                                        }
-                                    </ul>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="question-type-badge">
-                                    <i class="fas fa-keyboard"></i>
-                                    Klasik
-                                </div>
-                                
-                                <div class="choices-container">
-                                    <div class="choices-title">
-                                        <i class="fas fa-comment-alt"></i>
-                                        Cevap Tipi
-                                    </div>
-                                    <p style="color: var(--text-light); margin-top: 10px;">
-                                        <i class="fas fa-info-circle"></i> Bu soru açýk uçlu cevap gerektirir.
-                                    </p>
-                                </div>
-                            }
                         </div>
 
-                        <div class="question-card-footer">
-                            <div class="action-buttons">
-                                <a asp-action="Delete" asp-route-id="@q.Id" class="btn-delete delete-question-btn" data-question-text="@q.QuestionText">
-                                    <i class="fas fa-trash-alt"></i>
-                                    <span>Soru Sil</span>
-                                </a>
+                        <!-- Þýklar -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold text-dark mb-3">
+                                <i class="bi bi-list-ul me-1"></i>Þýklar:
+                            </h6>
+                            <div class="list-group">
+                                @foreach (var c in q.Choices)
+                                {
+                                    <div class="list-group-item border-0 border-bottom py-2 px-0">
+                                        <div class="d-flex align-items-center">
+                                            <div class="form-check me-3">
+                                                <input class="form-check-input"
+                                                       type="radio"
+                                                       disabled
+                                                       @(c.IsCorrect ? "checked" : "")>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <span class="@(c.IsCorrect ? "fw-bold text-success" : "text-dark")">
+                                                    @c.Text
+                                                </span>
+                                            </div>
+                                            @if (c.IsCorrect)
+                                            {
+                                                <span class="badge bg-success">
+                                                    <i class="bi bi-check-circle me-1"></i>Doðru
+                                                </span>
+                                            }
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         </div>
+
+                        <!-- Soru Tipi -->
+                        <div class="mb-3">
+                            <span class="badge @(q.Type == 0 ? "bg-primary" : "bg-info")">
+                                @(q.Type == 0 ? "Çoktan Seçmeli" : "Klasik")
+                            </span>
+                        </div>
                     </div>
-                    
-                    questionIndex++;
-                }
-            }
-            else
-            {
-                <div class="empty-state">
-                    <div class="empty-state-icon">
-                        <i class="fas fa-question-circle"></i>
+
+                    <!-- Butonlar -->
+                    <div class="card-footer bg-transparent border-top p-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="bi bi-hash me-1"></i>ID: @q.Id
+                            </small>
+                            <a asp-action="Delete" asp-route-id="@q.Id"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Bu soruyu silmek istediðinize emin misiniz?')">
+                                <i class="bi bi-trash-fill me-1"></i>Sil
+                            </a>
+                        </div>
                     </div>
-                    <h3>Henüz Soru Yok</h3>
-                    <p>Bu sýnava henüz hiç soru eklenmemiþ. Ýlk sorunuzu ekleyerek baþlayabilirsiniz.</p>
-                    <a asp-action="Create" asp-route-examId="@examId" class="create-question-btn">
-                        <i class="fas fa-plus-circle"></i>
-                        <span>Ýlk Soruyu Ekle</span>
+                </div>
+            </div>
+        }
+
+        @if (!Model.Any())
+        {
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <i class="bi bi-question-circle display-1 text-muted opacity-25 mb-3"></i>
+                    <h3 class="text-muted">Henüz soru eklenmemiþ</h3>
+                    <p class="text-muted mb-4">Ýlk sorunuzu eklemek için aþaðýdaki butonu kullanýn</p>
+                    <a asp-action="Create" asp-route-examId="@examId" class="btn btn-primary btn-lg">
+                        <i class="bi bi-plus-circle me-2"></i>Ýlk Sorunuzu Ekleyin
                     </a>
                 </div>
-            }
-        </div>
+            </div>
+        }
+    </div>
 
-        <!-- Geri Dön Butonu -->
-        <div class="text-center">
-            <a href="/Teacher" class="back-button">
-                <i class="fas fa-arrow-left"></i>
-                <span>Sýnavlara Geri Dön</span>
-            </a>
+    <!-- Bilgilendirme -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="alert alert-info border-0 rounded-3 shadow-sm">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-info-circle-fill fs-3 me-3"></i>
+                    <div>
+                        <h5 class="alert-heading mb-2">Soru Yönetimi Hakkýnda</h5>
+                        <p class="mb-0">
+                            • Çoktan seçmeli sorularda en az 2 þýk eklenmelidir.<br>
+                            • Her soru için mutlaka bir doðru þýk belirtilmelidir.<br>
+                            • Soru silme iþlemi geri alýnamaz, lütfen dikkatli olun.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Geri Dön Butonu -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="text-center">
+                <a asp-controller="Exam" asp-action="Details" asp-route-id="@examId" class="btn btn-secondary btn-lg">
+                    <i class="bi bi-arrow-left me-2"></i>Sýnav Detaylarýna Dön
+                </a>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Font Awesome Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Kart animasyonlarý
-        const questionCards = document.querySelectorAll('.question-card');
-        questionCards.forEach((card, index) => {
-            card.style.animationDelay = `${index * 0.1}s`;
-        });
+<!-- Minimal hover efekti için inline style -->
+<style>
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+    }
 
-        // Sil butonlarý için onay dialog'u
-        const deleteButtons = document.querySelectorAll('.delete-question-btn');
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                const url = this.href;
-                const questionText = this.dataset.questionText;
-                const shortText = questionText.length > 100 ? questionText.substring(0, 100) + '...' : questionText;
+    .card {
+        transition: all 0.3s ease;
+    }
 
-                Swal.fire({
-                    title: 'Soruyu Sil',
-                    html: `
-                        <div style="text-align: left; padding: 15px;">
-                            <p>Aþaðýdaki soruyu silmek istediðinize emin misiniz?</p>
-                            <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 15px 0;">
-                                <strong>"${shortText}"</strong>
-                            </div>
-                            <p class="text-danger"><i class="fas fa-exclamation-triangle"></i> Bu iþlem geri alýnamaz!</p>
-                        </div>
-                    `,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#e74c3c',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Evet, Sil',
-                    cancelButtonText: 'Ýptal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = url;
-                    }
-                });
-            });
-        });
+    .list-group-item:hover {
+        background-color: rgba(102, 126, 234, 0.05);
+    }
 
-        // Ýstatistikler için sayma animasyonu
-        const statNumbers = document.querySelectorAll('.stat-number');
-        statNumbers.forEach(stat => {
-            const text = stat.textContent;
-            const target = parseInt(text);
-            let current = 0;
-            const increment = target / 30;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
-                }
-                stat.textContent = Math.round(current);
-            }, 30);
-        });
+    .form-check-input:checked {
+        background-color: #198754;
+        border-color: #198754;
+    }
 
-        // Soru kartlarýna hover efekti
-        questionCards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.zIndex = '10';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.zIndex = '1';
-            });
-        });
+    .form-check-input:disabled {
+        background-color: #e9ecef;
+    }
 
-        // Soru metni tamamýný göster/gizle
-        const questionTexts = document.querySelectorAll('.question-text');
-        questionTexts.forEach(textElement => {
-            const fullText = textElement.textContent;
-            
-            // Eðer metin çok uzunsa
-            if (fullText.length > 150) {
-                const shortText = fullText.substring(0, 150) + '...';
-                textElement.textContent = shortText;
-                
-                // Göster/gizle butonu ekle
-                const toggleButton = document.createElement('button');
-                toggleButton.type = 'button';
-                toggleButton.className = 'show-more-btn';
-                toggleButton.innerHTML = '<i class="fas fa-chevron-down"></i> Devamýný Göster';
-                toggleButton.style.background = 'none';
-                toggleButton.style.border = 'none';
-                toggleButton.style.color = 'var(--primary-color)';
-                toggleButton.style.cursor = 'pointer';
-                toggleButton.style.fontSize = '0.9rem';
-                toggleButton.style.marginTop = '5px';
-                toggleButton.style.display = 'flex';
-                toggleButton.style.alignItems = 'center';
-                toggleButton.style.gap = '5px';
-                toggleButton.style.fontWeight = '600';
-                
-                let isExpanded = false;
-                toggleButton.addEventListener('click', function() {
-                    if (!isExpanded) {
-                        textElement.textContent = fullText;
-                        toggleButton.innerHTML = '<i class="fas fa-chevron-up"></i> Daha Az Göster';
-                        isExpanded = true;
-                    } else {
-                        textElement.textContent = shortText;
-                        toggleButton.innerHTML = '<i class="fas fa-chevron-down"></i> Devamýný Göster';
-                        isExpanded = false;
-                    }
-                });
-                
-                textElement.parentNode.insertBefore(toggleButton, textElement.nextSibling);
-            }
-        });
-    });
-</script>
-
-<!-- SweetAlert2 için CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        border: none;
+    }
+</style>

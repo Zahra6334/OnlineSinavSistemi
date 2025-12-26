@@ -1,665 +1,170 @@
 ﻿@model List<ApplicationUser>
-@{
-    ViewData["Title"] = "Öğrenci Ekle";
-    var courseId = ViewBag.CourseId;
-    var searchQuery = Context.Request.Query["search"];
-}
 
-<style>
-    :root {
-        --primary-color: #2c5aa0;
-        --primary-dark: #1a3a6d;
-        --secondary-color: #e9f2f9;
-        --accent-color: #d4af37;
-        --success-color: #28a745;
-        --info-color: #17a2b8;
-        --warning-color: #ffc107;
-        --text-dark: #333;
-        --text-light: #555;
-        --white: #ffffff;
-        --gray-light: #f8f9fa;
-        --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        --shadow-hover: 0 8px 30px rgba(44, 90, 160, 0.12);
-        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        --border-radius: 16px;
-    }
-
-    .add-student-container {
-        min-height: 80vh;
-        padding: 40px 20px;
-        background: linear-gradient(135deg, var(--gray-light) 0%, #eef2f7 100%);
-    }
-
-    .add-student-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-        color: var(--white);
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: var(--shadow);
-        margin-bottom: 40px;
-        position: relative;
-        overflow: hidden;
-    }
-
-        .add-student-header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
-        }
-
-    .header-content {
-        position: relative;
-        z-index: 2;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .page-title {
-        font-size: 2.2rem;
-        font-weight: 800;
-        margin-bottom: 10px;
-        color: var(--white);
-    }
-
-    .page-subtitle {
-        font-size: 1.1rem;
-        opacity: 0.9;
-        margin-bottom: 0;
-        color: rgba(255, 255, 255, 0.9);
-    }
-
-    .back-button {
-        margin-top: 20px;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        color: var(--white);
-        text-decoration: none;
-        font-weight: 600;
-        transition: var(--transition);
-        padding: 10px 20px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: var(--border-radius);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            text-decoration: none;
-            color: var(--white);
-            transform: translateX(-5px);
-        }
-
-    .search-section {
-        background: var(--white);
-        border-radius: 20px;
-        padding: 30px;
-        box-shadow: var(--shadow);
-        margin-bottom: 30px;
-        border: 1px solid rgba(44, 90, 160, 0.1);
-    }
-
-    .search-title {
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: var(--primary-color);
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-        .search-title i {
-            color: var(--accent-color);
-        }
-
-    .search-form {
-        display: flex;
-        gap: 15px;
-        align-items: center;
-    }
-
-    .search-input {
-        flex: 1;
-        padding: 16px 20px;
-        border: 2px solid rgba(44, 90, 160, 0.2);
-        border-radius: 12px;
-        font-size: 1rem;
-        transition: var(--transition);
-        background: var(--white);
-    }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
-        }
-
-    .search-button {
-        padding: 16px 30px;
-        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-        color: var(--white);
-        border: none;
-        border-radius: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: var(--transition);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        white-space: nowrap;
-    }
-
-        .search-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(44, 90, 160, 0.3);
-        }
-
-    .reset-button {
-        padding: 16px 20px;
-        background: var(--secondary-color);
-        color: var(--primary-color);
-        border: 2px solid rgba(44, 90, 160, 0.2);
-        border-radius: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: var(--transition);
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-        .reset-button:hover {
-            background: rgba(44, 90, 160, 0.1);
-            text-decoration: none;
-            color: var(--primary-color);
-        }
-
-    .students-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-        gap: 25px;
-        margin-top: 20px;
-    }
-
-    .student-card {
-        background: var(--white);
-        border-radius: 20px;
-        box-shadow: var(--shadow);
-        overflow: hidden;
-        transition: var(--transition);
-        border: 1px solid transparent;
-        position: relative;
-    }
-
-        .student-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary-color);
-            box-shadow: var(--shadow-hover);
-        }
-
-    .student-card-header {
-        background: linear-gradient(135deg, rgba(44, 90, 160, 0.05) 0%, rgba(233, 242, 249, 0.5) 100%);
-        padding: 25px;
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        border-bottom: 1px solid rgba(44, 90, 160, 0.1);
-    }
-
-    .student-avatar {
-        width: 70px;
-        height: 70px;
-        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--white);
-        font-size: 1.8rem;
-        font-weight: 700;
-        box-shadow: 0 4px 15px rgba(44, 90, 160, 0.2);
-        flex-shrink: 0;
-    }
-
-    .student-info {
-        flex: 1;
-        overflow: hidden;
-    }
-
-    .student-name {
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: var(--primary-color);
-        margin-bottom: 5px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .student-email {
-        font-size: 0.95rem;
-        color: var(--text-light);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .student-card-body {
-        padding: 25px;
-    }
-
-    .student-meta {
-        display: flex;
-        gap: 20px;
-        margin-bottom: 25px;
-        flex-wrap: wrap;
-    }
-
-    .meta-item {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.9rem;
-        color: var(--text-light);
-    }
-
-        .meta-item i {
-            color: var(--accent-color);
-            font-size: 1rem;
-        }
-
-    .add-student-form {
-        margin-top: 20px;
-    }
-
-    .btn-add-student {
-        width: 100%;
-        padding: 14px;
-        background: linear-gradient(135deg, var(--success-color), #1e7e34);
-        color: var(--white);
-        border: none;
-        border-radius: 12px;
-        font-weight: 700;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: var(--transition);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-    }
-
-        .btn-add-student:hover {
-            background: linear-gradient(135deg, #1e7e34, #155724);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(40, 167, 69, 0.3);
-        }
-
-    .empty-state {
-        text-align: center;
-        padding: 60px 20px;
-        background: var(--white);
-        border-radius: 20px;
-        box-shadow: var(--shadow);
-        margin-top: 40px;
-    }
-
-    .empty-icon {
-        font-size: 4rem;
-        color: var(--primary-color);
-        opacity: 0.3;
-        margin-bottom: 20px;
-    }
-
-    .empty-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--primary-color);
-        margin-bottom: 10px;
-    }
-
-    .empty-text {
-        color: var(--text-light);
-        font-size: 1.1rem;
-        max-width: 500px;
-        margin: 0 auto 30px;
-        line-height: 1.6;
-    }
-
-    .btn-clear-search {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 12px 25px;
-        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-        color: var(--white);
-        border-radius: 12px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: var(--transition);
-    }
-
-        .btn-clear-search:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(44, 90, 160, 0.3);
-            text-decoration: none;
-            color: var(--white);
-        }
-
-    .search-info {
-        background: var(--secondary-color);
-        border-radius: 12px;
-        padding: 15px 20px;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: var(--primary-color);
-        font-weight: 600;
-    }
-
-        .search-info i {
-            color: var(--accent-color);
-            font-size: 1.2rem;
-        }
-
-    @@media (max-width: 992px) {
-        .students-grid
-
-    {
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    }
-
-    .search-form {
-        flex-direction: column;
-    }
-
-    .search-input, .search-button, .reset-button {
-        width: 100%;
-    }
-
-    }
-
-    @@media (max-width: 768px) {
-        .add-student-container
-
-    {
-        padding: 20px 15px;
-    }
-
-    .add-student-header {
-        padding: 30px 20px;
-    }
-
-    .page-title {
-        font-size: 1.8rem;
-    }
-
-    .student-card-header {
-        flex-direction: column;
-        text-align: center;
-        gap: 15px;
-    }
-
-    .student-meta {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .students-grid {
-        grid-template-columns: 1fr;
-    }
-
-    }
-
-    @@media (max-width: 576px) {
-        .page-title
-
-    {
-        font-size: 1.6rem;
-    }
-
-    .student-avatar {
-        width: 60px;
-        height: 60px;
-        font-size: 1.5rem;
-    }
-
-    .student-name {
-        font-size: 1.1rem;
-    }
-
-    }
-
-    /* Animation */
-    @@keyframes fadeInUp {
-        from
-
-    {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    }
-
-    .animated-card {
-        animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    }
-</style>
-
-<div class="add-student-container">
-    <!-- Header -->
-    <div class="add-student-header">
-        <div class="header-content">
-            <h1 class="page-title">Öğrenci Ekle</h1>
-            <p class="page-subtitle">
-                Dersinize öğrenci ekleyin ve yönetin.
-                @if (!string.IsNullOrEmpty(searchQuery))
-                {
-                    <span class="d-block mt-2">Arama: "@searchQuery"</span>
-                }
-            </p>
-            <a asp-controller="Course" asp-action="Details" asp-route-id="@courseId" class="back-button">
-                <i class="fas fa-arrow-left"></i>
-                Ders Detaylarına Dön
-            </a>
+<div class="container-fluid py-5">
+    <!-- Başlık -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="d-flex align-items-center mb-3">
+                <i class="bi bi-person-plus display-4 text-primary me-3"></i>
+                <div>
+                    <h1 class="display-5 fw-bold text-dark mb-1">Öğrenci Ekle</h1>
+                    <p class="text-muted mb-0">Dersinize öğrenci ekleyin</p>
+                </div>
+            </div>
+            <div class="border-bottom pb-3"></div>
         </div>
     </div>
 
-    <!-- Search Section -->
-    <div class="search-section">
-        <h3 class="search-title">
-            <i class="fas fa-search"></i>
-            Öğrenci Ara
-        </h3>
-        <form method="get" class="search-form">
-            <input type="hidden" name="courseId" value="@courseId" />
+    <!-- Arama ve İçerik -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Arama Kartı -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-primary text-white py-3">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-search me-2"></i>Öğrenci Ara
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="get">
+                        <input type="hidden" name="courseId" value="@ViewBag.CourseId" />
 
-            <input type="text"
-                   name="search"
-                   value="@searchQuery"
-                   class="search-input"
-                   placeholder="İsim veya email ile öğrenci ara..." />
-
-            <button type="submit" class="search-button">
-                <i class="fas fa-search"></i>
-                Ara
-            </button>
-
-            @if (!string.IsNullOrEmpty(searchQuery))
-            {
-                <a asp-action="AddStudent" asp-route-courseId="@courseId" class="reset-button">
-                    <i class="fas fa-times"></i>
-                    Temizle
-                </a>
-            }
-        </form>
-    </div>
-
-    @if (!string.IsNullOrEmpty(searchQuery))
-    {
-        <div class="search-info">
-            <i class="fas fa-info-circle"></i>
-            "@searchQuery" için @Model.Count öğrenci bulundu
-        </div>
-    }
-
-    @if (Model.Any())
-    {
-        <!-- Students Grid -->
-        <div class="students-grid">
-            @foreach (var student in Model)
-            {
-                <div class="student-card animated-card">
-                    <!-- Student Header -->
-                    <div class="student-card-header">
-                        <div class="student-avatar">
-                            @student.UserName?[0]
-                        </div>
-                        <div class="student-info">
-                            <h3 class="student-name">@student.UserName</h3>
-                            <div class="student-email">@student.Email</div>
-                        </div>
-                    </div>
-
-                    <!-- Student Body -->
-                    <div class="student-card-body">
-                        <div class="student-meta">
-                            <div class="meta-item">
-                                <i class="fas fa-id-card"></i>
-                                <span>@student.Numara</span>
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-user-tag"></i>
-                                <span>@student.Rol</span>
-                            </div>
-                            @if (!string.IsNullOrEmpty(student.full_name))
-                            {
-                                <div class="meta-item">
-                                    <i class="fas fa-signature"></i>
-                                    <span>@student.full_name</span>
-                                </div>
-                            }
-                        </div>
-
-                        <!-- Add Form -->
-                        <form asp-action="AddStudentToCourse" method="post" class="add-student-form">
-                            <input type="hidden" name="courseId" value="@courseId" />
-                            <input type="hidden" name="studentId" value="@student.Id" />
-
-                            <button type="submit" class="btn-add-student">
-                                <i class="fas fa-user-plus"></i>
-                                Derse Ekle
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text bg-light border-end-0">
+                                <i class="bi bi-person text-primary"></i>
+                            </span>
+                            <input type="text"
+                                   name="search"
+                                   class="form-control border-start-0"
+                                   placeholder="İsim veya email adresine göre ara..."
+                                   value="@Context.Request.Query["search"]" />
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-search me-1"></i>Ara
                             </button>
-                        </form>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Öğrenci Listesi Kartı -->
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-primary text-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-people me-2"></i>Öğrenci Listesi
+                        </h5>
+                        <span class="badge bg-light text-dark">
+                            @Model.Count Öğrenci
+                        </span>
                     </div>
                 </div>
-            }
-        </div>
-    }
-    else
-    {
-        <!-- Empty State -->
-        <div class="empty-state">
-            <div class="empty-icon">
-                <i class="fas fa-user-slash"></i>
+
+                <div class="card-body p-0">
+                    @if (Model.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="ps-4">
+                                            <i class="bi bi-person me-1"></i>Ad
+                                        </th>
+                                        <th>
+                                            <i class="bi bi-envelope me-1"></i>Email
+                                        </th>
+                                        <th class="text-end pe-4">
+                                            <i class="bi bi-gear me-1"></i>İşlem
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var student in Model)
+                                    {
+                                        <tr class="align-middle">
+                                            <td class="ps-4">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-3">
+                                                        <i class="bi bi-person-circle text-primary"></i>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="fw-bold mb-0">@student.UserName</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="text-muted">@student.Email</span>
+                                            </td>
+                                            <td class="text-end pe-4">
+                                                <form asp-action="AddStudentToCourse" method="post" class="d-inline">
+                                                    <input type="hidden" name="courseId" value="@ViewBag.CourseId" />
+                                                    <input type="hidden" name="studentId" value="@student.Id" />
+
+                                                    <button class="btn btn-success btn-sm">
+                                                        <i class="bi bi-plus-circle me-1"></i>Ekle
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="bi bi-people display-1 text-muted opacity-25 mb-3"></i>
+                            <h5 class="text-muted">Öğrenci bulunamadı</h5>
+                            <p class="text-muted mb-4">
+                                Arama kriterlerinize uygun öğrenci bulunamadı
+                            </p>
+                        </div>
+                    }
+                </div>
+
+                <!-- Footer -->
+                <div class="card-footer bg-transparent border-top p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Toplam @Model.Count öğrenci listeleniyor
+                            </small>
+                        </div>
+                        <a asp-action="Details" asp-route-id="@ViewBag.CourseId" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left me-2"></i>Ders Detaylarına Dön
+                        </a>
+                    </div>
+                </div>
             </div>
-            @if (!string.IsNullOrEmpty(searchQuery))
-            {
-                <h3 class="empty-title">Öğrenci Bulunamadı</h3>
-                <p class="empty-text">
-                    "@searchQuery" araması ile eşleşen öğrenci bulunamadı.
-                    Lütfen farklı bir arama terimi deneyin veya aramayı temizleyin.
-                </p>
-                <a asp-action="AddStudent" asp-route-courseId="@courseId" class="btn-clear-search">
-                    <i class="fas fa-times"></i>
-                    Aramayı Temizle
-                </a>
-            }
-            else
-            {
-                <h3 class="empty-title">Kayıtlı Öğrenci Yok</h3>
-                <p class="empty-text">
-                    Sistemde kayıtlı öğrenci bulunmuyor. Öğrencilerin sisteme kayıt olmasını bekleyin
-                    veya yeni öğrencileri sisteme ekleyin.
-                </p>
-            }
         </div>
-    }
+    </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Card hover animations
-        const studentCards = document.querySelectorAll('.student-card');
-        studentCards.forEach((card, index) => {
-            card.style.animationDelay = `${index * 0.1}s`;
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
-            card.addEventListener('mouseenter', function() {
-                const avatar = this.querySelector('.student-avatar');
-                if (avatar) {
-                    avatar.style.transform = 'scale(1.1) rotate(5deg)';
-                    avatar.style.transition = 'transform 0.3s ease';
-                }
-            });
+<!-- Minimal hover efekti için inline style -->
+<style>
+    .table-hover tbody tr:hover {
+        background-color: rgba(102, 126, 234, 0.05) !important;
+    }
 
-            card.addEventListener('mouseleave', function() {
-                const avatar = this.querySelector('.student-avatar');
-                if (avatar) {
-                    avatar.style.transform = '';
-                }
-            });
-        });
+    .table th {
+        border-bottom: 2px solid #dee2e6;
+    }
 
-        // Form submission feedback
-        const addForms = document.querySelectorAll('.add-student-form');
-        addForms.forEach(form => {
-            form.addEventListener('submit', function(e) {
-                const button = this.querySelector('.btn-add-student');
-                if (button) {
-                    const originalText = button.innerHTML;
-                    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ekleniyor...';
-                    button.disabled = true;
+    .table td {
+        border-bottom: 1px solid #dee2e6;
+    }
 
-                    // Re-enable button after 3 seconds if form submission fails
-                    setTimeout(() => {
-                        button.innerHTML = originalText;
-                        button.disabled = false;
-                    }, 3000);
-                }
-            });
-        });
+    .btn-success {
+        background-color: #198754;
+        border-color: #198754;
+    }
 
-        // Search input focus effect
-        const searchInput = document.querySelector('.search-input');
-        if (searchInput) {
-            searchInput.addEventListener('focus', function() {
-                this.parentElement.style.transform = 'translateY(-3px)';
-                this.parentElement.style.transition = 'transform 0.3s ease';
-            });
-
-            searchInput.addEventListener('blur', function() {
-                this.parentElement.style.transform = '';
-            });
+        .btn-success:hover {
+            background-color: #157347;
+            border-color: #146c43;
         }
-
-        // Smooth scroll for page load
-        setTimeout(() => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }, 100);
-    });
-</script>
+</style>

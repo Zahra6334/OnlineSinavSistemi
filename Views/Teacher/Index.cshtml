@@ -1,990 +1,181 @@
 ﻿@{
     ViewData["Title"] = "Öğretmen Paneli";
-    var userName = User.Identity?.Name?.Split('@')[0] ?? "Öğretmen";
-    // ViewBag değerlerini güvenli şekilde alalım
-    var dersSayisi = ViewBag.DersSayisi ?? 0;
-    var sinavSayisi = ViewBag.SinavSayisi ?? 0;
-    var ogrenciSayisi = ViewBag.OgrenciSayisi ?? 0;
-    var tamamlananSinavSayisi = ViewBag.TamamlananSinavSayisi ?? 0;
 }
 
-<style>
-    :root {
-        --primary-color: #2c5aa0;
-        --primary-dark: #1a3a6d;
-        --secondary-color: #e9f2f9;
-        --accent-color: #d4af37;
-        --success-color: #28a745;
-        --info-color: #17a2b8;
-        --warning-color: #ffc107;
-        --danger-color: #e74c3c;
-        --text-dark: #333;
-        --text-light: #555;
-        --white: #ffffff;
-        --gray-light: #f8f9fa;
-        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-        --shadow-hover: 0 15px 40px rgba(44, 90, 160, 0.15);
-        --transition: all 0.3s ease;
-        --border-radius: 12px;
-    }
-
-    .teacher-dashboard {
-        min-height: 80vh;
-        padding: 40px 20px;
-        background: linear-gradient(135deg, var(--gray-light) 0%, #eef2f7 100%);
-    }
-
-    .dashboard-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-        color: var(--white);
-        padding: 30px;
-        border-radius: 20px;
-        box-shadow: var(--shadow);
-        margin-bottom: 40px;
-        position: relative;
-        overflow: hidden;
-    }
-
-        .dashboard-header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,30 Q50,0 100,30 L100,100 L0,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
-            background-size: 100% 100px;
-            background-position: top;
-        }
-
-    .welcome-section {
-        display: flex;
-        align-items: center;
-        position: relative;
-        z-index: 1;
-    }
-
-    .teacher-avatar {
-        width: 80px;
-        height: 80px;
-        background: linear-gradient(135deg, var(--accent-color), #c69500);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--white);
-        font-size: 2.5rem;
-        margin-right: 25px;
-        border: 4px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .welcome-text h1 {
-        font-size: 2.2rem;
-        font-weight: 800;
-        margin-bottom: 10px;
-        color: var(--white);
-    }
-
-    .welcome-text p {
-        font-size: 1.1rem;
-        opacity: 0.9;
-        margin-bottom: 0;
-    }
-
-    .role-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(255, 255, 255, 0.2);
-        padding: 6px 15px;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        margin-top: 10px;
-    }
-
-    .dashboard-actions {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
-        margin-bottom: 40px;
-    }
-
-    .action-card {
-        background: var(--white);
-        border-radius: 20px;
-        padding: 30px;
-        box-shadow: var(--shadow);
-        border: 1px solid transparent;
-        transition: var(--transition);
-        text-decoration: none;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-
-        .action-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-color);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .action-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            border-radius: 5px 5px 0 0;
-        }
-
-    .action-icon {
-        width: 80px;
-        height: 80px;
-        background: var(--secondary-color);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-        font-size: 2.2rem;
-        color: var(--primary-color);
-        transition: var(--transition);
-    }
-
-    .action-card:hover .action-icon {
-        background: var(--primary-color);
-        color: var(--white);
-        transform: scale(1.1) rotate(5deg);
-    }
-
-    .action-title {
-        color: var(--primary-color);
-        font-weight: 700;
-        font-size: 1.4rem;
-        margin-bottom: 10px;
-    }
-
-    .action-description {
-        color: var(--text-light);
-        font-size: 0.95rem;
-        line-height: 1.5;
-        margin-bottom: 20px;
-    }
-
-    .action-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 25px;
-        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-        color: var(--white);
-        border-radius: 50px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: var(--transition);
-        border: none;
-        cursor: pointer;
-    }
-
-        .action-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(44, 90, 160, 0.3);
-            color: var(--white);
-            text-decoration: none;
-        }
-
-    .stats-section {
-        margin-top: 40px;
-    }
-
-    .stats-title {
-        color: var(--primary-color);
-        font-weight: 700;
-        font-size: 1.6rem;
-        margin-bottom: 25px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-        .stats-title i {
-            color: var(--accent-color);
-        }
-
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-    }
-
-    .stat-card {
-        background: var(--white);
-        border-radius: 15px;
-        padding: 25px;
-        box-shadow: var(--shadow);
-        border-left: 5px solid var(--primary-color);
-        transition: var(--transition);
-    }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-
-    .stat-icon {
-        width: 60px;
-        height: 60px;
-        background: rgba(44, 90, 160, 0.1);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 15px;
-        color: var(--primary-color);
-        font-size: 1.8rem;
-    }
-
-    .stat-content h3 {
-        color: var(--text-dark);
-        font-weight: 600;
-        font-size: 1.1rem;
-        margin-bottom: 5px;
-    }
-
-    .stat-number {
-        font-size: 2.2rem;
-        font-weight: 800;
-        color: var(--primary-color);
-        margin: 10px 0;
-    }
-
-    .stat-trend {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        margin-top: 10px;
-    }
-
-    .trend-up {
-        background: rgba(40, 167, 69, 0.1);
-        color: var(--success-color);
-    }
-
-    .trend-down {
-        background: rgba(220, 53, 69, 0.1);
-        color: var(--danger-color);
-    }
-
-    .quick-actions {
-        margin-top: 50px;
-        padding: 30px;
-        background: linear-gradient(135deg, var(--secondary-color) 0%, #e1ebf5 100%);
-        border-radius: 20px;
-        border: 2px dashed var(--primary-color);
-    }
-
-    .quick-actions-title {
-        color: var(--primary-color);
-        font-weight: 700;
-        font-size: 1.4rem;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .quick-buttons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        justify-content: center;
-    }
-
-    .quick-btn {
-        padding: 12px 25px;
-        border-radius: 50px;
-        background: var(--white);
-        color: var(--primary-color);
-        font-weight: 600;
-        text-decoration: none;
-        border: 2px solid var(--primary-color);
-        transition: var(--transition);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-        .quick-btn:hover {
-            background: var(--primary-color);
-            color: var(--white);
-            transform: translateY(-3px);
-            text-decoration: none;
-            box-shadow: 0 5px 15px rgba(44, 90, 160, 0.2);
-        }
-
-    /* Yeni Eklenen Özellikler */
-    .date-time-widget {
-        position: absolute;
-        right: 30px;
-        top: 30px;
-        background: rgba(255, 255, 255, 0.1);
-        padding: 10px 20px;
-        border-radius: 15px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-        .date-time-widget .time {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--white);
-        }
-
-        .date-time-widget .date {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-    .recent-activities {
-        margin-top: 40px;
-    }
-
-    .activities-list {
-        background: var(--white);
-        border-radius: 15px;
-        padding: 25px;
-        box-shadow: var(--shadow);
-    }
-
-    .activity-item {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        padding: 15px;
-        border-bottom: 1px solid #eee;
-        transition: var(--transition);
-    }
-
-        .activity-item:hover {
-            background: var(--secondary-color);
-            border-radius: 10px;
-        }
-
-    .activity-icon {
-        width: 40px;
-        height: 40px;
-        background: var(--secondary-color);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--primary-color);
-    }
-
-    .activity-content h4 {
-        margin: 0;
-        color: var(--text-dark);
-        font-weight: 600;
-    }
-
-    .activity-content p {
-        margin: 5px 0 0;
-        color: var(--text-light);
-        font-size: 0.9rem;
-    }
-
-    .activity-time {
-        margin-left: auto;
-        color: var(--text-light);
-        font-size: 0.85rem;
-        font-weight: 500;
-    }
-
-    .progress-section {
-        margin-top: 40px;
-    }
-
-    .progress-card {
-        background: var(--white);
-        border-radius: 15px;
-        padding: 25px;
-        box-shadow: var(--shadow);
-        margin-bottom: 20px;
-    }
-
-    .progress-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 15px;
-    }
-
-    .progress-bar {
-        height: 10px;
-        background: #e9ecef;
-        border-radius: 5px;
-        overflow: hidden;
-        margin-top: 10px;
-    }
-
-    .progress-fill {
-        height: 100%;
-        background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-        border-radius: 5px;
-        transition: width 1s ease-in-out;
-    }
-
-    .notification-badge {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: var(--danger-color);
-        color: white;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.7rem;
-        font-weight: bold;
-    }
-
-    /* Responsive */
-    @@media (max-width: 992px) {
-        .dashboard-actions
-
-    {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    }
-
-    .welcome-section {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .teacher-avatar {
-        margin-right: 0;
-        margin-bottom: 20px;
-    }
-
-    .welcome-text h1 {
-        font-size: 1.8rem;
-    }
-
-    .date-time-widget {
-        position: relative;
-        right: auto;
-        top: auto;
-        margin-top: 20px;
-        width: 100%;
-        text-align: center;
-    }
-
-    }
-
-    @@media (max-width: 768px) {
-        .teacher-dashboard
-
-    {
-        padding: 20px 15px;
-    }
-
-    .dashboard-header {
-        padding: 20px;
-    }
-
-    .action-card {
-        padding: 20px;
-    }
-
-    .action-icon {
-        width: 70px;
-        height: 70px;
-        font-size: 2rem;
-    }
-
-    .quick-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .quick-btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .date-time-widget .time {
-        font-size: 1.3rem;
-    }
-
-    }
-
-    @@media (max-width: 480px) {
-        .dashboard-actions
-
-    {
-        grid-template-columns: 1fr;
-    }
-
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .teacher-avatar {
-        width: 70px;
-        height: 70px;
-        font-size: 2.2rem;
-    }
-
-    }
-
-    /* Animations */
-    @@keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @@keyframes pulse {
-        0% {
-            transform: scale(1);
-        }
-
-        50% {
-            transform: scale(1.05);
-        }
-
-        100% {
-            transform: scale(1);
-        }
-    }
-
-    @@keyframes slideInLeft {
-        from {
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    .animated {
-        animation: fadeInUp 0.6s ease-out;
-    }
-
-    .pulse {
-        animation: pulse 2s infinite;
-    }
-</style>
-
-<div class="teacher-dashboard">
-    <div class="container">
-        <!-- Header -->
-        <div class="dashboard-header">
-            <div class="date-time-widget">
-                <div class="time" id="currentTime"></div>
-                <div class="date" id="currentDate"></div>
-            </div>
-            <div class="welcome-section">
-                <div class="teacher-avatar">
-                    <i class="fas fa-user-tie"></i>
+<div class="container-fluid py-5">
+    <!-- Başlık ve Hoş Geldiniz -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="d-flex align-items-center mb-3">
+                <i class="bi bi-person-badge display-4 text-primary me-3"></i>
+                <div>
+                    <h1 class="display-5 fw-bold text-dark mb-1">Öğretmen Paneli</h1>
+                    <p class="lead text-muted mb-0">Hoş geldiniz, <span class="text-primary fw-bold">@User.Identity.Name</span></p>
                 </div>
-                <div class="welcome-text">
-                    <h1>Hoş Geldiniz, @userName!</h1>
-                    <p>Öğretmen Panelinize erişiminiz sağlandı.</p>
-                    <div class="role-badge">
-                        <i class="fas fa-user-tie"></i>
-                        Öğretmen Paneli
+            </div>
+            <div class="border-bottom pb-3"></div>
+        </div>
+    </div>
+
+    <!-- Hızlı İşlemler -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h3 class="fw-bold text-dark mb-4">
+                <i class="bi bi-lightning-charge-fill text-warning me-2"></i>Hızlı İşlemler
+            </h3>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <a asp-controller="Course" asp-action="Index" class="text-decoration-none">
+                        <div class="card border-0 shadow-lg h-100 hover-lift" style="transition: all 0.3s;">
+                            <div class="card-body p-4 text-center">
+                                <div class="bg-primary bg-opacity-10 p-3 rounded-circle d-inline-block mb-3">
+                                    <i class="bi bi-journal-plus display-5 text-primary"></i>
+                                </div>
+                                <h4 class="card-title fw-bold text-dark mb-2">Ders Ekle</h4>
+                                <p class="card-text text-muted mb-0">
+                                    Yeni ders ekleyin veya mevcut dersleri yönetin
+                                </p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 p-3 text-center">
+                                <span class="btn btn-primary px-4">
+                                    <i class="bi bi-arrow-right-circle me-2"></i>Devam Et
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4">
+                    <a asp-controller="Exam" asp-action="Create" class="text-decoration-none">
+                        <div class="card border-0 shadow-lg h-100 hover-lift" style="transition: all 0.3s;">
+                            <div class="card-body p-4 text-center">
+                                <div class="bg-success bg-opacity-10 p-3 rounded-circle d-inline-block mb-3">
+                                    <i class="bi bi-file-earmark-plus display-5 text-success"></i>
+                                </div>
+                                <h4 class="card-title fw-bold text-dark mb-2">Sınav Oluştur</h4>
+                                <p class="card-text text-muted mb-0">
+                                    Yeni sınav oluşturun ve soru bankanızı kullanın
+                                </p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 p-3 text-center">
+                                <span class="btn btn-success px-4">
+                                    <i class="bi bi-arrow-right-circle me-2"></i>Devam Et
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4">
+                    <a asp-controller="Exam" asp-action="Index" class="text-decoration-none">
+                        <div class="card border-0 shadow-lg h-100 hover-lift" style="transition: all 0.3s;">
+                            <div class="card-body p-4 text-center">
+                                <div class="bg-info bg-opacity-10 p-3 rounded-circle d-inline-block mb-3">
+                                    <i class="bi bi-clipboard-data display-5 text-info"></i>
+                                </div>
+                                <h4 class="card-title fw-bold text-dark mb-2">Sınavları Listele</h4>
+                                <p class="card-text text-muted mb-0">
+                                    Tüm sınavlarınızı görüntüleyin ve yönetin
+                                </p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 p-3 text-center">
+                                <span class="btn btn-info text-white px-4">
+                                    <i class="bi bi-arrow-right-circle me-2"></i>Devam Et
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- İstatistikler -->
+    <div class="row">
+        <div class="col-12">
+            <h3 class="fw-bold text-dark mb-4">
+                <i class="bi bi-bar-chart-fill text-primary me-2"></i>İstatistikler
+            </h3>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary bg-opacity-10 p-3 rounded-3 me-3">
+                                    <i class="bi bi-journals display-4 text-primary"></i>
+                                </div>
+                                <div>
+                                    <h2 class="display-4 fw-bold text-dark mb-0">@ViewBag.DersSayisi</h2>
+                                    <p class="text-muted mb-0">Toplam Ders Sayısı</p>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-primary" role="progressbar"
+                                         style="width: @((ViewBag.DersSayisi > 0 ? ViewBag.DersSayisi : 1) * 10)%;"
+                                         aria-valuenow="@ViewBag.DersSayisi" aria-valuemin="0" aria-valuemax="10"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-success bg-opacity-10 p-3 rounded-3 me-3">
+                                    <i class="bi bi-clipboard-check display-4 text-success"></i>
+                                </div>
+                                <div>
+                                    <h2 class="display-4 fw-bold text-dark mb-0">@ViewBag.SinavSayisi</h2>
+                                    <p class="text-muted mb-0">Toplam Sınav Sayısı</p>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-success" role="progressbar"
+                                         style="width: @((ViewBag.SinavSayisi > 0 ? ViewBag.SinavSayisi : 1) * 10)%;"
+                                         aria-valuenow="@ViewBag.SinavSayisi" aria-valuemin="0" aria-valuemax="10"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Dashboard Actions -->
-        <div class="dashboard-actions">
-            <!-- Ders Ekle -->
-            <a asp-controller="Course" asp-action="Index" class="action-card animated">
-                <span class="notification-badge">@dersSayisi</span>
-                <div class="action-icon">
-                    <i class="fas fa-book-open"></i>
-                </div>
-                <h3 class="action-title">Ders Yönetimi</h3>
-                <p class="action-description">
-                    Yeni dersler ekleyin, mevcut dersleri düzenleyin ve öğrencilerinizi yönetin.
-                </p>
-                <span class="action-btn">
-                    <i class="fas fa-plus-circle"></i>
-                    Dersleri Yönet
-                </span>
-            </a>
-
-            <!-- Sınav Oluştur -->
-            <a asp-controller="Exam" asp-action="Create" class="action-card animated">
-                <span class="notification-badge">@sinavSayisi</span>
-                <div class="action-icon">
-                    <i class="fas fa-file-signature"></i>
-                </div>
-                <h3 class="action-title">Sınav Oluştur</h3>
-                <p class="action-description">
-                    Yeni sınavlar oluşturun, soru bankanızı kullanın ve sınav ayarlarınızı yapılandırın.
-                </p>
-                <span class="action-btn">
-                    <i class="fas fa-plus-circle"></i>
-                    Sınav Oluştur
-                </span>
-            </a>
-
-            <!-- Sınavları Listele -->
-            <a asp-controller="Exam" asp-action="Index" class="action-card animated">
-                <span class="notification-badge pulse">@tamamlananSinavSayisi</span>
-                <div class="action-icon">
-                    <i class="fas fa-list-alt"></i>
-                </div>
-                <h3 class="action-title">Sınavları Görüntüle</h3>
-                <p class="action-description">
-                    Oluşturduğunuz sınavları listeleyin, düzenleyin ve öğrenci sonuçlarını inceleyin.
-                </p>
-                <span class="action-btn">
-                    <i class="fas fa-eye"></i>
-                    Sınavları Listele
-                </span>
-            </a>
-        </div>
-
-        <!-- Statistics -->
-        <div class="stats-section">
-            <h2 class="stats-title">
-                <i class="fas fa-chart-bar"></i>
-                İstatistikler
-            </h2>
-
-            <div class="stats-grid">
-                <div class="stat-card animated">
-                    <div class="stat-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>Toplam Ders Sayısı</h3>
-                        <div class="stat-number" id="dersCount">@dersSayisi</div>
-                        <span class="stat-trend trend-up">
-                            <i class="fas fa-arrow-up"></i>
-                            Aktif
-                        </span>
+    <!-- Ek Bilgiler -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="alert alert-info border-0 rounded-3 shadow-sm">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-info-circle-fill display-5 me-3"></i>
+                    <div>
+                        <h4 class="alert-heading mb-2">Öğretmen Paneli Hakkında</h4>
+                        <p class="mb-0">
+                            Bu panel üzerinden ders ekleyebilir, sınav oluşturabilir ve mevcut sınavlarınızı yönetebilirsiniz.
+                            İstatistikler bölümünde toplam ders ve sınav sayılarınızı takip edebilirsiniz.
+                        </p>
                     </div>
                 </div>
-
-                <div class="stat-card animated" style="animation-delay: 0.2s;">
-                    <div class="stat-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>Toplam Sınav Sayısı</h3>
-                        <div class="stat-number" id="examCount">@sinavSayisi</div>
-                        <span class="stat-trend trend-up">
-                            <i class="fas fa-chart-line"></i>
-                            Aktif
-                        </span>
-                    </div>
-                </div>
-
-                <div class="stat-card animated" style="animation-delay: 0.4s;">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>Öğrenci Sayısı</h3>
-                        <div class="stat-number" id="studentCount">@ogrenciSayisi</div>
-                        <span class="stat-trend trend-up">
-                            <i class="fas fa-user-plus"></i>
-                            Kayıtlı
-                        </span>
-                    </div>
-                </div>
-
-                <div class="stat-card animated" style="animation-delay: 0.6s;">
-                    <div class="stat-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>Tamamlanan Sınavlar</h3>
-                        <div class="stat-number" id="completedCount">@tamamlananSinavSayisi</div>
-                        <span class="stat-trend trend-up">
-                            <i class="fas fa-check"></i>
-                            Başarılı
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Progress Section -->
-        <div class="progress-section animated" style="animation-delay: 0.8s;">
-            <h2 class="stats-title">
-                <i class="fas fa-tasks"></i>
-                Sınav İstatistikleri
-            </h2>
-
-            <div class="progress-card">
-                <div class="progress-header">
-                    <h3 style="color: var(--primary-color); margin: 0;">Tamamlanma Oranı</h3>
-                    <span style="font-weight: 600; color: var(--primary-color);" id="completionRate">
-                        @if (sinavSayisi > 0)
-                        {
-                            @((tamamlananSinavSayisi * 100 / sinavSayisi).ToString("F1"))
-                        
-                            <span>%</span>
-                        }
-                        else
-                        {
-                            <text>0%</text>
-                        }
-                    </span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill" style="width: @if(sinavSayisi > 0) {
-                    @((tamamlananSinavSayisi * 100 / sinavSayisi).ToString("F1"))
-                                        } else
-                    {
-
-                        <text>0</text>
-                    }
-%;"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Recent Activities -->
-        <div class="recent-activities animated" style="animation-delay: 1s;">
-            <h2 class="stats-title">
-                <i class="fas fa-history"></i>
-                Son Aktiviteler
-            </h2>
-            <div class="activities-list">
-                <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="fas fa-user-plus"></i>
-                    </div>
-                    <div class="activity-content">
-                        <h4>Öğrenci Kaydı</h4>
-                        <p>Yeni öğrenci sisteme kaydedildi</p>
-                    </div>
-                    <div class="activity-time">10 dk önce</div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="fas fa-file-signature"></i>
-                    </div>
-                    <div class="activity-content">
-                        <h4>Sınav Oluşturuldu</h4>
-                        <p>"Matematik Vize Sınavı" oluşturuldu</p>
-                    </div>
-                    <div class="activity-time">1 saat önce</div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="activity-content">
-                        <h4>Sınav Tamamlandı</h4>
-                        <p>15 öğrenci sınavı tamamladı</p>
-                    </div>
-                    <div class="activity-time">3 saat önce</div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <div class="activity-content">
-                        <h4>Yeni Ders Eklendi</h4>
-                        <p>"Fizik 101" dersi sisteme eklendi</p>
-                    </div>
-                    <div class="activity-time">1 gün önce</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="quick-actions animated" style="animation-delay: 1.2s;">
-            <h3 class="quick-actions-title">Hızlı Erişim</h3>
-            <div class="quick-buttons">
-                <a asp-controller="Course" asp-action="Create" class="quick-btn">
-                    <i class="fas fa-plus"></i>
-                    Hızlı Ders Ekle
-                </a>
-                <a asp-controller="Exam" asp-action="Create" class="quick-btn">
-                    <i class="fas fa-plus-square"></i>
-                    Hızlı Sınav Oluştur
-                </a>
-                <a asp-controller="Exam" asp-action="Index" class="quick-btn">
-                    <i class="fas fa-chart-pie"></i>
-                    Sınav Sonuçları
-                </a>
-                <a asp-controller="Student" asp-action="Index" class="quick-btn">
-                    <i class="fas fa-user-graduate"></i>
-                    Öğrencileri Görüntüle
-                </a>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Font Awesome Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Animasyonları sırayla başlat
-        const animatedItems = document.querySelectorAll('.animated');
-        animatedItems.forEach((item, index) => {
-            item.style.animationDelay = `${index * 0.1}s`;
-        });
+<!-- Minimal hover efekti için inline style -->
+<style>
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+    }
 
-        // Card hover efektleri
-        const actionCards = document.querySelectorAll('.action-card');
-        actionCards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                const icon = this.querySelector('.action-icon');
-                icon.style.transform = 'scale(1.1) rotate(5deg)';
-            });
-
-            card.addEventListener('mouseleave', function() {
-                const icon = this.querySelector('.action-icon');
-                icon.style.transform = '';
-            });
-        });
-
-        // Stat card hover efekti
-        const statCards = document.querySelectorAll('.stat-card');
-        statCards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                const icon = this.querySelector('.stat-icon');
-                icon.style.transform = 'scale(1.1)';
-                icon.style.transition = 'transform 0.3s ease';
-            });
-
-            card.addEventListener('mouseleave', function() {
-                const icon = this.querySelector('.stat-icon');
-                icon.style.transform = '';
-            });
-        });
-
-        // Gerçek zamanlı saat ve tarih güncellemesi
-        function updateDateTime() {
-            const now = new Date();
-
-            // Saati formatla
-            const time = now.toLocaleTimeString('tr-TR', {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-
-            // Tarihi formatla
-            const date = now.toLocaleDateString('tr-TR', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-
-            document.getElementById('currentTime').textContent = time;
-            document.getElementById('currentDate').textContent = date;
-        }
-
-        // İlk güncelleme
-        updateDateTime();
-
-        // Her saniye güncelle
-        setInterval(updateDateTime, 1000);
-
-        // Sayıları animasyonlu şekilde artır (isteğe bağlı)
-        function animateCounter(element, targetValue, duration = 2000) {
-            const startValue = 0;
-            const increment = targetValue / (duration / 16); // 60fps
-            let currentValue = startValue;
-
-            const timer = setInterval(() => {
-                currentValue += increment;
-                if (currentValue >= targetValue) {
-                    element.textContent = Math.round(targetValue);
-                    clearInterval(timer);
-                } else {
-                    element.textContent = Math.round(currentValue);
-                }
-            }, 16);
-        }
-
-        // İstatistik sayılarını animasyonlu göster
-        const statNumbers = document.querySelectorAll('.stat-number');
-        statNumbers.forEach(stat => {
-            const targetValue = parseInt(stat.textContent);
-            if (!isNaN(targetValue) && targetValue > 0) {
-                animateCounter(stat, targetValue);
-            }
-        });
-
-        // Progress bar animasyonu
-        const progressFill = document.getElementById('progressFill');
-        if (progressFill) {
-            const targetWidth = parseFloat(progressFill.style.width);
-            progressFill.style.width = '0%';
-
-            setTimeout(() => {
-                progressFill.style.transition = 'width 1.5s ease-in-out';
-                progressFill.style.width = targetWidth + '%';
-            }, 500);
-        }
-
-        // Aktivite öğelerine tıklama efekti
-        const activityItems = document.querySelectorAll('.activity-item');
-        activityItems.forEach(item => {
-            item.addEventListener('click', function() {
-                this.style.transform = 'translateX(5px)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 300);
-            });
-        });
-
-        // Sayfa yüklendiğinde hoş geldiniz mesajı
-        setTimeout(() => {
-            console.log(`Öğretmen paneli yüklendi. Hoş geldiniz, ${'@userName'}!`);
-        }, 1000);
-
-        // Sistem durumu kontrolü
-        function checkSystemStatus() {
-            const stats = {
-                ders: parseInt(document.getElementById('dersCount').textContent),
-                sinav: parseInt(document.getElementById('examCount').textContent),
-                ogrenci: parseInt(document.getElementById('studentCount').textContent)
-            };
-
-            if (stats.ders === 0 || stats.sinav === 0) {
-                console.warn('Sistemde ders veya sınav bulunmamaktadır.');
-            }
-        }
-
-        // Sistem durumunu kontrol et
-        setTimeout(checkSystemStatus, 2000);
-    });
-</script>
+    .card {
+        transition: all 0.3s ease;
+    }
+</style>

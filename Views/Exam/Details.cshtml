@@ -6,527 +6,97 @@
     var studentExams = ViewBag.StudentExams as List<StudentExam>;
 }
 
-<style>
-    :root {
-        --primary-color: #2c5aa0;
-        --secondary-color: #e9f2f9;
-        --accent-color: #d4af37;
-        --success-color: #28a745;
-        --warning-color: #ffc107;
-        --danger-color: #e74c3c;
-        --info-color: #17a2b8;
-        --text-dark: #333;
-        --text-light: #555;
-        --white: #ffffff;
-        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-        --transition: all 0.3s ease;
-    }
-
-    .exam-details-section {
-        background: linear-gradient(135deg, #f8fafc 0%, #e9f2f9 100%);
-        min-height: 100vh;
-        padding: 40px 0;
-    }
-
-    .exam-header-card {
-        background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a6d 100%);
-        color: var(--white);
-        border-radius: 20px;
-        padding: 30px;
-        margin-bottom: 30px;
-        box-shadow: var(--shadow);
-        position: relative;
-        overflow: hidden;
-    }
-
-        .exam-header-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0,0 Q500,100 1000,0 L1000,100 L0,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
-            background-size: 100% 100px;
-            background-position: bottom;
-        }
-
-    .exam-title {
-        font-size: 2.2rem;
-        font-weight: 800;
-        margin-bottom: 15px;
-        position: relative;
-        z-index: 1;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .exam-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 25px;
-        margin-top: 20px;
-        position: relative;
-        z-index: 1;
-    }
-
-    .meta-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .meta-icon {
-        width: 40px;
-        height: 40px;
-        background: rgba(255, 255, 255, 0.15);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-    }
-
-    .meta-content {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .meta-label {
-        font-size: 0.85rem;
-        opacity: 0.9;
-    }
-
-    .meta-value {
-        font-weight: 600;
-        font-size: 1.1rem;
-    }
-
-    .details-container {
-        background: var(--white);
-        border-radius: 20px;
-        box-shadow: var(--shadow);
-        padding: 30px;
-        margin-bottom: 30px;
-        border: 2px solid transparent;
-        transition: var(--transition);
-    }
-
-        .details-container:hover {
-            border-color: var(--primary-color);
-            box-shadow: 0 15px 40px rgba(44, 90, 160, 0.15);
-        }
-
-    .section-title {
-        color: var(--primary-color);
-        font-weight: 700;
-        margin-bottom: 25px;
-        font-size: 1.6rem;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        border-bottom: 2px solid var(--secondary-color);
-        padding-bottom: 10px;
-    }
-
-        .section-title i {
-            color: var(--accent-color);
-        }
-
-    .status-badge {
-        padding: 8px 20px;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 0.95rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        border: 2px solid transparent;
-    }
-
-    .status-published {
-        background: rgba(40, 167, 69, 0.1);
-        color: var(--success-color);
-        border-color: var(--success-color);
-    }
-
-    .status-unpublished {
-        background: rgba(108, 117, 125, 0.1);
-        color: #6c757d;
-        border-color: #6c757d;
-    }
-
-    .btn-toggle {
-        background: linear-gradient(135deg, var(--accent-color) 0%, #b8941f 100%);
-        color: var(--white);
-        padding: 12px 30px;
-        border-radius: 50px;
-        font-weight: 600;
-        border: none;
-        transition: var(--transition);
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-        .btn-toggle:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
-            color: var(--white);
-        }
-
-    .btn-secondary-custom {
-        background: transparent;
-        color: var(--text-light);
-        padding: 12px 30px;
-        border-radius: 50px;
-        font-weight: 600;
-        border: 2px solid #e1e8f0;
-        transition: var(--transition);
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-    }
-
-        .btn-secondary-custom:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        }
-
-    /* Tablo Stilleri */
-    .students-table-container {
-        overflow-x: auto;
-        border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    }
-
-    .modern-table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-        background: var(--white);
-        border-radius: 15px;
-        overflow: hidden;
-    }
-
-        .modern-table thead {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a6d 100%);
-            color: var(--white);
-        }
-
-        .modern-table th {
-            padding: 18px 15px;
-            font-weight: 600;
-            text-align: left;
-            border: none;
-            position: relative;
-        }
-
-            .modern-table th:not(:last-child)::after {
-                content: "";
-                position: absolute;
-                right: 0;
-                top: 20%;
-                height: 60%;
-                width: 1px;
-                background: rgba(255, 255, 255, 0.2);
-            }
-
-        .modern-table tbody tr {
-            transition: var(--transition);
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-            .modern-table tbody tr:hover {
-                background: rgba(44, 90, 160, 0.03);
-                transform: translateX(5px);
-            }
-
-        .modern-table td {
-            padding: 18px 15px;
-            border: none;
-            vertical-align: middle;
-        }
-
-    .status-indicator {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 6px 14px;
-        border-radius: 50px;
-        font-weight: 500;
-        font-size: 0.9rem;
-    }
-
-    .status-completed {
-        background: rgba(40, 167, 69, 0.1);
-        color: var(--success-color);
-    }
-
-    .status-not-completed {
-        background: rgba(231, 76, 60, 0.1);
-        color: var(--danger-color);
-    }
-
-    .btn-view-answers {
-        background: rgba(44, 90, 160, 0.1);
-        color: var(--primary-color);
-        padding: 8px 20px;
-        border-radius: 50px;
-        font-weight: 600;
-        border: 1px solid rgba(44, 90, 160, 0.2);
-        transition: var(--transition);
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.9rem;
-        text-decoration: none;
-    }
-
-        .btn-view-answers:hover {
-            background: var(--primary-color);
-            color: var(--white);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(44, 90, 160, 0.2);
-        }
-
-    .score-badge {
-        display: inline-block;
-        padding: 6px 14px;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 0.95rem;
-        min-width: 70px;
-        text-align: center;
-    }
-
-    .score-high {
-        background: rgba(40, 167, 69, 0.1);
-        color: var(--success-color);
-        border: 1px solid rgba(40, 167, 69, 0.2);
-    }
-
-    .score-medium {
-        background: rgba(255, 193, 7, 0.1);
-        color: var(--warning-color);
-        border: 1px solid rgba(255, 193, 7, 0.2);
-    }
-
-    .score-low {
-        background: rgba(231, 76, 60, 0.1);
-        color: var(--danger-color);
-        border: 1px solid rgba(231, 76, 60, 0.2);
-    }
-
-    .score-na {
-        background: rgba(108, 117, 125, 0.1);
-        color: #6c757d;
-        border: 1px solid rgba(108, 117, 125, 0.2);
-    }
-
-    .empty-state {
-        text-align: center;
-        padding: 60px 20px;
-        background: rgba(233, 242, 249, 0.5);
-        border-radius: 15px;
-        border: 2px dashed #c0d4e8;
-    }
-
-    .empty-state-icon {
-        font-size: 3.5rem;
-        color: #c0d4e8;
-        margin-bottom: 20px;
-    }
-
-    .empty-state h4 {
-        color: var(--text-light);
-        margin-bottom: 10px;
-    }
-
-    .empty-state p {
-        color: var(--text-light);
-        max-width: 500px;
-        margin: 0 auto;
-    }
-
-    .action-buttons {
-        display: flex;
-        gap: 15px;
-        flex-wrap: wrap;
-        margin-top: 25px;
-    }
-
-    .student-count {
-        background: var(--white);
-        border-radius: 15px;
-        padding: 15px 25px;
-        margin-bottom: 20px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .student-count-icon {
-        width: 50px;
-        height: 50px;
-        background: var(--secondary-color);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        color: var(--primary-color);
-    }
-
-    .student-count-info h5 {
-        margin: 0;
-        color: var(--text-light);
-        font-size: 0.95rem;
-    }
-
-    .student-count-number {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: var(--primary-color);
-    }
-
-    @@media (max-width: 768px) {
-        .exam-title
-
-    {
-        font-size: 1.8rem;
-    }
-
-    .exam-meta {
-        gap: 15px;
-    }
-
-    .meta-item {
-        flex: 0 0 calc(50% - 15px);
-    }
-
-    .modern-table {
-        font-size: 0.9rem;
-    }
-
-        .modern-table th,
-        .modern-table td {
-            padding: 12px 10px;
-        }
-
-    .action-buttons {
-        flex-direction: column;
-    }
-
-    .btn-toggle,
-    .btn-secondary-custom {
-        width: 100%;
-        justify-content: center;
-    }
-
-    }
-
-    @@media (max-width: 576px) {
-        .meta-item
-
-    {
-        flex: 0 0 100%;
-    }
-
-    .exam-header-card {
-        padding: 20px;
-    }
-
-    .details-container {
-        padding: 20px;
-    }
-
-    }
-</style>
-
-<div class="exam-details-section">
-    <div class="container">
-        <!-- Hero Başlık -->
-        <div class="exam-header-card">
-            <h1 class="exam-title">
-                <i class="fas fa-file-alt"></i> @Model.Title
-            </h1>
-
-            <div class="exam-meta">
-                <div class="meta-item">
-                    <div class="meta-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <div class="meta-content">
-                        <span class="meta-label">DERS</span>
-                        <span class="meta-value">@Model.Course?.CourseName</span>
-                    </div>
-                </div>
-
-                <div class="meta-item">
-                    <div class="meta-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="meta-content">
-                        <span class="meta-label">SÜRE</span>
-                        <span class="meta-value">@Model.DurationMinutes dakika</span>
-                    </div>
-                </div>
-
-                <div class="meta-item">
-                    <div class="meta-icon">
-                        <i class="fas fa-calendar-alt"></i>
-                    </div>
-                    <div class="meta-content">
-                        <span class="meta-label">BAŞLANGIÇ</span>
-                        <span class="meta-value">@Model.StartDate.ToString("dd MMMM yyyy HH:mm")</span>
-                    </div>
-                </div>
-
-                <div class="meta-item">
-                    <div class="meta-icon">
-                        <i class="fas fa-bullhorn"></i>
-                    </div>
-                    <div class="meta-content">
-                        <span class="meta-label">DURUM</span>
-                        <span class="meta-value">
-                            <span class="status-badge @(Model.IsPublished ? "status-published" : "status-unpublished")">
-                                <i class="fas @(Model.IsPublished ? "fa-check-circle" : "fa-times-circle")"></i>
-                                @(Model.IsPublished ? "Yayınlandı" : "Yayınlanmadı")
-                            </span>
-                        </span>
-                    </div>
+<div class="container-fluid py-5">
+    <!-- Başlık -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="d-flex align-items-center mb-3">
+                <i class="bi bi-clipboard-check display-4 text-primary me-3"></i>
+                <div>
+                    <h1 class="display-5 fw-bold text-dark mb-1">@Model.Title</h1>
+                    <p class="text-muted mb-0">Sınav detayları ve öğrenci durumları</p>
                 </div>
             </div>
+            <div class="border-bottom pb-3"></div>
         </div>
+    </div>
 
-        <!-- Yayın Kontrolü -->
-        <div class="details-container">
-            <h3 class="section-title">
-                <i class="fas fa-sliders-h"></i> Sınav Yayın Kontrolü
-            </h3>
-
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <p class="mb-0">
-                        @if (Model.IsPublished)
-                        {
-                            <span>Bu sınav şu anda <strong class="text-success">öğrencilere görünür durumda</strong>. Yayından kaldırmak için aşağıdaki butonu kullanabilirsiniz.</span>
-                        }
-                        else
-                        {
-                            <span>Bu sınav şu anda <strong class="text-secondary">öğrencilere görünmüyor</strong>. Yayınlamak için aşağıdaki butonu kullanabilirsiniz.</span>
-                        }
-                    </p>
+    <!-- Sınav Bilgileri Kartı -->
+    <div class="row mb-5">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-primary text-white py-3">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-info-circle me-2"></i>Sınav Bilgileri
+                    </h5>
                 </div>
-                <div class="col-md-4 text-md-end">
-                    <form asp-controller="Teacher" asp-action="TogglePublish" method="post">
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
+                                    <i class="bi bi-book text-primary fs-4"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold text-muted mb-1">Ders</h6>
+                                    <p class="mb-0 fs-5">@Model.Course?.CourseName</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
+                                    <i class="bi bi-stopwatch text-primary fs-4"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold text-muted mb-1">Süre</h6>
+                                    <p class="mb-0 fs-5">@Model.DurationMinutes dakika</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
+                                    <i class="bi bi-calendar text-primary fs-4"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold text-muted mb-1">Başlangıç Tarihi</h6>
+                                    <p class="mb-0 fs-5">@Model.StartDate.ToString("dd.MM.yyyy HH:mm")</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
+                                    <i class="bi bi-broadcast text-primary fs-4"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold text-muted mb-1">Yayın Durumu</h6>
+                                    @if (Model.IsPublished)
+                                    {
+                                        <span class="badge bg-success fs-6">
+                                            <i class="bi bi-check-circle me-1"></i>Yayınlandı
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary fs-6">
+                                            <i class="bi bi-clock me-1"></i>Yayınlanmadı
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Yayınlama Butonu -->
+                    <form asp-controller="Teacher"
+                          asp-action="TogglePublish"
+                          method="post"
+                          class="mt-4">
                         <input type="hidden" name="id" value="@Model.Id" />
-                        <button type="submit" class="btn-toggle">
-                            <i class="fas @(Model.IsPublished ? "fa-eye-slash" : "fa-eye")"></i>
+                        <button type="submit" class="btn @(Model.IsPublished ? "btn-warning" : "btn-primary") btn-lg">
+                            <i class="bi bi-@(Model.IsPublished ? "x-circle" : "check-circle") me-2"></i>
                             @(Model.IsPublished ? "Yayından Kaldır" : "Sınavı Yayınla")
                         </button>
                     </form>
@@ -534,239 +104,258 @@
             </div>
         </div>
 
-        <!-- Öğrenci İstatistikleri -->
-        @if (studentExams != null && studentExams.Any())
-        {
-            <div class="student-count">
-                <div class="student-count-icon">
-                    <i class="fas fa-users"></i>
+        <!-- İstatistik Kartı -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-lg h-100">
+                <div class="card-header bg-primary text-white py-3">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-bar-chart me-2"></i>İstatistikler
+                    </h5>
                 </div>
-                <div class="student-count-info">
-                    <h5>SINAVA KATILAN ÖĞRENCİLER</h5>
-                    <div class="student-count-number">
-                        @studentExams.Count() Öğrenci
+                <div class="card-body p-4">
+                    @{
+                        var totalStudents = studentExams?.Count ?? 0;
+                        var completedExams = studentExams?.Count(se => se.Completed) ?? 0;
+                        var averageScore = studentExams?.Where(se => se.Score.HasValue).Average(se => se.Score) ?? 0;
+                    }
+
+                    <div class="text-center mb-4">
+                        <h2 class="display-2 fw-bold text-primary mb-0">@totalStudents</h2>
+                        <p class="text-muted mb-0">Toplam Öğrenci</p>
+                    </div>
+
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <div class="border rounded-3 p-3 text-center">
+                                <h4 class="fw-bold text-success mb-1">@completedExams</h4>
+                                <p class="text-muted mb-0 small">Tamamlanan</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="border rounded-3 p-3 text-center">
+                                <h4 class="fw-bold text-primary mb-1">@(totalStudents - completedExams)</h4>
+                                <p class="text-muted mb-0 small">Devam Eden</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-top">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted">Ortalama Not:</span>
+                            <span class="fs-4 fw-bold text-primary">@(averageScore.ToString("F2"))</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        }
+        </div>
+    </div>
 
-        <!-- Öğrenci Listesi -->
-        <div class="details-container">
-            <h3 class="section-title">
-                <i class="fas fa-user-graduate"></i> Öğrenci Sınav Durumları
-            </h3>
-
-            @if (studentExams != null && studentExams.Any())
-            {
-                <div class="students-table-container">
-                    <table class="modern-table">
-                        <thead>
-                            <tr>
-                                <th><i class="fas fa-id-card"></i> NUMARA</th>
-                                <th><i class="fas fa-user"></i> AD SOYAD</th>
-                                <th><i class="fas fa-play-circle"></i> BAŞLAMA</th>
-                                <th><i class="fas fa-stop-circle"></i> BİTİŞ</th>
-                                <th><i class="fas fa-check-circle"></i> DURUM</th>
-                                <th><i class="fas fa-star"></i> NOT</th>
-                                <th><i class="fas fa-cogs"></i> İŞLEMLER</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var se in studentExams)
-                            {
-                                <tr>
-                                    <td>
-                                        <strong>@se.Student.Numara</strong>
-                                    </td>
-                                    <td>
-                                        <strong>@se.Student.full_name</strong>
-                                    </td>
-                                    <td>
-                                        @if (se.StartTime.HasValue)
-                                        {
-                                            <span>@se.StartTime.Value.ToString("dd/MM HH:mm")</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="text-muted">-</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (se.EndTime.HasValue)
-                                        {
-                                            <span>@se.EndTime.Value.ToString("dd/MM HH:mm")</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="text-muted">-</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (se.Completed)
-                                        {
-                                            <span class="status-indicator status-completed">
-                                                <i class="fas fa-check"></i> Tamamlandı
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <span class="status-indicator status-not-completed">
-                                                <i class="fas fa-times"></i> Devam Ediyor
-                                            </span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (se.Score.HasValue)
-                                        {
-                                            var scoreClass = se.Score.Value >= 70 ? "score-high" :
-                                            se.Score.Value >= 50 ? "score-medium" : "score-low";
-                                            <span class="score-badge @scoreClass">
-                                                @se.Score.Value.ToString("F1")
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <span class="score-badge score-na">-</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (se.Completed)
-                                        {
-                                            <a asp-controller="Answer"
-                                               asp-action="Index"
-                                               asp-route-studentExamId="@se.Id"
-                                               class="btn-view-answers">
-                                                <i class="fas @(se.Score.HasValue ? "fa-eye" : "fa-check-circle")"></i>
-                                                @(se.Score.HasValue ? "Cevapları Gör" : "Not Ver")
-                                            </a>
-                                        }
-                                        else
-                                        {
-                                            <span class="text-muted">Sınav devam ediyor</span>
-                                        }
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            }
-            else
-            {
-                <div class="empty-state">
-                    <div class="empty-state-icon">
-                        <i class="fas fa-user-slash"></i>
+    <!-- Öğrenci Listesi -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-primary text-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-people-fill me-2"></i>Öğrenci Durumları
+                        </h5>
+                        <span class="badge bg-light text-dark">@(studentExams?.Count ?? 0) Öğrenci</span>
                     </div>
-                    <h4>Henüz Öğrenci Katılmadı</h4>
-                    <p>Bu sınava henüz hiç öğrenci katılmadı. Öğrencilerin sınava katılabilmesi için sınavı yayınlayabilirsiniz.</p>
-                    @if (!Model.IsPublished)
+                </div>
+
+                <div class="card-body p-0">
+                    @if (studentExams != null && studentExams.Any())
                     {
-                        <form asp-controller="Teacher" asp-action="TogglePublish" method="post" data-is-published="@Model.IsPublished.ToString().ToLower()">
-                            <input type="hidden" name="id" value="@Model.Id" />
-                            <button type="submit" class="btn-toggle">
-                                <i class="fas @(Model.IsPublished ? "fa-eye-slash" : "fa-eye")"></i>
-                                @(Model.IsPublished ? "Yayından Kaldır" : "Sınavı Yayınla")
-                            </button>
-                        </form>
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="ps-4">
+                                            <i class="bi bi-123 me-1"></i>Numara
+                                        </th>
+                                        <th>
+                                            <i class="bi bi-person me-1"></i>Ad Soyad
+                                        </th>
+                                        <th>
+                                            <i class="bi bi-play-circle me-1"></i>Başlama
+                                        </th>
+                                        <th>
+                                            <i class="bi bi-stop-circle me-1"></i>Bitiş
+                                        </th>
+                                        <th>
+                                            <i class="bi bi-check-circle me-1"></i>Durum
+                                        </th>
+                                        <th>
+                                            <i class="bi bi-star me-1"></i>Not
+                                        </th>
+                                        <th class="pe-4">
+                                            <i class="bi bi-gear me-1"></i>İşlem
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var se in studentExams)
+                                    {
+                                        <tr class="align-middle">
+                                            <td class="ps-4 fw-bold">@se.Student.Numara</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-2">
+                                                        <i class="bi bi-person-circle text-primary"></i>
+                                                    </div>
+                                                    @se.Student.full_name
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <small class="text-muted">@(se.StartTime?.ToString("dd.MM.yyyy HH:mm") ?? "-")</small>
+                                            </td>
+                                            <td>
+                                                <small class="text-muted">@(se.EndTime?.ToString("dd.MM.yyyy HH:mm") ?? "-")</small>
+                                            </td>
+                                            <td>
+                                                @if (se.Completed)
+                                                {
+                                                    <span class="badge bg-success rounded-pill">
+                                                        <i class="bi bi-check-circle me-1"></i>Tamamlandı
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-warning text-dark rounded-pill">
+                                                        <i class="bi bi-clock me-1"></i>Devam Ediyor
+                                                    </span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (se.Score.HasValue)
+                                                {
+                                                    <span class="badge @(se.Score >= 50 ? "bg-success" : "bg-danger") rounded-pill">
+                                                        @se.Score.Value.ToString("F2")
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary rounded-pill">-</span>
+                                                }
+                                            </td>
+                                            <td class="pe-4">
+                                                @if (se.Completed)
+                                                {
+                                                    <a asp-controller="Answer"
+                                                       asp-action="Index"
+                                                       asp-route-studentExamId="@se.Id"
+                                                       class="btn btn-sm @(se.Score.HasValue ? "btn-success" : "btn-primary")">
+                                                        <i class="bi bi-eye-fill me-1"></i>
+                                                        @(se.Score.HasValue ? "Detay Gör" : "Not Ver")
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">Sınav bitmedi</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="bi bi-people display-1 text-muted opacity-25 mb-3"></i>
+                            <h5 class="text-muted">Henüz bu sınava giren öğrenci yok</h5>
+                            <p class="text-muted mb-4">Sınavı yayınladıktan sonra öğrenciler sınava katılabilir</p>
+                        </div>
                     }
                 </div>
-            }
+
+                <!-- Footer -->
+                <div class="card-footer bg-transparent border-top p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Toplam @(studentExams?.Count ?? 0) öğrenci •
+                                @(studentExams?.Count(se => se.Completed) ?? 0) tamamlandı
+                            </small>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="history.back()">
+                            <i class="bi bi-arrow-left me-2"></i>Geri Dön
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <!-- Geri Dön Butonu -->
-        <div class="action-buttons">
-            <button type="button" class="btn-secondary-custom" onclick="history.back()">
-                <i class="fas fa-arrow-left"></i> Geri Dön
-            </button>
-
-            <a asp-action="Index" class="btn-secondary-custom">
-                <i class="fas fa-list"></i> Tüm Sınavlara Dön
-            </a>
+    <!-- Hızlı İşlemler -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="text-center">
+                <div class="d-flex justify-content-center gap-3">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">
+                        <i class="bi bi-pencil-fill me-2"></i>Sınavı Düzenle
+                    </a>
+                    <a asp-controller="Question" asp-action="Index" asp-route-examId="@Model.Id" class="btn btn-outline-success">
+                        <i class="bi bi-question-circle-fill me-2"></i>Soruları Yönet
+                    </a>
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="bi bi-list-ul me-2"></i>Tüm Sınavlar
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Font Awesome Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Tablo satırlarına tıklanabilirlik efekti
-        const tableRows = document.querySelectorAll('.modern-table tbody tr');
-        tableRows.forEach(row => {
-            row.style.cursor = 'pointer';
-            row.addEventListener('click', function(e) {
-                // Eğer tıklanan element bir buton değilse
-                if (!e.target.closest('a, button')) {
-                    this.style.backgroundColor = 'rgba(44, 90, 160, 0.05)';
-                    setTimeout(() => {
-                        this.style.backgroundColor = '';
-                    }, 200);
-                }
-            });
-        });
-
-        // Animasyonlar
-        const cards = document.querySelectorAll('.details-container, .exam-header-card');
-        cards.forEach((card, index) => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-
-            setTimeout(() => {
-                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-            }, 300 + (index * 200));
-        });
-
-        // Tablo satırları animasyonu
-        const tableRowsAnimated = document.querySelectorAll('.modern-table tbody tr');
-        tableRowsAnimated.forEach((row, index) => {
-            row.style.opacity = '0';
-            row.style.transform = 'translateX(-20px)';
-
-            setTimeout(() => {
-                row.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                row.style.opacity = '1';
-                row.style.transform = 'translateX(0)';
-            }, 400 + (index * 50));
-        });
-
-        // Yayın butonu için onay dialog'u
-        const toggleForm = document.querySelector('form[asp-action="TogglePublish"]');
-            if (toggleForm) {
-        toggleForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const isPublished = this.getAttribute('data-is-published') === 'true';
-            const action = isPublished ? 'yayından kaldırmak' : 'yayınlamak';
-            const message = isPublished ? 'görülememesine' : 'görülebilmesine';
-
-            Swal.fire({
-                title: 'Emin misiniz?',
-                html: `
-                    <div style="text-align: left; padding: 15px;">
-                        <p>Sınavı <strong>${action}</strong> üzeresiniz.</p>
-                        <p>@Model.Title</p>
-                        <p>Bu işlem sınavın öğrenciler tarafından ${message} neden olacaktır.</p>
-                    </div>
-                `,
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: isPublished ? '#6c757d' : '#28a745',
-                cancelButtonColor: '#dc3545',
-                confirmButtonText: isPublished ? 'Evet, Yayından Kaldır' : 'Evet, Yayınla',
-                cancelButtonText: 'İptal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    toggleForm.submit();
-                }
-            });
-        });
+<!-- Inline Styles -->
+<style>
+    .table-hover tbody tr:hover {
+        background-color: rgba(102, 126, 234, 0.05) !important;
     }
-    });
-</script>
 
-<!-- SweetAlert2 için CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    .table th {
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table td {
+        border-bottom: 1px solid #dee2e6;
+        vertical-align: middle;
+    }
+
+    .badge {
+        font-size: 0.85em;
+        padding: 0.35em 0.65em;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        border: none;
+    }
+
+    .btn-outline-primary {
+        border-color: #667eea;
+        color: #667eea;
+    }
+
+        .btn-outline-primary:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            border-color: #667eea;
+            color: white;
+        }
+
+    .btn-outline-success {
+        border-color: #198754;
+        color: #198754;
+    }
+
+        .btn-outline-success:hover {
+            background-color: #198754;
+            border-color: #198754;
+            color: white;
+        }
+</style>

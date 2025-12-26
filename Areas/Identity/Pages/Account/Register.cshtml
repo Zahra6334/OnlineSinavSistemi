@@ -1,123 +1,349 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Hesap Oluştur";
 }
 
-<h1>@ViewData["Title"]</h1>
-
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Yeni hesap oluştur</h2>
-            <hr />
-
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-
-            <!-- E-Posta -->
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-
-            <!-- Ad Soyad -->
-            <div class="form-group mb-3">
-                <label asp-for="Input.AdSoyad"></label>
-                <input asp-for="Input.AdSoyad" class="form-control" />
-                <span asp-validation-for="Input.AdSoyad" class="text-danger"></span>
-            </div>
-
-            <!-- Rol -->
-            <div class="form-group mb-3">
-                <label asp-for="Input.Rol"></label>
-                <select asp-for="Input.Rol" class="form-control" id="roleSelect">
-                    <option value="">Seçiniz</option>
-                    <option value="Ogretmen">Öğretmen</option>
-                    <option value="Ogrenci">Öğrenci</option>
-                </select>
-                <span asp-validation-for="Input.Rol" class="text-danger"></span>
-            </div>
-
-            <!-- Numara -->
-            <div class="form-group mb-3">
-                <label asp-for="Input.Numara"></label>
-                <input asp-for="Input.Numara" class="form-control" />
-                <span asp-validation-for="Input.Numara" class="text-danger"></span>
-            </div>
-
-            <!-- Branş (sadece öğretmende gözükecek) -->
-            <div class="form-group mb-3" id="bransDiv" style="display:none;">
-                <label asp-for="Input.Brans"></label>
-                <input asp-for="Input.Brans" class="form-control" />
-                <span asp-validation-for="Input.Brans" class="text-danger"></span>
-            </div>
-
-            <!-- Şifre -->
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-
-            <!-- Şifre tekrar -->
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Kayıt Ol</button>
-        </form>
-    </div>
-
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Harici bir servisle kayıt ol</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <p>
-                        Harici kimlik doğrulama servisi yok. Daha fazla bilgi için
-                        <a href="https://go.microsoft.com/fwlink/?LinkID=532715">buraya tıklayın</a>.
-                    </p>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name">
-                                        @provider.DisplayName ile giriş yap
-                                    </button>
-                                }
-                            </p>
+<div class="container-fluid bg-gradient-primary bg-opacity-10" style="min-height: 100vh;">
+    <div class="row justify-content-center align-items-center py-5" style="min-height: 90vh;">
+        <div class="col-xl-6 col-lg-8 col-md-10">
+            <div class="card border-0 shadow-lg overflow-hidden mx-auto" style="max-width: 700px;">
+                <div class="row g-0">
+                    <!-- Sol Taraf - Form -->
+                    <div class="col-lg-12 p-5">
+                        <div class="text-center mb-4">
+                            <i class="bi bi-person-plus display-4 text-primary"></i>
+                            <h1 class="h3 fw-bold text-dark mt-3">Yeni Hesap Oluştur</h1>
+                            <p class="text-muted">Online sınav sistemine kayıt olun</p>
                         </div>
-                    </form>
-                }
-            }
-        </section>
+
+                        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <span></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+
+                            <div class="row">
+                                <!-- Ad Soyad -->
+                                <div class="col-md-6 mb-4">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0">
+                                            <i class="bi bi-person text-primary"></i>
+                                        </span>
+                                        <div class="form-floating flex-grow-1">
+                                            <input asp-for="Input.AdSoyad" class="form-control border-start-0"
+                                                   placeholder="Ad Soyad" />
+                                            <label asp-for="Input.AdSoyad" class="text-muted">
+                                                Ad Soyad
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="Input.AdSoyad" class="invalid-feedback d-block"></span>
+                                </div>
+
+                                <!-- E-Posta -->
+                                <div class="col-md-6 mb-4">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0">
+                                            <i class="bi bi-envelope text-primary"></i>
+                                        </span>
+                                        <div class="form-floating flex-grow-1">
+                                            <input asp-for="Input.Email" class="form-control border-start-0"
+                                                   autocomplete="username" aria-required="true"
+                                                   placeholder="ornek@email.com" />
+                                            <label asp-for="Input.Email" class="text-muted">
+                                                E-posta
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="Input.Email" class="invalid-feedback d-block"></span>
+                                </div>
+                            </div>
+
+                            <!-- Rol Seçimi -->
+                            <div class="mb-4">
+                                <label class="form-label text-muted mb-2">
+                                    <i class="bi bi-person-badge me-1"></i>Rolünüzü Seçin
+                                </label>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="card border-2 role-card" data-value="Ogrenci">
+                                            <div class="card-body text-center py-4">
+                                                <i class="bi bi-mortarboard display-6 text-primary mb-3"></i>
+                                                <h5 class="card-title">Öğrenci</h5>
+                                                <p class="card-text text-muted small">Sınavlara katılın, sonuçlarınızı görün</p>
+                                            </div>
+                                        </div>
+                                        <input type="radio" asp-for="Input.Rol" value="Ogrenci" class="d-none" id="roleOgrenci" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card border-2 role-card" data-value="Ogretmen">
+                                            <div class="card-body text-center py-4">
+                                                <i class="bi bi-person-badge display-6 text-success mb-3"></i>
+                                                <h5 class="card-title">Öğretmen</h5>
+                                                <p class="card-text text-muted small">Sınav oluşturun, öğrencileri yönetin</p>
+                                            </div>
+                                        </div>
+                                        <input type="radio" asp-for="Input.Rol" value="Ogretmen" class="d-none" id="roleOgretmen" />
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Input.Rol" class="invalid-feedback d-block"></span>
+                            </div>
+
+                            <!-- Numara -->
+                            <div class="mb-4">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-123 text-primary"></i>
+                                    </span>
+                                    <div class="form-floating flex-grow-1">
+                                        <input asp-for="Input.Numara" class="form-control border-start-0"
+                                               placeholder="Numaranız" />
+                                        <label asp-for="Input.Numara" class="text-muted">
+                                            Öğrenci/Öğretmen Numarası
+                                        </label>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Input.Numara" class="invalid-feedback d-block"></span>
+                            </div>
+
+                            <!-- Branş (Sadece Öğretmen) -->
+                            <div class="mb-4" id="bransDiv" style="display:none;">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-book text-primary"></i>
+                                    </span>
+                                    <div class="form-floating flex-grow-1">
+                                        <input asp-for="Input.Brans" class="form-control border-start-0"
+                                               placeholder="Branşınız" />
+                                        <label asp-for="Input.Brans" class="text-muted">
+                                            Branşınız (örn: Matematik, Fizik)
+                                        </label>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Input.Brans" class="invalid-feedback d-block"></span>
+                            </div>
+
+                            <div class="row">
+                                <!-- Şifre -->
+                                <div class="col-md-6 mb-4">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0">
+                                            <i class="bi bi-key text-primary"></i>
+                                        </span>
+                                        <div class="form-floating flex-grow-1">
+                                            <input asp-for="Input.Password" class="form-control border-start-0"
+                                                   autocomplete="new-password" aria-required="true"
+                                                   placeholder="Şifre" />
+                                            <label asp-for="Input.Password" class="text-muted">
+                                                Şifre
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="Input.Password" class="invalid-feedback d-block"></span>
+                                </div>
+
+                                <!-- Şifre Tekrar -->
+                                <div class="col-md-6 mb-4">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0">
+                                            <i class="bi bi-key-fill text-primary"></i>
+                                        </span>
+                                        <div class="form-floating flex-grow-1">
+                                            <input asp-for="Input.ConfirmPassword" class="form-control border-start-0"
+                                                   autocomplete="new-password" aria-required="true"
+                                                   placeholder="Şifre Tekrar" />
+                                            <label asp-for="Input.ConfirmPassword" class="text-muted">
+                                                Şifre Tekrar
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="Input.ConfirmPassword" class="invalid-feedback d-block"></span>
+                                </div>
+                            </div>
+
+                            <!-- Kayıt Butonu -->
+                            <button id="registerSubmit" type="submit"
+                                    class="btn btn-primary btn-lg w-100 py-3 rounded-3 shadow-sm mt-3">
+                                <i class="bi bi-person-plus me-2"></i>Hesap Oluştur
+                            </button>
+
+                            <!-- Giriş Linki -->
+                            <div class="text-center mt-4">
+                                <p class="text-muted mb-2">Zaten bir hesabınız var mı?</p>
+                                <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl"
+                                   class="btn btn-outline-primary rounded-3 px-4">
+                                    <i class="bi bi-box-arrow-in-right me-2"></i>Giriş Yap
+                                </a>
+                            </div>
+                        </form>
+
+                        <!-- Harici Giriş Bölümü -->
+                        <div class="mt-5 pt-4 border-top">
+                            @{
+                                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                                {
+                                    <div class="text-center">
+                                        <p class="text-muted">Harici kimlik doğrulama servisi bulunamadı.</p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="text-center">
+                                        <h5 class="mb-3 text-muted">Hızlı kayıt için</h5>
+                                        <form id="external-account" asp-page="./ExternalLogin"
+                                              asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                            <div class="row g-2">
+                                                @foreach (var provider in Model.ExternalLogins!)
+                                                {
+                                                    <div class="col-12">
+                                                        <button type="submit"
+                                                                class="btn btn-outline-secondary w-100 py-2 rounded-3"
+                                                                name="provider" value="@provider.Name"
+                                                                title="@provider.DisplayName ile kayıt ol">
+                                                            <i class="bi bi-@provider.Name.ToLower() me-2"></i>
+                                                            @provider.DisplayName ile Kayıt Ol
+                                                        </button>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </form>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alt Linkler -->
+            <div class="text-center mt-4">
+                <a href="/" class="text-decoration-none text-muted">
+                    <i class="bi bi-house me-1"></i>Ana Sayfaya Dön
+                </a>
+                <span class="mx-2">•</span>
+                <a href="/Home/Privacy" class="text-decoration-none text-muted">
+                    <i class="bi bi-shield-check me-1"></i>Gizlilik Politikası
+                </a>
+            </div>
+        </div>
     </div>
 </div>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+<!-- Inline Styles -->
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    }
+
+    .card {
+        margin: 0 auto;
+    }
+
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        border: none;
+    }
+
+    .btn-outline-primary {
+        border-color: #667eea;
+        color: #667eea;
+    }
+
+        .btn-outline-primary:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            border-color: #667eea;
+            color: white;
+        }
+
+    .role-card {
+        cursor: pointer;
+        transition: all 0.3s;
+        border-color: #dee2e6 !important;
+    }
+
+        .role-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,.1);
+            border-color: #667eea !important;
+        }
+
+        .role-card.selected {
+            border-color: #667eea !important;
+            background-color: rgba(102, 126, 234, 0.1);
+        }
+
+            .role-card.selected .text-primary {
+                color: #764ba2 !important;
+            }
+
+            .role-card.selected .text-success {
+                color: #667eea !important;
+            }
+</style>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 
     <script>
-        document.getElementById("roleSelect").addEventListener("change", function () {
-            var selectedRole = this.value;
-            var bransDiv = document.getElementById("bransDiv");
-            var bransInput = document.getElementById("Input_Brans");
+        // Rol seçimi için kart tıklama
+        document.querySelectorAll('.role-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Tüm kartlardan seçili class'ını kaldır
+                document.querySelectorAll('.role-card').forEach(c => {
+                    c.classList.remove('selected');
+                    c.classList.remove('border-primary');
+                });
 
-            if (selectedRole === "Ogretmen") {
-                bransDiv.style.display = "block";
-            } else {
-                bransDiv.style.display = "none";
-                if (bransInput) {
-                    bransInput.value = ""; // Branş'ı boş gönder
+                // Tıklanan kartı seçili yap
+                this.classList.add('selected');
+                this.classList.add('border-primary');
+
+                // İlgili radio butonu seç
+                const roleValue = this.getAttribute('data-value');
+                const radioButton = document.querySelector(`input[value="${roleValue}"]`);
+                if (radioButton) {
+                    radioButton.checked = true;
+
+                    // Branş alanını kontrol et
+                    const bransDiv = document.getElementById('bransDiv');
+                    const bransInput = document.getElementById('Input_Brans');
+
+                    if (roleValue === "Ogretmen") {
+                        bransDiv.style.display = "block";
+                        if (bransInput) {
+                            bransInput.setAttribute('required', 'required');
+                        }
+                    } else {
+                        bransDiv.style.display = "none";
+                        if (bransInput) {
+                            bransInput.removeAttribute('required');
+                            bransInput.value = "";
+                        }
+                    }
+
+                    // Form validation'ı tetikle
+                    radioButton.dispatchEvent(new Event('change'));
+                }
+            });
+        });
+
+        // Sayfa yüklendiğinde varsayılan seçimi ayarla
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedRole = document.querySelector('input[name="Input.Rol"]:checked');
+            if (selectedRole) {
+                const card = document.querySelector(`.role-card[data-value="${selectedRole.value}"]`);
+                if (card) {
+                    card.classList.add('selected');
+                    card.classList.add('border-primary');
                 }
             }
         });
