@@ -165,6 +165,7 @@ namespace OnlineSinavSistemi.Controllers
         public async Task<IActionResult> TogglePublish(int id)
         {
             await _examService.PublishExamAsync(id);
+
             return RedirectToAction("Index");
         }
 

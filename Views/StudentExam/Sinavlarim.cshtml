@@ -1,782 +1,87 @@
 ﻿@model IEnumerable<OnlineSinavSistemi.Models.StudentExam>
+
 @{
     ViewBag.Title = "Sınavlarım";
 }
 
-<style>
-    :root {
-        --primary-color: #2c5aa0;
-        --secondary-color: #e9f2f9;
-        --accent-color: #d4af37;
-        --success-color: #28a745;
-        --warning-color: #ffc107;
-        --danger-color: #e74c3c;
-        --text-dark: #333;
-        --text-light: #555;
-        --white: #ffffff;
-        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-        --transition: all 0.3s ease;
-    }
-
-    .my-exams-section {
-        background: linear-gradient(135deg, #f8fafc 0%, #e9f2f9 100%);
-        min-height: 100vh;
-        padding: 60px 0;
-    }
-
-    .page-header {
-        margin-bottom: 40px;
-    }
-
-    .page-title {
-        color: var(--primary-color);
-        font-weight: 800;
-        font-size: 2.5rem;
-        margin-bottom: 10px;
-        position: relative;
-        display: inline-block;
-    }
-
-        .page-title::after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 80px;
-            height: 4px;
-            background: var(--accent-color);
-            border-radius: 2px;
-        }
-
-    .page-subtitle {
-        color: var(--text-light);
-        font-size: 1.1rem;
-        margin-top: 20px;
-    }
-
-    .stats-cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 25px;
-        margin-bottom: 40px;
-    }
-
-    .stat-card {
-        background: var(--white);
-        border-radius: 20px;
-        padding: 30px;
-        box-shadow: var(--shadow);
-        border: 2px solid transparent;
-        transition: var(--transition);
-        text-align: center;
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeInUp 0.6s ease forwards;
-    }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-color);
-            box-shadow: 0 15px 40px rgba(44, 90, 160, 0.15);
-        }
-
-        .stat-card:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .stat-card:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .stat-card:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-    .stat-icon {
-        width: 70px;
-        height: 70px;
-        background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a6d 100%);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        color: var(--white);
-        margin: 0 auto 20px;
-    }
-
-    .stat-number {
-        font-size: 2.5rem;
-        font-weight: 800;
-        color: var(--primary-color);
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    .stat-label {
-        color: var(--text-light);
-        font-weight: 600;
-        font-size: 1.1rem;
-    }
-
-    .exams-container {
-        background: var(--white);
-        border-radius: 20px;
-        box-shadow: var(--shadow);
-        overflow: hidden;
-        margin-top: 30px;
-    }
-
-    .exams-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a6d 100%);
-        color: var(--white);
-        padding: 25px 30px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-
-        .exams-header h3 {
-            margin: 0;
-            font-size: 1.5rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-    .exams-count {
-        background: rgba(255, 255, 255, 0.2);
-        padding: 5px 15px;
-        border-radius: 50px;
-        font-weight: 600;
-    }
-
-    .exams-table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-    }
-
-        .exams-table thead {
-            background: var(--secondary-color);
-        }
-
-        .exams-table th {
-            padding: 20px 15px;
-            font-weight: 600;
-            color: var(--primary-color);
-            text-align: left;
-            border-bottom: 2px solid var(--primary-color);
-            font-size: 1.1rem;
-        }
-
-        .exams-table tbody tr {
-            transition: var(--transition);
-            border-bottom: 1px solid #f0f0f0;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.6s ease forwards;
-        }
-
-            .exams-table tbody tr:hover {
-                background: rgba(44, 90, 160, 0.03);
-                transform: translateY(-2px);
-            }
-
-        .exams-table td {
-            padding: 25px 15px;
-            vertical-align: middle;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .exams-table tr:last-child td {
-            border-bottom: none;
-        }
-
-    .exam-title {
-        font-weight: 600;
-        color: var(--text-dark);
-        margin-bottom: 5px;
-        display: block;
-    }
-
-    .exam-course {
-        color: var(--text-light);
-        font-size: 0.9rem;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .exam-status {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 18px;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 0.9rem;
-    }
-
-    .status-completed {
-        background: rgba(40, 167, 69, 0.1);
-        color: var(--success-color);
-        border: 1px solid rgba(40, 167, 69, 0.2);
-    }
-
-    .status-pending {
-        background: rgba(255, 193, 7, 0.1);
-        color: var(--warning-color);
-        border: 1px solid rgba(255, 193, 7, 0.2);
-    }
-
-    .exam-score {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 20px;
-        border-radius: 50px;
-        font-weight: 700;
-        font-size: 1rem;
-        min-width: 100px;
-        justify-content: center;
-    }
-
-    .score-visible {
-        background: rgba(40, 167, 69, 0.1);
-        color: var(--success-color);
-        border: 1px solid rgba(40, 167, 69, 0.2);
-    }
-
-    .score-evaluating {
-        background: rgba(255, 193, 7, 0.1);
-        color: var(--warning-color);
-        border: 1px solid rgba(255, 193, 7, 0.2);
-    }
-
-    .score-hidden {
-        background: rgba(108, 117, 125, 0.1);
-        color: #6c757d;
-        border: 1px solid rgba(108, 117, 125, 0.2);
-    }
-
-    .btn-take-exam {
-        background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a6d 100%);
-        color: white;
-        padding: 12px 25px;
-        border-radius: 10px;
-        font-weight: 600;
-        font-size: 0.95rem;
-        border: none;
-        transition: var(--transition);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        text-decoration: none;
-        min-width: 120px;
-    }
-
-        .btn-take-exam:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(44, 90, 160, 0.3);
-            color: white;
-        }
-
-    .btn-disabled {
-        background: rgba(108, 117, 125, 0.1);
-        color: #6c757d;
-        padding: 12px 25px;
-        border-radius: 10px;
-        font-weight: 600;
-        font-size: 0.95rem;
-        border: 1px solid rgba(108, 117, 125, 0.2);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        text-decoration: none;
-        min-width: 120px;
-        cursor: default;
-    }
-
-    .empty-state {
-        text-align: center;
-        padding: 80px 20px;
-        background: rgba(233, 242, 249, 0.5);
-        border-radius: 20px;
-        border: 2px dashed #c0d4e8;
-        margin-top: 40px;
-    }
-
-    .empty-state-icon {
-        font-size: 4rem;
-        color: #c0d4e8;
-        margin-bottom: 20px;
-    }
-
-    .empty-state h3 {
-        color: var(--text-light);
-        margin-bottom: 15px;
-        font-size: 1.5rem;
-    }
-
-    .empty-state p {
-        color: var(--text-light);
-        max-width: 500px;
-        margin: 0 auto 30px;
-        font-size: 1.1rem;
-    }
-
-    .filter-buttons {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 25px;
-        flex-wrap: wrap;
-    }
-
-    .filter-btn {
-        background: var(--secondary-color);
-        color: var(--text-light);
-        padding: 10px 20px;
-        border-radius: 50px;
-        font-weight: 500;
-        border: none;
-        transition: var(--transition);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-        .filter-btn.active {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .filter-btn:hover {
-            transform: translateY(-2px);
-        }
-
-    .exam-duration {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        color: var(--text-light);
-        font-size: 0.9rem;
-    }
-
-    .exam-date {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        color: var(--text-light);
-        font-size: 0.9rem;
-    }
-
-    .time-remaining {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        padding: 5px 12px;
-        border-radius: 15px;
-        font-size: 0.85rem;
-        font-weight: 500;
-        margin-top: 5px;
-        background: rgba(231, 76, 60, 0.1);
-        color: var(--danger-color);
-    }
-
-    @@media (max-width: 768px) {
-        .exams-table
-
-    {
-        display: block;
-        overflow-x: auto;
-    }
-
-    .exams-table th,
-    .exams-table td {
-        min-width: 150px;
-    }
-
-    .page-title {
-        font-size: 2rem;
-    }
-
-    .stats-cards {
-        grid-template-columns: 1fr;
-    }
-
-    .filter-buttons {
-        flex-direction: column;
-    }
-
-    .filter-btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .exams-header {
-        flex-direction: column;
-        text-align: center;
-        gap: 10px;
-    }
-
-    }
-
-    @@media (max-width: 480px) {
-        .stat-card
-
-    {
-        padding: 20px;
-    }
-
-    .stat-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 1.5rem;
-    }
-
-    .stat-number {
-        font-size: 2rem;
-    }
-
-    .exams-table th,
-    .exams-table td {
-        padding: 15px 10px;
-    }
-
-    }
-
-    @@keyframes fadeInUp {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .exams-table tbody tr:nth-child(1) {
-        animation-delay: 0.1s;
-    }
-
-    .exams-table tbody tr:nth-child(2) {
-        animation-delay: 0.2s;
-    }
-
-    .exams-table tbody tr:nth-child(3) {
-        animation-delay: 0.3s;
-    }
-
-    .exams-table tbody tr:nth-child(4) {
-        animation-delay: 0.4s;
-    }
-
-    .exams-table tbody tr:nth-child(5) {
-        animation-delay: 0.5s;
-    }
-</style>
-
-<div class="my-exams-section">
-    <div class="container">
-        <!-- Sayfa Başlığı -->
-        <div class="page-header">
-            <h1 class="page-title">Sınavlarım</h1>
-            <p class="page-subtitle">Yaklaşan ve aktif tüm sınavlarınız burada listelenmektedir.</p>
-        </div>
-
-        <!-- İstatistik Kartları -->
-        <div class="stats-cards">
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-list-alt"></i>
-                </div>
-                <div class="stat-number">@ViewBag.ToplamSinav</div>
-                <div class="stat-label">Toplam Sınav</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <div class="stat-number">@ViewBag.TamamlananSinav</div>
-                <div class="stat-label">Tamamlanan</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-clock"></i>
-                </div>
-                <div class="stat-number">@ViewBag.BekleyenSinav</div>
-                <div class="stat-label">Bekleyen</div>
-            </div>
-        </div>
-
-        <!-- Filtre Butonları -->
-        @if (Model.Any())
-        {
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">
-                    <i class="fas fa-list"></i> Tümü (@ViewBag.ToplamSinav)
-                </button>
-                <button class="filter-btn" data-filter="pending">
-                    <i class="fas fa-clock"></i> Bekleyen (@ViewBag.BekleyenSinav)
-                </button>
-                <button class="filter-btn" data-filter="completed">
-                    <i class="fas fa-check-circle"></i> Tamamlanan (@ViewBag.TamamlananSinav)
-                </button>
-            </div>
-        }
-
-        <!-- Sınavlar Tablosu -->
-        @if (Model.Any())
-        {
-            <div class="exams-container">
-                <div class="exams-header">
-                    <h3><i class="fas fa-file-alt"></i> Sınav Listesi</h3>
-                    <div class="exams-count">@Model.Count() Sınav</div>
-                </div>
-
-                <div class="table-responsive">
-                    <table class="exams-table">
-                        <thead>
-                            <tr>
-                                <th>SINAV</th>
-                                <th>DERS</th>
-                                <th>TARİH & SÜRE</th>
-                                <th>DURUM</th>
-                                <th>SONUÇ</th>
-                                <th>İŞLEM</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                var timeRemaining = item.Exam?.StartDate - DateTime.Now;
-                                var isUpcoming = timeRemaining.HasValue && timeRemaining.Value.TotalHours > 0 && timeRemaining.Value.TotalHours < 24;
-
-                                <tr data-status="@(item.Completed ? "completed" : "pending")">
-                                    <!-- Sınav Bilgisi -->
-                                    <td>
-                                        <span class="exam-title">@item.Exam?.Title</span>
-                                        @if (isUpcoming)
-                                        {
-                                            <span class="time-remaining">
-                                                <i class="fas fa-clock"></i>
-                                                @Math.Ceiling(timeRemaining.Value.TotalHours) saat kaldı
-                                            </span>
-                                        }
-                                    </td>
-
-                                    <!-- Ders -->
-                                    <td>
-                                        <span class="exam-course">
-                                            <i class="fas fa-book"></i>
-                                            @item.Exam?.Course?.CourseName
-                                        </span>
-                                    </td>
-
-                                    <!-- Tarih & Süre -->
-                                    <td>
-                                        <div class="exam-date">
-                                            <i class="fas fa-calendar-alt"></i>
-                                            @item.Exam?.StartDate.ToString("dd/MM HH:mm")
-                                        </div>
-                                        <div class="exam-duration">
-                                            <i class="fas fa-hourglass-half"></i>
-                                            @item.Exam?.DurationMinutes dakika
-                                        </div>
-                                    </td>
-
-                                    <!-- Durum -->
-                                    <td>
-                                        @if (item.Completed)
-                                        {
-                                            <span class="exam-status status-completed">
-                                                <i class="fas fa-check-circle"></i>
-                                                Tamamlandı
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <span class="exam-status status-pending">
-                                                <i class="fas fa-clock"></i>
-                                                Bekliyor
-                                            </span>
-                                        }
-                                    </td>
-
-                                    <!-- Sonuç / Not -->
-                                    <td>
-                                        @if (item.Completed && item.ScoreShared)
-                                        {
-                                            <span class="exam-score score-visible">
-                                                <i class="fas fa-star"></i>
-                                                @item.Score
-                                            </span>
-                                        }
-                                        else if (item.Completed && !item.ScoreShared)
-                                        {
-                                            <span class="exam-score score-evaluating">
-                                                <i class="fas fa-hourglass-half"></i>
-                                                Değerlendiriliyor
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <span class="exam-score score-hidden">
-                                                <i class="fas fa-minus"></i>
-                                                —
-                                            </span>
-                                        }
-                                    </td>
-
-                                    <!-- İşlem -->
-                                    <td>
-                                        @if (!item.Completed)
-                                        {
-                                            <a asp-action="TakeExam"
-                                               asp-route-examId="@item.ExamId"
-                                               class="btn-take-exam">
-                                                <i class="fas fa-play-circle"></i>
-                                                <span>Sınava Gir</span>
-                                            </a>
-                                        }
-                                        else
-                                        {
-                                            <span class="btn-disabled">
-                                                <i class="fas fa-check-circle"></i>
-                                                <span>Tamamlandı</span>
-                                            </span>
-                                        }
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="empty-state">
-                <div class="empty-state-icon">
-                    <i class="fas fa-file-alt"></i>
-                </div>
-                <h3>Henüz Sınavınız Yok</h3>
-                <p>Size atanmış henüz bir sınav bulunmamaktadır. Öğretmeniniz sınav oluşturduğunda burada görünecektir.</p>
-            </div>
-        }
-    </div>
+<h2>Yaklaşan / Aktif Sınavlar</h2>
+
+<div class="mb-3">
+    <strong>Toplam Sınav:</strong> @ViewBag.ToplamSinav<br />
+    <strong>Tamamlanan:</strong> @ViewBag.TamamlananSinav<br />
+    <strong>Bekleyen:</strong> @ViewBag.BekleyenSinav
 </div>
 
-<!-- Font Awesome Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+@if (!Model.Any())
+{
+    <p>Henüz atanmış bir sınavınız yok.</p>
+}
+else
+{
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Sınav Başlığı</th>
+                <th>Ders</th>
+                <th>Başlangıç</th>
+                <th>Süre (dk)</th>
+                <th>Durum</th>
+                <th>Sonuç</th>
+                <th>İşlem</th>
+            </tr>
+        </thead>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Filtreleme fonksiyonları
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const examRows = document.querySelectorAll('.exams-table tbody tr');
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Exam?.Title</td>
+                    <td>@item.Exam?.Course?.CourseName</td>
+                    <td>@item.Exam?.StartDate.ToString("g")</td>
+                    <td>@item.Exam?.DurationMinutes</td>
 
-        // Filtre butonlarına tıklama
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Aktif butonu değiştir
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
+                    <!-- DURUM -->
+                    <td>
+                        @(item.Completed ? "Tamamlandı" : "Bekliyor")
+                    </td>
 
-                // Filtreyi uygula
-                applyFilter();
-            });
-        });
+                    <!-- SONUÇ / NOT -->
+                    <td>
+                        @if (item.Completed && item.ScoreShared)
+                        {
+                            <span class="badge bg-success">
+                                Not: @item.Score
+                            </span>
+                        }
+                        else if (item.Completed && !item.ScoreShared)
+                        {
+                            <span class="badge bg-warning text-dark">
+                                Değerlendiriliyor
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">—</span>
+                        }
+                    </td>
 
-        function applyFilter() {
-            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
-
-            examRows.forEach(row => {
-                const status = row.dataset.status;
-                const matchesFilter =
-                    activeFilter === 'all' ||
-                    (activeFilter === 'pending' && status === 'pending') ||
-                    (activeFilter === 'completed' && status === 'completed');
-
-                if (matchesFilter) {
-                    row.style.display = 'table-row';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-
-            // Görünen satır sayısını güncelle
-            const visibleRows = Array.from(examRows).filter(row => row.style.display !== 'none');
-            const examsCount = document.querySelector('.exams-count');
-            if (examsCount) {
-                examsCount.textContent = `${visibleRows.length} Sınav`;
+                    <!-- İŞLEM -->
+                    <td>
+                        @if (!item.Completed)
+                        {
+                            <a asp-action="TakeExam"
+                               asp-route-examId="@item.ExamId"
+                               class="btn btn-primary btn-sm">
+                                Sınava Gir
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-success">Tamamlandı</span>
+                        }
+                    </td>
+                </tr>
             }
-        }
-
-        // Tablo satır animasyonları
-        examRows.forEach((row, index) => {
-            row.style.animationDelay = `${(index + 1) * 0.1}s`;
-        });
-
-        // İstatistik sayma animasyonu
-        const statNumbers = document.querySelectorAll('.stat-number');
-        statNumbers.forEach(stat => {
-            const target = parseInt(stat.textContent);
-            let current = 0;
-            const increment = target / 30;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
-                }
-                stat.textContent = Math.round(current);
-            }, 30);
-        });
-
-        // Yaklaşan sınavları real-time güncelle
-        function updateRemainingTimes() {
-            const timeRemainingElements = document.querySelectorAll('.time-remaining');
-
-            timeRemainingElements.forEach(element => {
-                // Burada kalan süreyi hesaplayıp güncelleyebiliriz
-                // Şimdilik sadece gösteriyoruz
-            });
-        }
-
-        // Her dakika kalan süreleri güncelle
-        setInterval(updateRemainingTimes, 60000);
-
-        // Sayfa yüklendiğinde filtreleri uygula
-        applyFilter();
-
-        // Tablo satırlarına hover efekti
-        examRows.forEach(row => {
-            row.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-2px)';
-            });
-
-            row.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-
-        // Sınava gir butonlarına hover efekti
-        const takeExamButtons = document.querySelectorAll('.btn-take-exam');
-        takeExamButtons.forEach(button => {
-            button.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-3px) scale(1.05)';
-            });
-
-            button.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(-3px)';
-            });
-        });
-    });
-</script>
+        </tbody>
+    </table>
+}

@@ -8,565 +8,108 @@
     var email = currentUser?.Email ?? "Kullanıcı";
     var username = email.Split('@')[0];
     var profileImage = currentUser?.ProfileImage ?? "/images/default-profile.png";
-    var userRole = currentUser?.Rol ?? "Ogrenci";
-    var roleDisplayName = userRole == "OGRETMEN" ? "Öğretmen" : "Öğrenci";
-    var roleIcon = userRole == "OGRETMEN" ? "👨‍🏫" : "👨‍🎓";
-    var roleColor = userRole == "OGRETMEN" ? "#2c5aa0" : "#28a745";
 
-    <style>
-        :root {
-            --primary-color: #2c5aa0;
-            --primary-dark: #1a3a6d;
-            --secondary-color: #e9f2f9;
-            --accent-color: #d4af37;
-            --sidebar-width: 320px;
-            --transition: all 0.3s ease;
-            --border-radius: 12px;
-        }
-
-        /* Sidebar Overlay */
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1049;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            backdrop-filter: blur(3px);
-        }
-
-            .sidebar-overlay.active {
-                opacity: 1;
-                visibility: visible;
-            }
-
-        /* Sidebar Container */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            right: -var(--sidebar-width);
-            width: var(--sidebar-width);
-            height: 100vh;
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
-            transition: right 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            z-index: 1050;
-            overflow-y: auto;
-            overflow-x: hidden;
-            border-left: 5px solid var(--primary-color);
-        }
-
-            .sidebar.open {
-                right: 0;
-            }
-
-        /* Sidebar Header */
-        .sidebar-header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-            padding: 25px;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-            .sidebar-header::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 Q50,30 100,0 L100,100 L0,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
-                background-size: 100% 100px;
-                background-position: top;
-            }
-
-        .user-info-container {
-            display: flex;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .profile-image-container {
-            position: relative;
-            width: 70px;
-            height: 70px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-            .profile-image-container:hover {
-                transform: scale(1.05);
-            }
-
-        .profile-image {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--accent-color);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .profile-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: var(--transition);
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        .profile-image-container:hover .profile-overlay {
-            opacity: 1;
-        }
-
-        .user-details {
-            margin-left: 15px;
-            flex: 1;
-        }
-
-        .user-name {
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-        }
-
-        .user-email {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-bottom: 8px;
-            word-break: break-all;
-        }
-
-        .role-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .sidebar-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
-        }
-
-            .sidebar-close:hover {
-                background: rgba(255, 255, 255, 0.3);
-                transform: rotate(90deg);
-            }
-
-        /* Sidebar Menu */
-        .sidebar-menu {
-            list-style: none;
-            padding: 20px;
-            margin: 0;
-        }
-
-        .sidebar-divider {
-            height: 1px;
-            background: linear-gradient(to right, transparent, #dee2e6, transparent);
-            margin: 15px 0;
-            border: none;
-        }
-
-        .sidebar-menu li {
-            margin-bottom: 8px;
-        }
-
-        .sidebar-menu a, .logout-btn {
-            display: flex;
-            align-items: center;
-            padding: 14px 18px;
-            color: #495057;
-            text-decoration: none;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-            font-weight: 500;
-            background: white;
-            border: 1px solid transparent;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-            .sidebar-menu a:hover, .logout-btn:hover {
-                background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-                color: white;
-                transform: translateX(8px);
-                border-color: var(--primary-color);
-                box-shadow: 0 5px 20px rgba(44, 90, 160, 0.2);
-            }
-
-            .sidebar-menu a i, .logout-btn i {
-                width: 25px;
-                margin-right: 12px;
-                text-align: center;
-                font-size: 1.2rem;
-                transition: var(--transition);
-            }
-
-            .sidebar-menu a:hover i, .logout-btn:hover i {
-                transform: scale(1.1);
-            }
-
-        .logout-form {
-            margin: 0;
-        }
-
-        .logout-btn {
-            width: 100%;
-            text-align: left;
-            border: none;
-            cursor: pointer;
-            background: linear-gradient(135deg, #dc3545, #c82333);
-            color: white;
-            font-weight: 600;
-        }
-
-            .logout-btn:hover {
-                background: linear-gradient(135deg, #c82333, #bd2130);
-            }
-
-        /* Menu Categories */
-        .menu-category {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            color: #6c757d;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin: 20px 0 10px 18px;
-            padding-left: 10px;
-            border-left: 3px solid var(--primary-color);
-        }
-
-        /* Cropper Modal */
-        .crop-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            justify-content: center;
-            align-items: center;
-            z-index: 1060;
-            backdrop-filter: blur(5px);
-        }
-
-        .crop-modal-content {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: modalFadeIn 0.3s ease;
-        }
-
-        .crop-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--secondary-color);
-        }
-
-            .crop-modal-header h3 {
-                margin: 0;
-                color: var(--primary-color);
-                font-weight: 700;
-            }
-
-        .crop-modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: #6c757d;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-            .crop-modal-close:hover {
-                color: var(--primary-color);
-                transform: rotate(90deg);
-            }
-
-        .crop-image-container {
-            margin: 20px 0;
-            max-height: 400px;
-            overflow: hidden;
-            border-radius: 10px;
-        }
-
-        .crop-modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .crop-modal-btn {
-            padding: 10px 25px;
-            border-radius: 8px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .crop-modal-btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-        }
-
-            .crop-modal-btn-primary:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(44, 90, 160, 0.3);
-            }
-
-        .crop-modal-btn-secondary {
-            background: #e9ecef;
-            color: #495057;
-        }
-
-            .crop-modal-btn-secondary:hover {
-                background: #dee2e6;
-                transform: translateY(-2px);
-            }
-
-        @@keyframes modalFadeIn {
-            from
-
-        {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        }
-
-        /* Responsive */
-        @@media (max-width: 768px) {
-            : root
-
-        {
-            --sidebar-width: 280px;
-        }
-
-        .sidebar-header {
-            padding: 20px;
-        }
-
-        .profile-image {
-            width: 60px;
-            height: 60px;
-        }
-
-        .user-name {
-            font-size: 1.1rem;
-        }
-
-        .sidebar-menu {
-            padding: 15px;
-        }
-
-            .sidebar-menu a, .logout-btn {
-                padding: 12px 15px;
-            }
-
-        }
-    </style>
-
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-        <!-- Header -->
-        <div class="sidebar-header">
-            <div class="user-info-container">
-                <div class="profile-image-container">
-                    <img id="profileImagePreview" src="@profileImage"
-                         class="profile-image"
-                         alt="Profil Resmi" />
-                    <div class="profile-overlay">
-                        <i class="fas fa-camera"></i>
-                    </div>
-                </div>
-
-                <div class="user-details">
-                    <div class="user-name">@currentUser?.full_name</div>
-                    <div class="user-email">@email</div>
-                    <div class="role-badge">
-                        <span>@roleIcon</span>
-                        <span>@roleDisplayName</span>
-                    </div>
-                </div>
+        <div class="sidebar-header d-flex align-items-center">
+            <div style="position: relative;">
+                <img id="profileImagePreview" src="@profileImage"
+                     class="rounded-circle"
+                     style="width:50px; height:50px; object-fit:cover; border:2px solid #dee2e6; cursor:pointer;"
+                     title="Profil Resmini Değiştir" />
+                <div id="profileOverlay" 
+                     style="position:absolute; top:0; left:0; width:100%; height:100%; border-radius:50%; cursor:pointer;"></div>
             </div>
-
-            <button class="sidebar-close" id="sidebarClose">
-                <i class="fas fa-times"></i>
-            </button>
+            <span class="ms-2">@username</span>
+            <button class="sidebar-close ms-auto" id="sidebarClose"><i class="fas fa-times"></i></button>
         </div>
 
-        <!-- Menu -->
         <ul class="sidebar-menu">
-            <div class="menu-category">Genel</div>
-            <li>
-                <a asp-controller="Account" asp-action="Profile">
-                    <i class="fas fa-user-circle"></i> Profil Bilgilerim
-                </a>
-            </li>
+
+            <li><a asp-controller="Account" asp-action="Profile"><i class="fas fa-info-circle"></i> Profil Bilgilerim</a></li>
+
+
 
             @if (User.IsInRole("OGRENCI"))
             {
-                <div class="menu-category">Öğrenci Paneli</div>
                 <li>
                     <a asp-controller="StudentExam" asp-action="Index">
-                        <i class="fas fa-graduation-cap"></i> Derslerim
+                        <i class="fas fa-book"></i> Derslerim
                     </a>
                 </li>
+
                 <li>
                     <a asp-controller="StudentExam" asp-action="Sinavlarim">
-                        <i class="fas fa-file-alt"></i> Sınavlarım
+                        <i class="fas fa-book"></i> Sınavlarım
                     </a>
                 </li>
-                <li>
-                    <a asp-controller="Reminder" asp-action="Index">
-                        <i class="fas fa-bell"></i> Hatırlatıcılar
-                    </a>
-                </li>
+                <li><a asp-controller="Reminder" asp-action="Index">Hatırlatıcılar</a></li>
+
             }
+
 
             @if (User.IsInRole("OGRETMEN"))
             {
-                <div class="menu-category">Öğretmen Paneli</div>
                 <li>
                     <a asp-controller="Course" asp-action="Index">
-                        <i class="fas fa-chalkboard-teacher"></i> Derslerim
+                        <i class="fas fa-book"></i> Derslerim_ogretmen
                     </a>
                 </li>
+
                 <li>
                     <a asp-controller="Exam" asp-action="Index">
-                        <i class="fas fa-tasks"></i> Sınavlarım
+                        <i class="fas fa-book"></i> Sınavlarım_ogretmen
                     </a>
                 </li>
             }
 
+            @if (SignInManager.IsSignedIn(User))
+            {
+               
+            }
+            else
+            {
+                
+            }
+
             <div class="sidebar-divider"></div>
-
-            <div class="menu-category">Ayarlar</div>
-            <li>
-                <a asp-controller="Account" asp-action="Profile">
-                    <i class="fas fa-cog"></i> Hesap Ayarları
-                </a>
-            </li>
-
+            <li><a asp-controller="Account" asp-action="Profile"><i class="fas fa-cog"></i> Hesap Ayarları</a></li>
             <div class="sidebar-divider"></div>
-
             <li>
-                <form class="logout-form" asp-area="Identity" asp-page="/Account/Logout"
-                      asp-route-returnUrl="@(Url.Action("Index","Home"))">
-                    <button type="submit" class="logout-btn">
-                        <i class="fas fa-sign-out-alt"></i> Çıkış Yap
-                    </button>
+                <form class="logout-form" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(Url.Action("Index","Home"))">
+                    <button type="submit" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button>
                 </form>
             </li>
         </ul>
     </div>
 
-    <!-- Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    <!-- Hidden File Input -->
     <input type="file" id="profileImageInput" accept="image/*" style="display:none;" />
 
     <!-- Cropper Modal -->
-    <div id="cropModal" class="crop-modal">
-        <div class="crop-modal-content">
-            <div class="crop-modal-header">
-                <h3>Profil Resmini Düzenle</h3>
-                <button class="crop-modal-close" id="cropModalClose">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-
-            <div class="crop-image-container">
-                <img id="cropperImage" src="" alt="Düzenlenecek resim" />
-            </div>
-
-            <div class="crop-modal-actions">
-                <button id="cropCancelBtn" class="crop-modal-btn crop-modal-btn-secondary">
-                    <i class="fas fa-times"></i> İptal
-                </button>
-                <button id="cropUploadBtn" class="crop-modal-btn crop-modal-btn-primary">
-                    <i class="fas fa-upload"></i> Yükle
-                </button>
+    <div id="cropModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:1050;">
+        <div style="background:white; padding:20px; border-radius:8px; max-width:500px; width:90%;">
+            <img id="cropperImage" src="" style="max-width:100%;"/>
+            <div class="mt-2 text-end">
+                <button id="cropUploadBtn" class="btn btn-primary">Yükle</button>
+                <button id="cropCancelBtn" class="btn btn-secondary">İptal</button>
             </div>
         </div>
     </div>
 
-    <!-- External Libraries -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
     <script>
         let cropper;
 
-        // Profile image click handler
-        document.querySelector('.profile-image-container').addEventListener('click', () => {
+        document.getElementById('profileOverlay').addEventListener('click', () => {
             document.getElementById('profileImageInput').click();
         });
 
-        // Profile overlay click handler
-        document.querySelector('.profile-overlay').addEventListener('click', () => {
-            document.getElementById('profileImageInput').click();
-        });
-
-        // File input change handler
         document.getElementById('profileImageInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
-
-            if (!file.type.match('image.*')) {
-                alert('Lütfen bir resim dosyası seçin!');
-                return;
-            }
 
             const reader = new FileReader();
             reader.onload = function(event) {
@@ -576,137 +119,43 @@
                 const modal = document.getElementById('cropModal');
                 modal.style.display = 'flex';
 
-                if (cropper) {
-                    cropper.destroy();
-                }
-
                 cropper = new Cropper(img, {
                     aspectRatio: 1,
-                    viewMode: 1,
-                    autoCropArea: 0.8,
-                    responsive: true,
-                    restore: true,
-                    checkCrossOrigin: false,
-                    background: false
+                    viewMode: 1
                 });
             };
             reader.readAsDataURL(file);
         });
 
-        // Modal close handlers
-        document.getElementById('cropModalClose').addEventListener('click', closeCropperModal);
-        document.getElementById('cropCancelBtn').addEventListener('click', closeCropperModal);
-
-        function closeCropperModal() {
-            if (cropper) {
-                cropper.destroy();
-                cropper = null;
-            }
+        document.getElementById('cropCancelBtn').addEventListener('click', () => {
+            if(cropper) cropper.destroy();
             document.getElementById('cropModal').style.display = 'none';
-            document.getElementById('profileImageInput').value = '';
-        }
+        });
 
-        // Upload button handler
         document.getElementById('cropUploadBtn').addEventListener('click', async () => {
-            if (!cropper) return;
-
             const canvas = cropper.getCroppedCanvas({
-                width: 300,
-                height: 300,
-                imageSmoothingEnabled: true,
-                imageSmoothingQuality: 'high'
+                width: 200,
+                height: 200
             });
 
             canvas.toBlob(async (blob) => {
                 const formData = new FormData();
                 formData.append('profilResmi', blob, 'profile.png');
 
-                try {
-                    const response = await fetch('@Url.Action("ProfilResmiDegistir", "Account")', {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                        }
-                    });
+                const response = await fetch('@Url.Action("ProfilResmiDegistir","Account")', {
+                    method: 'POST',
+                    body: formData
+                });
 
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (data.success) {
-                            // Update profile image preview
-                            const objectUrl = URL.createObjectURL(blob);
-                            document.getElementById('profileImagePreview').src = objectUrl;
-
-                            // Show success message
-                            showToast('Profil resminiz başarıyla güncellendi!', 'success');
-
-                            // Close modal
-                            closeCropperModal();
-                        } else {
-                            showToast(data.message || 'Yükleme sırasında bir hata oluştu!', 'error');
-                        }
-                    } else {
-                        showToast('Sunucu hatası! Lütfen tekrar deneyin.', 'error');
-                    }
-                } catch (error) {
-                    console.error('Upload error:', error);
-                    showToast('İnternet bağlantınızı kontrol edin!', 'error');
+                if (response.ok) {
+                    document.getElementById('profileImagePreview').src = URL.createObjectURL(blob);
+                } else {
+                    alert("Yükleme başarısız!");
                 }
-            }, 'image/png', 0.9);
+
+                cropper.destroy();
+                document.getElementById('cropModal').style.display = 'none';
+            });
         });
-
-        // Toast notification function
-        function showToast(message, type = 'info') {
-            const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 15px 25px;
-                background: ${type === 'success' ? 'var(--primary-color)' : '#dc3545'};
-                color: white;
-                border-radius: 8px;
-                box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-                z-index: 9999;
-                animation: slideIn 0.3s ease;
-                font-weight: 500;
-            `;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-
-            setTimeout(() => {
-                toast.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => {
-                    document.body.removeChild(toast);
-                }, 300);
-            }, 3000);
-        }
-
-        // Add animations
-        const style = document.createElement('style');
-        style.textContent = `
-        @@keyframes slideIn {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-
-        @@keyframes slideOut {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 }

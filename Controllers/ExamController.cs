@@ -26,18 +26,32 @@ namespace OnlineSinavSistemi.Controllers
         }
 
         // 🟢 Sınav listesi
-        public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> Index(int? page)
         {
-            var userId = _userManager.GetUserId(User);
+            int pageSize = 6; // Her sayfada gösterilecek kart sayısı
+            int pageNumber = page ?? 1;
 
-            // Öğretmenin sınavlarını getir
-            var exams = await _db.Exams
-                                 .Where(e => e.TeacherId == userId)
-                                 .Include(e => e.Course)
-                                 .ToListAsync();
+            var exams = _db.Exams
+                .Include(e => e.Course)
+                .OrderByDescending(e => e.StartDate);
 
-            return View(exams);
+            var totalCount = await exams.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+            var pagedExams = await exams
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.HasPreviousPage = pageNumber > 1;
+            ViewBag.HasNextPage = pageNumber < totalPages;
+
+            return View(pagedExams);
         }
+        
 
         // 🟢 Yeni sınav oluştur (GET)
         public IActionResult Create()
