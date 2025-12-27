@@ -32,6 +32,7 @@ namespace OnlineSinavSistemi.Controllers
             var courses = await _context.Courses
                 .Where(c => c.TeacherId == user.Id)
                 .Include(c => c.Exams)
+                .Include(c => c.CourseStudents)
                 .ToListAsync();
 
             return View(courses);
@@ -79,7 +80,7 @@ namespace OnlineSinavSistemi.Controllers
                     .ThenInclude(cs => cs.Student)
                 .Include(c => c.Exams)
                 .FirstOrDefaultAsync(c => c.Id == id);
-
+               
             if (course == null)
                 return NotFound();
 
@@ -87,7 +88,7 @@ namespace OnlineSinavSistemi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddStudent(int courseId, string search)
+        public async Task<IActionResult> AddStudent(int courseId, string search, int? examId)
         {
             // Student rolündeki kullanıcılar
             var students = await _userManager.GetUsersInRoleAsync("OGRENCI");
@@ -103,13 +104,14 @@ namespace OnlineSinavSistemi.Controllers
             }
 
             ViewBag.CourseId = courseId;
+            ViewBag.ExamId = examId; // examId'yi ViewBag'e ekle
 
             return View(students);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> AddStudentToCourse(int courseId, string studentId)
+        public async Task<IActionResult> AddStudentToCourse(int courseId, string studentId, int? examId)
         {
             // Aynı öğrenci tekrar eklenmesin
             bool exists = await _context.CourseStudents
@@ -124,32 +126,57 @@ namespace OnlineSinavSistemi.Controllers
                 });
             }
 
-            // 🔥 BU DERSE AİT YAYINLI SINAVLAR
-            var exams = await _context.Exams
-                .Where(e => e.CourseId == courseId && e.IsPublished)
-                .ToListAsync();
-
-            foreach (var exam in exams)
+            // Eğer examId gelmişse, öğrenciyi o sınava da ekle (yayın durumuna bakmadan)
+            if (examId.HasValue)
             {
                 bool examExists = await _context.StudentExams
-                    .AnyAsync(se =>
-                        se.ExamId == exam.Id &&
-                        se.StudentId == studentId);
+                    .AnyAsync(se => se.ExamId == examId.Value && se.StudentId == studentId);
 
                 if (!examExists)
                 {
                     _context.StudentExams.Add(new StudentExam
                     {
-                        ExamId = exam.Id,
+                        ExamId = examId.Value,
                         StudentId = studentId,
                         Completed = false
                     });
                 }
             }
+            else
+            {
+                // Eğer examId yoksa, eski mantık: yayınlı sınavlara ekle
+                var exams = await _context.Exams
+                    .Where(e => e.CourseId == courseId && e.IsPublished)
+                    .ToListAsync();
+
+                foreach (var exam in exams)
+                {
+                    bool examExists = await _context.StudentExams
+                        .AnyAsync(se => se.ExamId == exam.Id && se.StudentId == studentId);
+
+                    if (!examExists)
+                    {
+                        _context.StudentExams.Add(new StudentExam
+                        {
+                            ExamId = exam.Id,
+                            StudentId = studentId,
+                            Completed = false
+                        });
+                    }
+                }
+            }
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Details", new { id = courseId });
+            // Yönlendirme: Eğer examId gelmişse sınav detayına, yoksa ders detayına
+            if (examId.HasValue)
+            {
+                return RedirectToAction("Details", "Exam", new { id = examId.Value });
+            }
+            else
+            {
+                return RedirectToAction("Details", new { id = courseId });
+            }
         }
 
 

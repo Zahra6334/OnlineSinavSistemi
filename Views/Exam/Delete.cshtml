@@ -17,6 +17,11 @@
             <div class="border-bottom pb-3"></div>
         </div>
     </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-danger border-3">
+                <div class="card-body p-5">
                     <!-- Sınav Bilgileri -->
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body p-4">
@@ -55,6 +60,28 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
+                                            <i class="bi bi-question-circle text-primary"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="fw-bold text-muted mb-1">Toplam Soru</h6>
+                                            <p class="mb-0">@Model.Questions?.Count soru</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
+                                            <i class="bi bi-people text-primary"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="fw-bold text-muted mb-1">Katılımcı Sayısı</h6>
+                                            <p class="mb-0">@Model.StudentExams?.Count öğrenci</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -68,7 +95,8 @@
                                 <p class="mb-0">
                                     • Bu sınavı sildiğinizde tüm sorular ve öğrenci cevapları da silinecektir.<br>
                                     • Silinen sınavı ve ilişkili verileri geri getiremezsiniz.<br>
-                                    • Öğrencilerin bu sınavla ilgili notları da silinecektir.
+                                    • Öğrencilerin bu sınavla ilgili notları da silinecektir.<br>
+                                    • Toplam <strong>@Model.Questions?.Count soru</strong> ve <strong>@Model.StudentExams?.Count öğrenci kaydı</strong> silinecek.
                                 </p>
                             </div>
                         </div>
@@ -77,14 +105,15 @@
 
                 <!-- Butonlar -->
                 <div class="card-footer bg-transparent border-top p-4">
-                    <form asp-action="DeleteConfirmed" method="post" class="d-flex justify-content-between">
+                    <form asp-action="Delete" method="post" class="d-flex justify-content-between">
                         <input type="hidden" asp-for="Id" />
+                        @Html.AntiForgeryToken()
 
-                        <a asp-action="Index" class="btn btn-secondary btn-lg">
+                        <a asp-action="Index" class="btn btn-secondary btn-lg px-4">
                             <i class="bi bi-x-circle me-2"></i>İptal
                         </a>
 
-                        <button type="submit" class="btn btn-danger btn-lg">
+                        <button type="submit" class="btn btn-danger btn-lg px-4" onclick="return confirmDelete()">
                             <i class="bi bi-trash3-fill me-2"></i>Evet, Sınavı Sil
                         </button>
                     </form>
@@ -94,7 +123,7 @@
     </div>
 
     <!-- Bilgilendirme -->
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-4">
         <div class="col-lg-8">
             <div class="alert alert-info border-0 rounded-3 shadow-sm">
                 <div class="d-flex align-items-center">
@@ -120,16 +149,20 @@
 <style>
     .card.border-danger {
         border-width: 2px !important;
+        border-color: #dc3545 !important;
     }
 
     .btn-danger {
         background-color: #dc3545;
         border-color: #dc3545;
+        transition: all 0.3s ease;
     }
 
         .btn-danger:hover {
             background-color: #bb2d3b;
             border-color: #b02a37;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
         }
 
     .alert-danger {
@@ -137,4 +170,27 @@
         border-color: #f5c2c7;
         color: #842029;
     }
+
+    .alert-info {
+        background-color: #cff4fc;
+        border-color: #b6effb;
+        color: #055160;
+    }
 </style>
+
+@section Scripts {
+    <script>
+        function confirmDelete() {
+            var questionCount = @Model.Questions?.Count ?? 0;
+            var studentCount = @Model.StudentExams?.Count ?? 0;
+
+            var message = "Bu sınavı silmek istediğinize emin misiniz?\n\n";
+            message += "Silinecekler:\n";
+            message += `• ${questionCount} soru\n`;
+            message += `• ${studentCount} öğrenci kaydı\n\n`;
+            message += "Bu işlem geri alınamaz!";
+
+            return confirm(message);
+        }
+    </script>
+}
