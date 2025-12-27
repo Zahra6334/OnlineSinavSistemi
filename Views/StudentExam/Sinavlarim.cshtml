@@ -1,87 +1,321 @@
 ﻿@model IEnumerable<OnlineSinavSistemi.Models.StudentExam>
-
 @{
     ViewBag.Title = "Sınavlarım";
+
+    // Sayfalandırma değişkenleri (Controller'dan geliyor)
+    var pageNumber = ViewBag.PageNumber ?? 1;
+    var totalPages = ViewBag.TotalPages ?? 1;
+    var hasPreviousPage = ViewBag.HasPreviousPage ?? false;
+    var hasNextPage = ViewBag.HasNextPage ?? false;
 }
 
-<h2>Yaklaşan / Aktif Sınavlar</h2>
+<div class="container-fluid py-5">
+    <!-- Başlık -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="d-flex align-items-center mb-3">
+                <i class="bi bi-clipboard-check display-4 text-primary me-3"></i>
+                <div>
+                    <h1 class="display-5 fw-bold text-dark mb-1">Sınavlarım</h1>
+                    <p class="text-muted mb-0">Yaklaşan ve tamamlanan sınavlarınız</p>
+                </div>
+            </div>
+            <div class="border-bottom pb-3"></div>
+        </div>
+    </div>
 
-<div class="mb-3">
-    <strong>Toplam Sınav:</strong> @ViewBag.ToplamSinav<br />
-    <strong>Tamamlanan:</strong> @ViewBag.TamamlananSinav<br />
-    <strong>Bekleyen:</strong> @ViewBag.BekleyenSinav
+    <!-- İstatistik Kartları -->
+    <div class="row mb-5">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-lg h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
+                            <i class="bi bi-clipboard-data fs-2 text-primary"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-1">Toplam Sınav</h6>
+                            <h3 class="fw-bold text-dark mb-0">@ViewBag.ToplamSinav</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-lg h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-success bg-opacity-10 p-3 rounded-circle me-3">
+                            <i class="bi bi-check-circle fs-2 text-success"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-1">Tamamlanan</h6>
+                            <h3 class="fw-bold text-dark mb-0">@ViewBag.TamamlananSinav</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-lg h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-warning bg-opacity-10 p-3 rounded-circle me-3">
+                            <i class="bi bi-clock fs-2 text-warning"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-1">Bekleyen</h6>
+                            <h3 class="fw-bold text-dark mb-0">@ViewBag.BekleyenSinav</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sınavlar Tablosu -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-primary text-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-list-columns me-2"></i>Yaklaşan / Aktif Sınavlar
+                            @if (Model.Any())
+                            {
+                                <span class="badge bg-light text-dark ms-2">Toplam @ViewBag.ToplamSinav kayıt</span>
+                            }
+                        </h5>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    @if (!Model.Any())
+                    {
+                        <div class="text-center p-5">
+                            <i class="bi bi-clipboard-x display-1 text-muted mb-3"></i>
+                            <h5 class="fw-bold text-dark mb-2">Henüz atanmış bir sınavınız yok.</h5>
+                            <p class="text-muted">Yakında sınavlarınız burada görünecektir.</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="py-3 px-4">
+                                            <i class="bi bi-card-text me-2"></i>Sınav Başlığı
+                                        </th>
+                                        <th class="py-3 px-4">
+                                            <i class="bi bi-book me-2"></i>Ders
+                                        </th>
+                                        <th class="py-3 px-4">
+                                            <i class="bi bi-calendar-event me-2"></i>Başlangıç
+                                        </th>
+                                        <th class="py-3 px-4">
+                                            <i class="bi bi-clock me-2"></i>Süre (dk)
+                                        </th>
+                                        <th class="py-3 px-4">
+                                            <i class="bi bi-info-circle me-2"></i>Durum
+                                        </th>
+                                        <th class="py-3 px-4">
+                                            <i class="bi bi-award me-2"></i>Sonuç
+                                        </th>
+                                        <th class="py-3 px-4">
+                                            <i class="bi bi-gear me-2"></i>İşlem
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="py-3 px-4 fw-bold">@item.Exam?.Title</td>
+                                            <td class="py-3 px-4">@item.Exam?.Course?.CourseName</td>
+                                            <td class="py-3 px-4">@item.Exam?.StartDate.ToString("g")</td>
+                                            <td class="py-3 px-4">@item.Exam?.DurationMinutes</td>
+
+                                            <!-- DURUM -->
+                                            <td class="py-3 px-4">
+                                                @if (item.Completed)
+                                                {
+                                                    <span class="badge bg-success">
+                                                        <i class="bi bi-check-circle me-1"></i>Tamamlandı
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-warning text-dark">
+                                                        <i class="bi bi-clock me-1"></i>Bekliyor
+                                                    </span>
+                                                }
+                                            </td>
+
+                                            <!-- SONUÇ / NOT -->
+                                            <td class="py-3 px-4">
+                                                @if (item.Completed && item.ScoreShared)
+                                                {
+                                                    <span class="badge bg-primary">
+                                                        <i class="bi bi-star me-1"></i>Not: @item.Score
+                                                    </span>
+                                                }
+                                                else if (item.Completed && !item.ScoreShared)
+                                                {
+                                                    <span class="badge bg-secondary">
+                                                        <i class="bi bi-hourglass-split me-1"></i>Değerlendiriliyor
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">—</span>
+                                                }
+                                            </td>
+
+                                            <!-- İŞLEM -->
+                                            <td class="py-3 px-4">
+                                                @if (!item.Completed)
+                                                {
+                                                    <a asp-action="TakeExam"
+                                                       asp-route-examId="@item.ExamId"
+                                                       class="btn btn-primary btn-sm">
+                                                        <i class="bi bi-pencil me-1"></i>Sınava Gir
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-success">
+                                                        <i class="bi bi-check2-circle me-1"></i>Tamamlandı
+                                                    </span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+
+                <!-- Sayfalama Bölümü -->
+                @if (Model.Any() && totalPages > 1)
+                {
+                    <div class="card-footer bg-transparent border-top p-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <small class="text-muted">
+                                    Sayfa @pageNumber / @totalPages -
+                                    Toplam @ViewBag.ToplamSinav kayıt
+                                </small>
+                            </div>
+
+                            <nav aria-label="Sınav sayfalandırma">
+                                <ul class="pagination mb-0">
+                                    <!-- Önceki sayfa butonu -->
+                                    <li class="page-item @(!hasPreviousPage ? "disabled" : "")">
+                                        <a class="page-link"
+                                           href="@(hasPreviousPage ? $"?page={pageNumber - 1}" : "#")"
+                                           aria-label="Önceki">
+                                            <i class="bi bi-chevron-left"></i>
+                                        </a>
+                                    </li>
+
+                                    <!-- Sayfa numaraları -->
+                                    @for (int i = 1; i <= totalPages; i++)
+                                    {
+                                        if (i == 1 || i == totalPages || (i >= pageNumber - 2 && i <= pageNumber + 2))
+                                        {
+                                            <li class="page-item @(i == pageNumber ? "active" : "")">
+                                                <a class="page-link" href="?page=@i">@i</a>
+                                            </li>
+                                        }
+                                        else if (i == pageNumber - 3 || i == pageNumber + 3)
+                                        {
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="#">...</a>
+                                            </li>
+                                        }
+                                    }
+
+                                    <!-- Sonraki sayfa butonu -->
+                                    <li class="page-item @(!hasNextPage ? "disabled" : "")">
+                                        <a class="page-link"
+                                           href="@(hasNextPage ? $"?page={pageNumber + 1}" : "#")"
+                                           aria-label="Sonraki">
+                                            <i class="bi bi-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                }
+                else if (!Model.Any())
+                {
+                    <div class="card-footer bg-transparent border-0 py-3 px-4">
+                        <div class="d-flex justify-content-center">
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
+                                <i class="bi bi-house me-2"></i>Ana Sayfaya Dön
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>
 
-@if (!Model.Any())
-{
-    <p>Henüz atanmış bir sınavınız yok.</p>
-}
-else
-{
-    <table class="table table-bordered mt-3">
-        <thead>
-            <tr>
-                <th>Sınav Başlığı</th>
-                <th>Ders</th>
-                <th>Başlangıç</th>
-                <th>Süre (dk)</th>
-                <th>Durum</th>
-                <th>Sonuç</th>
-                <th>İşlem</th>
-            </tr>
-        </thead>
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Exam?.Title</td>
-                    <td>@item.Exam?.Course?.CourseName</td>
-                    <td>@item.Exam?.StartDate.ToString("g")</td>
-                    <td>@item.Exam?.DurationMinutes</td>
+<style>
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        border: none;
+    }
 
-                    <!-- DURUM -->
-                    <td>
-                        @(item.Completed ? "Tamamlandı" : "Bekliyor")
-                    </td>
+    .table-hover tbody tr:hover {
+        background-color: rgba(102, 126, 234, 0.05) !important;
+    }
 
-                    <!-- SONUÇ / NOT -->
-                    <td>
-                        @if (item.Completed && item.ScoreShared)
-                        {
-                            <span class="badge bg-success">
-                                Not: @item.Score
-                            </span>
-                        }
-                        else if (item.Completed && !item.ScoreShared)
-                        {
-                            <span class="badge bg-warning text-dark">
-                                Değerlendiriliyor
-                            </span>
-                        }
-                        else
-                        {
-                            <span class="text-muted">—</span>
-                        }
-                    </td>
+    .table th {
+        border-bottom: 2px solid #dee2e6;
+    }
 
-                    <!-- İŞLEM -->
-                    <td>
-                        @if (!item.Completed)
-                        {
-                            <a asp-action="TakeExam"
-                               asp-route-examId="@item.ExamId"
-                               class="btn btn-primary btn-sm">
-                                Sınava Gir
-                            </a>
-                        }
-                        else
-                        {
-                            <span class="text-success">Tamamlandı</span>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+    .table td {
+        border-bottom: 1px solid #dee2e6;
+        vertical-align: middle;
+    }
+
+    .page-item.active .page-link {
+        background-color: #667eea !important;
+        border-color: #667eea !important;
+    }
+
+    .page-link {
+        color: #667eea;
+    }
+
+        .page-link:hover {
+            color: #667eea;
+        }
+
+    .page-item.disabled .page-link {
+        color: #6c757d;
+    }
+
+    .badge {
+        padding: 0.5em 0.8em;
+        font-weight: 500;
+    }
+
+    .card {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .bg-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    }
+</style>

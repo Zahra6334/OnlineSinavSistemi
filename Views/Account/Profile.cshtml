@@ -1,7 +1,44 @@
-﻿@model OnlineSinavSistemi.Models.ApplicationUser
+﻿@using Microsoft.AspNetCore.Identity
+@using OnlineSinavSistemi.Models
+
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@model OnlineSinavSistemi.Models.ApplicationUser
+
 @{
     ViewData["Title"] = "Hesap Ayarları";
-    var rol = ViewBag.Role as string ?? "Öğrenci"; // Controller'da rolü ViewBag ile göndereceğiz
+
+    // 1. Giriş yapmış kullanıcıyı çekiyoruz
+    var currentUser = await UserManager.GetUserAsync(User);
+
+    // 2. Kullanıcının Rollerimi Çekiyoruz
+    var userRoles = await UserManager.GetRolesAsync(currentUser);
+
+    // 3. Ekranda görünecek rol ismini Türkçeleştiriyoruz
+    string gorunenRol = "Kullanıcı"; // Varsayılan
+
+    if (userRoles.Contains("OGRETMEN"))
+    {
+        gorunenRol = "Öğretmen";
+    }
+    else if (userRoles.Contains("OGRENCI"))
+    {
+        gorunenRol = "Öğrenci";
+    }
+    else if (userRoles.Contains("ADMIN"))
+    {
+        gorunenRol = "Yönetici";
+    }
+    else if (userRoles.Any())
+    {
+        // Tanımsız bir rol varsa olduğu gibi yaz
+        gorunenRol = userRoles.First();
+    }
+
+    // 4. Sidebar ve diğer alanlar için verileri hazırlıyoruz
+    var email = currentUser?.Email ?? "E-posta yok";
+    var username = currentUser?.UserName ?? email.Split('@')[0];
+    var profileImage = currentUser?.ProfileImage ?? "/images/default-profile.png";
 }
 
 <div class="row justify-content-center">
@@ -10,14 +47,19 @@
 
         <div class="card mb-4 shadow-sm">
             <div class="card-body d-flex align-items-center">
-                <!-- Sol Kısım (Rol İkonu) -->
                 <div class="rounded-circle bg-dark text-white p-3 me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; font-size: 1.2rem;">
-                    @rol[0]  <!-- Rolün ilk harfi -->
+                    @if (!string.IsNullOrEmpty(gorunenRol))
+                    {
+                        @gorunenRol[0]
+                    }
+                    else
+                    {
+                        <span>?</span>
+                    }
                 </div>
 
                 <div>
-                    <h5 class="mb-0">@rol</h5>  <!-- Rolün tamamı -->
-                    <p class="text-muted mb-0">@Model.Email</p>
+                    <h5 class="mb-0">@gorunenRol</h5>  <p class="text-muted mb-0">@email</p>
                 </div>
 
                 <span class="ms-auto me-2"> > </span>
@@ -26,7 +68,7 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex align-items-center">
                     <i class="fas fa-circle text-secondary me-3"></i>
-                    Durum bilinmiyor
+                    Durum: @(SignInManager.IsSignedIn(User) ? "Çevrimiçi" : "Çevrimdışı")
                 </li>
                 <li class="list-group-item d-flex align-items-center justify-content-between">
                     <span>
@@ -53,23 +95,24 @@
 
         <div class="card shadow-sm">
             <ul class="list-group list-group-flush">
-                <!-- Kişisel Hesap -->
                 <li class="list-group-item d-flex align-items-center">
                     <div class="rounded-circle bg-dark text-white p-2 me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; font-size: 0.9rem;">
-                        @rol[0]
+                        @if (!string.IsNullOrEmpty(gorunenRol))
+                        {
+                            @gorunenRol[0]
+                        }
                     </div>
                     <div>
-                        <h6 class="mb-0">@rol</h6>
-                        <p class="text-muted mb-0">@Model.Email</p>
+                        <h6 class="mb-0">@gorunenRol</h6>
+                        <p class="text-muted mb-0">@email</p>
                     </div>
                 </li>
 
-                <!-- Kurumsal Hesap -->
                 <li class="list-group-item d-flex align-items-center justify-content-between">
                     <div>
                         <i class="fas fa-university me-3" style="font-size: 1.5rem;"></i>
                         <span class="fw-bold">Bingöl Üniversitesi</span>
-                        <p class="text-muted mb-0 ms-4 ps-2">@Model.Email</p>
+                        <p class="text-muted mb-0 ms-4 ps-2">@email</p>
                     </div>
                     <i class="fas fa-check text-primary"></i>
                 </li>
@@ -82,3 +125,158 @@
         </div>
     </div>
 </div>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header d-flex align-items-center">
+            <div style="position: relative;">
+                <img id="profileImagePreview" src="@profileImage"
+                     class="rounded-circle"
+                     style="width:50px; height:50px; object-fit:cover; border:2px solid #dee2e6; cursor:pointer;"
+                     title="Profil Resmini Değiştir" />
+                <div id="profileOverlay"
+                     style="position:absolute; top:0; left:0; width:100%; height:100%; border-radius:50%; cursor:pointer;"></div>
+            </div>
+            <span class="ms-2">@username</span>
+            <button class="sidebar-close ms-auto" id="sidebarClose"><i class="fas fa-times"></i></button>
+        </div>
+
+        <ul class="sidebar-menu">
+
+            <li><a asp-controller="Account" asp-action="Profile"><i class="fas fa-info-circle"></i> Profil Bilgilerim</a></li>
+
+            @if (User.IsInRole("OGRENCI"))
+            {
+                <li>
+                    <a asp-controller="StudentExam" asp-action="Index">
+                        <i class="fas fa-book"></i> Derslerim
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-controller="StudentExam" asp-action="Sinavlarim">
+                        <i class="fas fa-edit"></i> Sınavlarım
+                    </a>
+                </li>
+                <li><a asp-controller="Reminder" asp-action="Index"><i class="fas fa-clock"></i> Hatırlatıcılar</a></li>
+            }
+
+            @if (User.IsInRole("OGRETMEN"))
+            {
+                <li>
+                    <a asp-controller="Course" asp-action="Index">
+                        <i class="fas fa-chalkboard-teacher"></i> Derslerim (Öğretmen)
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-controller="Exam" asp-action="Index">
+                        <i class="fas fa-file-alt"></i> Sınav Yönetimi
+                    </a>
+                </li>
+            }
+
+            <div class="sidebar-divider"></div>
+            <li><a asp-controller="Account" asp-action="Profile"><i class="fas fa-cog"></i> Hesap Ayarları</a></li>
+            <div class="sidebar-divider"></div>
+            <li>
+                <form class="logout-form" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(Url.Action("Index", "Home"))">
+                    <button type="submit" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <input type="file" id="profileImageInput" accept="image/*" style="display:none;" />
+
+    <div id="cropModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:1050;">
+        <div style="background:white; padding:20px; border-radius:8px; max-width:500px; width:90%;">
+            <img id="cropperImage" src="" style="max-width:100%;" />
+            <div class="mt-2 text-end">
+                <button id="cropUploadBtn" class="btn btn-primary">Yükle</button>
+                <button id="cropCancelBtn" class="btn btn-secondary">İptal</button>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+    <script>
+        let cropper;
+
+        // Sidebar açma/kapama scriptleri (Eğer layout'ta yoksa buraya eklemen gerekebilir)
+        // document.getElementById('sidebarClose').addEventListener...
+
+        document.getElementById('profileOverlay').addEventListener('click', () => {
+            document.getElementById('profileImageInput').click();
+        });
+
+        document.getElementById('profileImageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = document.getElementById('cropperImage');
+                img.src = event.target.result;
+
+                const modal = document.getElementById('cropModal');
+                modal.style.display = 'flex';
+
+                if(cropper) cropper.destroy(); // Varsa eskiyi yok et
+                cropper = new Cropper(img, {
+                    aspectRatio: 1,
+                    viewMode: 1
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('cropCancelBtn').addEventListener('click', () => {
+            if(cropper) cropper.destroy();
+            document.getElementById('cropModal').style.display = 'none';
+            document.getElementById('profileImageInput').value = ""; // Inputu temizle
+        });
+
+        document.getElementById('cropUploadBtn').addEventListener('click', async () => {
+            const canvas = cropper.getCroppedCanvas({
+                width: 200,
+                height: 200
+            });
+
+            canvas.toBlob(async (blob) => {
+                const formData = new FormData();
+                formData.append('profilResmi', blob, 'profile.png');
+
+                try {
+                    const response = await fetch('@Url.Action("ProfilResmiDegistir", "Account")', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        // Başarılı olursa resmi güncelle
+                        const newImgUrl = URL.createObjectURL(blob);
+                        document.getElementById('profileImagePreview').src = newImgUrl;
+
+                        // Modal'ı kapat
+                        cropper.destroy();
+                        document.getElementById('cropModal').style.display = 'none';
+
+                        // Kullanıcıya bilgi ver (isteğe bağlı)
+                        // alert("Profil resmi güncellendi!");
+                    } else {
+                        alert("Yükleme sırasında bir hata oluştu.");
+                    }
+                } catch (error) {
+                    console.error('Hata:', error);
+                    alert("Bir hata oluştu.");
+                }
+            });
+        });
+    </script>
+}

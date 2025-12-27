@@ -1,215 +1,160 @@
 ﻿@model OnlineSinavSistemi.Models.Exam
+
 @{
     ViewData["Title"] = "Sınav Düzenle";
 }
 
-<div class="container-fluid py-5">
-    <!-- Başlık -->
-    <div class="row mb-5">
-        <div class="col-12">
-            <div class="d-flex align-items-center mb-3">
-                <i class="bi bi-pencil-square display-4 text-primary me-3"></i>
-                <div>
-                    <h1 class="display-5 fw-bold text-dark mb-1">Sınav Düzenle</h1>
-                    <p class="text-muted mb-0">Sınav bilgilerini güncelleyin</p>
-                </div>
-            </div>
-            <div class="border-bottom pb-3"></div>
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <div id="ajaxAlertContainer"></div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i> @TempData["SuccessMessage"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-    </div>
+    }
 
-    <!-- Form Kartı -->
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card border-0 shadow-lg">
-                <div class="card-header bg-primary text-white py-3">
-                    <h4 class="card-title mb-0">
-                        <i class="bi bi-gear-fill me-2"></i>Sınav Bilgileri
-                    </h4>
-                </div>
+    <form asp-action="Edit" method="post" id="editForm">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="TeacherId" />
 
-                <div class="card-body p-5">
-                    <form asp-action="Edit" method="post">
-                        <input type="hidden" asp-for="Id" />
-                        <div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <span></span>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-
-                        <!-- Sınav Başlığı -->
-                        <div class="mb-4">
-                            <label asp-for="Title" class="form-label fw-bold mb-2">
-                                <i class="bi bi-card-heading me-1"></i>Sınav Başlığı
-                            </label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-end-0">
-                                    <i class="bi bi-pencil text-primary"></i>
-                                </span>
-                                <input asp-for="Title" class="form-control border-start-0" placeholder="Sınav başlığını girin" />
-                            </div>
-                            <span asp-validation-for="Title" class="text-danger mt-1"></span>
-                        </div>
-
-                        <!-- Ders Seçimi -->
-                        <div class="mb-4">
-                            <label class="form-label fw-bold mb-2">
-                                <i class="bi bi-book me-1"></i>Ders
-                            </label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-end-0">
-                                    <i class="bi bi-journal text-primary"></i>
-                                </span>
-                                <select asp-for="CourseId" class="form-control border-start-0" asp-items="ViewBag.Dersler">
-                                    <option value="">Ders Seçiniz</option>
-                                </select>
-                            </div>
-                            <span asp-validation-for="CourseId" class="text-danger mt-1"></span>
-                        </div>
-
-                        <!-- Süre -->
-                        <div class="mb-4">
-                            <label asp-for="DurationMinutes" class="form-label fw-bold mb-2">
-                                <i class="bi bi-stopwatch me-1"></i>Süre (Dakika)
-                            </label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-end-0">
-                                    <i class="bi bi-clock text-primary"></i>
-                                </span>
-                                <input asp-for="DurationMinutes" class="form-control border-start-0" placeholder="Örnek: 60" />
-                                <span class="input-group-text">dakika</span>
-                            </div>
-                            <span asp-validation-for="DurationMinutes" class="text-danger mt-1"></span>
-                            <small class="text-muted mt-1 d-block">
-                                <i class="bi bi-info-circle me-1"></i>Sınav süresini dakika cinsinden girin.
-                            </small>
-                        </div>
-
-                        <!-- Başlangıç Tarihi -->
-                        <div class="mb-4">
-                            <label asp-for="StartDate" class="form-label fw-bold mb-2">
-                                <i class="bi bi-calendar-date me-1"></i>Başlangıç Tarihi
-                            </label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-end-0">
-                                    <i class="bi bi-calendar text-primary"></i>
-                                </span>
-                                <input asp-for="StartDate" type="datetime-local" class="form-control border-start-0" />
-                            </div>
-                            <span asp-validation-for="StartDate" class="text-danger mt-1"></span>
-                            <small class="text-muted mt-1 d-block">
-                                <i class="bi bi-info-circle me-1"></i>Sınavın başlayacağı tarih ve saati seçin.
-                            </small>
-                        </div>
-
-                        <!-- Bilgilendirme -->
-                        <div class="alert alert-info border-0 rounded-3 mb-4">
-                            <div class="d-flex">
-                                <i class="bi bi-lightbulb-fill text-primary fs-4 me-3"></i>
-                                <div>
-                                    <h6 class="alert-heading mb-2">Dikkat!</h6>
-                                    <p class="mb-0">
-                                        • Sınav başlığı en az 5 karakter olmalıdır.<br>
-                                        • Süre en az 1 dakika olmalıdır.<br>
-                                        • Başlangıç tarihi geçmiş bir tarih olamaz.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Butonlar -->
-                        <div class="d-flex justify-content-between mt-5 pt-3">
-                            <button type="button" class="btn btn-secondary btn-lg" onclick="history.back()">
-                                <i class="bi bi-arrow-left me-2"></i>Geri Dön
-                            </button>
-                            <div>
-                                <a asp-action="Index" class="btn btn-secondary btn-lg me-2">
-                                    <i class="bi bi-x-circle me-2"></i>İptal
-                                </a>
-                                <button type="submit" class="btn btn-success btn-lg">
-                                    <i class="bi bi-check-circle me-2"></i>Kaydet
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Footer -->
-                <div class="card-footer bg-transparent border-top p-3">
-                    <div class="text-center">
-                        <small class="text-muted">
-                            <i class="bi bi-clock-history me-1"></i>
-                            Sınav ID: @Model.Id • Son düzenleme: @DateTime.Now.ToString("dd.MM.yyyy HH:mm")
-                        </small>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Hızlı İşlemler -->
-            <div class="row mt-4">
-                <div class="col-12">
-                    <div class="text-center">
-                        <p class="text-muted mb-3">Hızlı İşlemler</p>
-                        <div class="d-flex justify-content-center gap-3">
-                            <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-primary">
-                                <i class="bi bi-eye-fill me-2"></i>Sınav Detayları
-                            </a>
-                            <a asp-controller="Question" asp-action="Index" asp-route-examId="@Model.Id" class="btn btn-outline-success">
-                                <i class="bi bi-question-circle me-2"></i>Soruları Yönet
-                            </a>
-                            <a asp-action="Index" class="btn btn-outline-secondary">
-                                <i class="bi bi-list-ul me-2"></i>Tüm Sınavlar
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="form-group">
+            <label asp-for="Title" class="control-label font-weight-bold">Sınav Başlığı</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
         </div>
-    </div>
+
+        <div class="form-group">
+            <label asp-for="CourseId" class="control-label font-weight-bold">Ders</label>
+            <select asp-for="CourseId" class="form-control" asp-items="ViewBag.Dersler">
+                <option value="">-- Ders Seçin --</option>
+            </select>
+            <span asp-validation-for="CourseId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DurationMinutes" class="control-label font-weight-bold">Sınav Süresi (dakika)</label>
+            <input asp-for="DurationMinutes" class="form-control" type="number" min="1" max="480" />
+            <span asp-validation-for="DurationMinutes" class="text-danger"></span>
+            <small class="form-text text-muted">Sınav süresi dakika cinsinden (1-480 dakika).</small>
+        </div>
+
+        <input asp-for="StartDate"
+               class="form-control"
+               type="datetime-local"
+               value="@Model.StartDate.ToString("yyyy-MM-ddTHH:mm")"
+               data-val="false"
+               id="StartDate"
+               name="StartDate" />
+
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-primary" id="saveBtn">
+                <i class="fas fa-save"></i> Kaydet ve Listeye Dön
+            </button>
+
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> İptal
+            </a>
+
+            <button type="button" class="btn btn-success float-right" id="saveAndStayBtn">
+                <i class="fas fa-check-circle"></i> Kaydet ve Burada Kal
+            </button>
+        </div>
+    </form>
 </div>
 
-<!-- Bootstrap Icons -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-
-<!-- Inline Styles -->
-<style>
-    .form-control:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
-    .btn-success {
-        background-color: #198754;
-        border-color: #198754;
-    }
+    <script>
+        $(document).ready(function() {
+       
+            // --- 2. AJAX ile Kaydetme ---
+            $('#saveAndStayBtn').click(function(e) {
+                e.preventDefault(); // Sayfanın normal post olmasını engelle
 
-        .btn-success:hover {
-            background-color: #157347;
-            border-color: #146c43;
+                var form = $('#editForm');
+
+                // İstemci tarafı validasyon kontrolü (Boş alan vs.)
+                if (!form.valid()) return;
+
+                // Form verilerini al
+                var formData = new FormData(form[0]);
+
+                $.ajax({
+                    url: '@Url.Action("Edit")',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest" // Controller bunu kontrol edecek
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            // Başarılı ise Alert Oluştur
+                            var alertHtml = `
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <i class="fas fa-check-circle me-2"></i> ${response.message}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>`;
+
+                            // Mesajı ekrana bas
+                            $('#ajaxAlertContainer').html(alertHtml);
+
+                            // Sayfayı YENİLEMİYORUZ (window.location.reload YOK)
+                            // Böylece kullanıcı formda kalmaya devam eder.
+
+                            // 5 saniye sonra mesajı otomatik kapat
+                            setTimeout(function() { $('.alert').alert('close'); }, 5000);
+
+                        } else {
+                            // Backend validasyon hatası varsa
+                            var errorMsg = response.message;
+                            if(response.errors && response.errors.length > 0) {
+                                errorMsg += "\n" + response.errors.join("\n");
+                            }
+                            alert(errorMsg);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Sunucu hatası oluştu: ' + error);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <style>
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
         }
 
-    .btn-outline-primary {
-        border-color: #667eea;
-        color: #667eea;
-    }
-
-        .btn-outline-primary:hover {
+        .btn-primary {
             background-color: #667eea;
             border-color: #667eea;
-            color: white;
         }
 
-    .btn-outline-success {
-        border-color: #198754;
-        color: #198754;
-    }
-
-        .btn-outline-success:hover {
-            background-color: #198754;
-            border-color: #198754;
-            color: white;
+        .btn-success {
+            background-color: #10b981;
+            border-color: #10b981;
         }
-</style>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+        .alert {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 }

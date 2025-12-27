@@ -22,6 +22,7 @@ namespace OnlineSinavSistemi.Data
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Reminder> Reminders { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

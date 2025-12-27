@@ -3,63 +3,557 @@
 @{
     ViewData["Title"] = "Sýnavý Çöz";
     var exam = Model?.Exam;
+    var remainingTime = 0;
+
+    // DurationMinutes nullable olmadýðý için düzeltildi
+    if (Model?.StartTime.HasValue == true && exam != null && exam.DurationMinutes > 0)
+    {
+        var elapsedMinutes = (DateTime.Now - Model.StartTime.Value).TotalMinutes;
+        remainingTime = (int)(exam.DurationMinutes - elapsedMinutes);
+        if (remainingTime < 0) remainingTime = 0;
+    }
 }
 
-<h2>@exam?.Title</h2>
-<p>Süre: @exam?.DurationMinutes dakika</p>
-
-@if (exam?.Questions != null && exam.Questions.Any())
-{
-    <form asp-action="SubmitExam" method="post" enctype="multipart/form-data">
-        <input type="hidden" asp-for="Id" />
-
-        @for (int i = 0; i < exam.Questions.Count; i++)
-        {
-            var question = exam.Questions.ElementAt(i);
-            <div class="card mb-3">
-                <div class="card-header">
-                    <strong>Soru @(i + 1):</strong> @question.QuestionText
+<div class="container-fluid py-4">
+    <!-- Baþlýk ve Sýnav Bilgileri -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-lg mb-4">
+                <div class="card-header bg-primary text-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2 class="card-title mb-0">
+                                <i class="bi bi-pencil-square me-2"></i>@exam?.Title
+                            </h2>
+                        </div>
+                        <div class="text-end">
+                            <!-- Geri Sayým Timer -->
+                            @if (exam?.DurationMinutes > 0)
+                            {
+                                <div id="examTimer" class="badge bg-warning text-dark fs-6 p-2">
+                                    <i class="bi bi-clock me-1"></i>
+                                    <span id="timerMinutes">@exam.DurationMinutes</span>:<span id="timerSeconds">00</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="examTimer" class="badge bg-info text-white fs-6 p-2">
+                                    <i class="bi bi-clock me-1"></i>Süresiz
+                                </div>
+                            }
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
-                    <input type="hidden" name="Answers[@i].QuestionId" value="@question.Id" />
-
-                    @* Çoktan seçmeli sorular *@
-                    @if (question.Type == OnlineSinavSistemi.Models.QuestionType.CoktanSecmeli)
-                    {
-                        foreach (var choice in question.Choices ?? new List<OnlineSinavSistemi.Models.Choice>())
-                        {
-                            <div class="form-check">
-                                <input class="form-check-input"
-                                       type="radio"
-                                       name="Answers[@i].SelectedChoiceId"
-                                       id="choice-@choice.Id"
-                                       value="@choice.Id" />
-                                <label class="form-check-label" for="choice-@choice.Id">
-                                    @choice.Text
-                                </label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-3">
+                                    <i class="bi bi-book fs-4 text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6 class="text-muted mb-0">Ders</h6>
+                                    <p class="fw-bold mb-0">@exam?.Course?.CourseName</p>
+                                </div>
                             </div>
-                        }
-                    }
-                    @* Klasik sorular *@
-                    else if (question.Type == OnlineSinavSistemi.Models.QuestionType.Klasik)
-                    {
-                        <div class="mb-2">
-                            <label class="form-label">Dosya Yükle (PDF, DOCX, JPG vb.)</label>
-                            <input type="file" class="form-control" name="Answers[@i].FileUpload" />
                         </div>
-                        <div class="mb-2">
-                            <label class="form-label">Metin Cevabý</label>
-                            <textarea class="form-control" name="Answers[@i].AnswerText" rows="4"></textarea>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-3">
+                                    <i class="bi bi-question-circle fs-4 text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6 class="text-muted mb-0">Toplam Soru</h6>
+                                    <p class="fw-bold mb-0">@exam?.Questions?.Count soru</p>
+                                </div>
+                            </div>
                         </div>
-                    }
+                    </div>
+
+                    <!-- Sýnav Baþlama Zamaný -->
+                    <div class="alert alert-light border-0 rounded-3 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-calendar-check text-primary fs-4 me-3"></i>
+                            <div>
+                                <h6 class="alert-heading mb-1">Sýnav Baþlama Zamaný</h6>
+                                <p class="mb-0">
+                                    <i class="bi bi-clock-history me-1"></i>
+                                    @Model?.StartTime?.ToString("dd.MM.yyyy HH:mm:ss")
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info border-0 rounded-3">
+                        <div class="d-flex">
+                            <i class="bi bi-info-circle-fill text-primary fs-4 me-3"></i>
+                            <div>
+                                <h6 class="alert-heading mb-2">Sýnav Kurallarý</h6>
+                                <p class="mb-0">
+                                    • Sýnav süresi dolduðunda otomatik olarak sonlanacaktýr.<br>
+                                    • Sorularý cevapladýktan sonra "Sýnavý Bitir" butonuna basýnýz.<br>
+                                    • Klasik sorular için dosya yükleyebilir veya metin cevabý yazabilirsiniz.<br>
+                                    • Sayfayý yenilemeyin veya tarayýcýyý kapatmayýn.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Sorular -->
+    <div class="row">
+        <div class="col-12">
+            @if (exam?.Questions != null && exam.Questions.Any())
+            {
+                <form id="examForm" asp-action="SubmitExam" method="post" enctype="multipart/form-data" class="card border-0 shadow-lg">
+                    <div class="card-header bg-primary text-white py-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-question-circle me-2"></i>Sorular
+                            </h5>
+                            <div class="d-flex align-items-center">
+                                <div class="progress" style="width: 200px; height: 10px;">
+                                    <div id="progressBar" class="progress-bar bg-warning" role="progressbar" style="width: 0%"></div>
+                                </div>
+                                <span class="ms-2" id="progressText">0/@exam.Questions.Count</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" id="autoSubmit" name="autoSubmit" value="false" />
+
+                        @for (int i = 0; i < exam.Questions.Count; i++)
+                        {
+                            var question = exam.Questions.ElementAt(i);
+                            var questionType = question.Type == OnlineSinavSistemi.Models.QuestionType.CoktanSecmeli ? "Çoktan Seçmeli" : "Klasik";
+
+                            <div class="card mb-4 border-0 shadow-sm question-card" data-question-index="@i">
+                                <div class="card-header bg-light py-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="fw-bold text-dark mb-0">
+                                            <span class="badge bg-primary me-2">Soru @(i + 1)</span>
+                                            @questionType
+                                        </h5>
+                                        <span class="badge bg-info">
+                                            <i class="bi bi-star-fill me-1"></i>@(question.Point ?? 0) puan
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-4">
+                                        <h6 class="fw-bold text-dark mb-3">@question.QuestionText</h6>
+                                        <input type="hidden" name="Answers[@i].QuestionId" value="@question.Id" />
+
+                                        @* Çoktan seçmeli sorular *@
+                                        @if (question.Type == OnlineSinavSistemi.Models.QuestionType.CoktanSecmeli)
+                                        {
+                                            <div class="list-group list-group-flush">
+                                                @foreach (var choice in question.Choices ?? new List<OnlineSinavSistemi.Models.Choice>())
+                                                {
+                                                    <div class="list-group-item border-0 px-0 py-2">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input question-answer"
+                                                                   type="radio"
+                                                                   name="Answers[@i].SelectedChoiceId"
+                                                                   id="choice-@choice.Id"
+                                                                   value="@choice.Id" />
+                                                            <label class="form-check-label fs-6" for="choice-@choice.Id">
+                                                                @choice.Text
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+                                        @* Klasik sorular *@
+                                        else if (question.Type == OnlineSinavSistemi.Models.QuestionType.Klasik)
+                                        {
+                                            <div class="row g-3">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label fw-bold">
+                                                            <i class="bi bi-file-earmark-arrow-up me-1"></i>Dosya Yükle
+                                                        </label>
+                                                        <input type="file"
+                                                               class="form-control question-answer"
+                                                               name="Answers[@i].FileUpload"
+                                                               accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                                                               onchange="updateProgress()" />
+                                                        <div class="form-text">PDF, DOC, DOCX, JPG, PNG (Max: 10MB)</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label fw-bold">
+                                                            <i class="bi bi-text-paragraph me-1"></i>Metin Cevabý
+                                                        </label>
+                                                        <textarea class="form-control question-answer"
+                                                      name="Answers[@i].AnswerText"
+                                                      rows="6"
+                                                      placeholder="Cevabýnýzý buraya yazýnýz..."
+                                                      oninput="updateProgress()"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="card-footer bg-transparent border-0 py-4 px-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a asp-action="Sinavlarim" class="btn btn-outline-primary" onclick="return confirmSExit()">
+                                <i class="bi bi-arrow-left me-2"></i>Sýnav Listesine Dön
+                            </a>
+                            <div>
+                                <button type="button" class="btn btn-warning btn-lg me-2" onclick="saveProgress()">
+                                    <i class="bi bi-save me-2"></i>Kaydet
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-lg" id="submitButton">
+                                    <i class="bi bi-check-circle me-2"></i>Sýnavý Bitir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <div class="card border-0 shadow-lg">
+                    <div class="card-body p-5 text-center">
+                        <div class="mb-4">
+                            <i class="bi bi-question-circle display-1 text-muted"></i>
+                        </div>
+                        <h3 class="fw-bold text-dark mb-3">Soru Bulunamadý</h3>
+                        <p class="text-muted mb-4">Bu sýnavda henüz soru eklenmemiþ.</p>
+                        <a asp-action="Sinavlarim" class="btn btn-primary">
+                            <i class="bi bi-arrow-left me-2"></i>Sýnav Listesine Dön
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+<!-- Inline Styles -->
+<style>
+    .form-check-input:checked {
+        background-color: #667eea;
+        border-color: #667eea;
+    }
+
+    .form-check-input:focus {
+        box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        border: none;
+    }
+
+    .btn-outline-primary {
+        border-color: #667eea;
+        color: #667eea;
+    }
+
+        .btn-outline-primary:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            border-color: #667eea;
+            color: white;
         }
 
-        <button type="submit" class="btn btn-success">Sýnavý Bitir</button>
-    </form>
-}
-else
-{
-    <p>Bu sýnavda soru bulunmamaktadýr.</p>
+    .badge {
+        padding: 0.5em 0.8em;
+        font-weight: 500;
+    }
+
+    .card {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .bg-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    }
+
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+    }
+
+    .list-group-item:hover {
+        background-color: rgba(102, 126, 234, 0.05);
+    }
+
+    .progress-bar {
+        transition: width 0.3s ease;
+    }
+
+    #examTimer {
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+        animation: pulse 2s infinite;
+    }
+
+    @@keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .time-warning {
+        background-color: #dc3545 !important;
+        color: white !important;
+        animation: pulse 1s infinite;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        // Sýnav süresi (dakika)
+        var examDurationMinutes = @(exam?.DurationMinutes ?? 0);
+        var remainingTimeSeconds = @(remainingTime * 60);
+        var timerInterval;
+        var autoSubmitted = false;
+
+        // Sayfa yüklendiðinde timer'ý baþlat
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Sýnav süresi (dk):', examDurationMinutes);
+
+            // Eðer süre bitmiþse otomatik gönder
+            if (remainingTimeSeconds <= 0 && examDurationMinutes > 0) {
+                autoSubmitExam();
+                return;
+            }
+
+            // Timer'ý baþlat (sadece süreli sýnavlarda)
+            if (examDurationMinutes > 0) {
+                startTimer();
+            }
+
+            // Ýlerleme durumunu güncelle
+            updateProgress();
+
+            // Sayfa kapatýlýrken uyarý göster
+            window.addEventListener('beforeunload', function(e) {
+                if (!autoSubmitted) {
+                    e.preventDefault();
+                    e.returnValue = 'Sýnav devam ediyor. Sayfadan ayrýlmak istediðinize emin misiniz?';
+                }
+            });
+
+            // Otomatik kaydetme (her 30 saniyede bir)
+            setInterval(saveProgress, 30000);
+
+            // Kaydedilmiþ ilerlemeyi yükle
+            loadProgress();
+        });
+
+        // Timer fonksiyonu
+        function startTimer() {
+            timerInterval = setInterval(function() {
+                remainingTimeSeconds--;
+
+                // Dakika ve saniyeleri hesapla
+                var minutes = Math.floor(remainingTimeSeconds / 60);
+                var seconds = remainingTimeSeconds % 60;
+
+                // Timer'ý güncelle
+                document.getElementById('timerMinutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('timerSeconds').textContent = seconds.toString().padStart(2, '0');
+
+                // 10 dakika kala uyarý
+                if (remainingTimeSeconds === 600) {
+                    showAlert('warning', '10 dakika kaldý!');
+                }
+
+                // 5 dakika kala uyarý
+                if (remainingTimeSeconds === 300) {
+                    showAlert('warning', '5 dakika kaldý!');
+                    document.getElementById('examTimer').classList.add('time-warning');
+                }
+
+                // 1 dakika kala uyarý
+                if (remainingTimeSeconds === 60) {
+                    showAlert('danger', 'Son 1 dakika!');
+                }
+
+                // Süre bittiðinde
+                if (remainingTimeSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    autoSubmitExam();
+                }
+
+                // Ýlerleme çubuðunu güncelle
+                var progressPercentage = ((examDurationMinutes * 60 - remainingTimeSeconds) / (examDurationMinutes * 60)) * 100;
+                document.getElementById('progressBar').style.width = progressPercentage + '%';
+
+            }, 1000);
+        }
+
+        // Otomatik sýnav gönderme
+        function autoSubmitExam() {
+            if (autoSubmitted) return;
+
+            autoSubmitted = true;
+            document.getElementById('autoSubmit').value = 'true';
+            showAlert('danger', 'Süre doldu! Sýnav otomatik olarak gönderiliyor...');
+
+            setTimeout(function() {
+                document.getElementById('examForm').submit();
+            }, 3000);
+        }
+
+        // Ýlerleme durumunu güncelle
+        function updateProgress() {
+            var totalQuestions = @exam?.Questions?.Count ?? 0;
+            var answeredQuestions = 0;
+
+            // Çoktan seçmeli sorularý kontrol et
+            var radioInputs = document.querySelectorAll('input[type="radio"]:checked');
+            answeredQuestions += radioInputs.length / (@exam?.Questions?.Count ?? 1); // Her soru için bir tane seçili
+
+            // Klasik sorularý kontrol et
+            var textareas = document.querySelectorAll('textarea.question-answer');
+            textareas.forEach(function(textarea) {
+                if (textarea.value.trim().length > 0) {
+                    answeredQuestions++;
+                }
+            });
+
+            // Dosya yüklemelerini kontrol et
+            var fileInputs = document.querySelectorAll('input[type="file"].question-answer');
+            fileInputs.forEach(function(input) {
+                if (input.files.length > 0) {
+                    answeredQuestions++;
+                }
+            });
+
+            // Ýlerleme yüzdesini hesapla
+            var progressPercentage = totalQuestions > 0 ? (answeredQuestions / totalQuestions) * 100 : 0;
+            document.getElementById('progressBar').style.width = progressPercentage + '%';
+            document.getElementById('progressText').textContent = Math.round(answeredQuestions) + '/' + totalQuestions;
+        }
+
+        // Uyarý gösterme
+        function showAlert(type, message) {
+            var alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-' + type + ' alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3 z-3';
+            alertDiv.style.minWidth = '300px';
+            alertDiv.innerHTML = `
+                <strong>${type === 'danger' ? 'Dikkat!' : 'Bilgi'}</strong> ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(alertDiv);
+
+            // 5 saniye sonra kaldýr
+            setTimeout(function() {
+                alertDiv.remove();
+            }, 5000);
+        }
+
+        // Çýkýþ onayý
+        function confirmSExit() {
+            return confirm('Sýnavdan çýkmak istediðinize emin misiniz? Cevaplarýnýz kaydedilecek.');
+        }
+
+        // Ýlerlemeyi kaydet (localStorage)
+        function saveProgress() {
+            try {
+                var formData = new FormData(document.getElementById('examForm'));
+                var answers = {};
+
+                // Form verilerini topla
+                for (var pair of formData.entries()) {
+                    if (pair[0].startsWith('Answers[')) {
+                        answers[pair[0]] = pair[1];
+                    }
+                }
+
+                // LocalStorage'a kaydet
+                localStorage.setItem('exam_progress_@Model.Id', JSON.stringify({
+                    answers: answers,
+                    timestamp: new Date().toISOString()
+                }));
+
+                // Geri sayým süresini de kaydet (sadece süreli sýnavlarda)
+                if (examDurationMinutes > 0) {
+                    localStorage.setItem('exam_timer_@Model.Id', remainingTimeSeconds);
+                }
+
+                showAlert('success', 'Ýlerleme kaydedildi.');
+                console.log('Ýlerleme kaydedildi:', answers);
+            } catch (error) {
+                console.error('Kaydetme hatasý:', error);
+            }
+        }
+
+        // Kaydedilmiþ ilerlemeyi yükle
+        function loadProgress() {
+            try {
+                var savedProgress = localStorage.getItem('exam_progress_@Model.Id');
+                if (savedProgress) {
+                    var data = JSON.parse(savedProgress);
+                    var answers = data.answers;
+
+                    // Cevaplarý doldur
+                    for (var key in answers) {
+                        var element = document.querySelector('[name="' + key + '"]');
+                        if (element) {
+                            if (element.type === 'radio') {
+                                if (element.value === answers[key]) {
+                                    element.checked = true;
+                                }
+                            } else if (element.type === 'textarea') {
+                                element.value = answers[key];
+                            }
+                        }
+                    }
+
+                    // Timer'ý yükle (sadece süreli sýnavlarda)
+                    if (examDurationMinutes > 0) {
+                        var savedTimer = localStorage.getItem('exam_timer_@Model.Id');
+                        if (savedTimer) {
+                            remainingTimeSeconds = parseInt(savedTimer);
+                            if (remainingTimeSeconds > 0) {
+                                var minutes = Math.floor(remainingTimeSeconds / 60);
+                                var seconds = remainingTimeSeconds % 60;
+                                document.getElementById('timerMinutes').textContent = minutes.toString().padStart(2, '0');
+                                document.getElementById('timerSeconds').textContent = seconds.toString().padStart(2, '0');
+                            }
+                        }
+                    }
+
+                    showAlert('info', 'Kaydedilmiþ cevaplarýnýz yüklendi.');
+                    updateProgress();
+                }
+            } catch (error) {
+                console.error('Yükleme hatasý:', error);
+            }
+        }
+
+        // Cevaplar deðiþtiðinde ilerlemeyi güncelle
+        document.querySelectorAll('.question-answer').forEach(function(element) {
+            element.addEventListener('change', updateProgress);
+            element.addEventListener('input', updateProgress);
+        });
+    </script>
 }

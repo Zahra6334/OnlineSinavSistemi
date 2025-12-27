@@ -7,11 +7,12 @@ using Microsoft.Extensions.Hosting;
 using OnlineSinavSistemi.Data;
 using OnlineSinavSistemi.Models;
 using OnlineSinavSistemi.Services;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnlineSinavSistemi.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "OGRETMEN")]
     public class ExamController : Controller
     {
         private readonly IExamService _examService;
@@ -29,21 +30,31 @@ namespace OnlineSinavSistemi.Controllers
 
         public async Task<IActionResult> Index(int? page)
         {
-            int pageSize = 6; // Her sayfada gösterilecek kart sayısı
+            // 1. Giriş yapan öğretmeni al
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return RedirectToAction("Login", "Account"); // Güvenlik önlemi
+
+            int pageSize = 6;
             int pageNumber = page ?? 1;
 
-            var exams = _db.Exams
-                .Include(e => e.Course)
+            // 2. SORGİYİ FİLTRELE (Düzeltme Burada)
+            // Sadece dersin hocası "bu kullanıcı" olan sınavları getir
+            var examsQuery = _db.Exams
+                .Include(e => e.Course) // Ders bilgilerini dahil et
+                .Where(e => e.Course.TeacherId == user.Id) // 🟢 İŞTE BU SATIR EKSİKTİ
                 .OrderByDescending(e => e.StartDate);
 
-            var totalCount = await exams.CountAsync();
+            // 3. Toplam sayıyı filtreli sonuç üzerinden hesapla
+            var totalCount = await examsQuery.CountAsync();
             var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 
-            var pagedExams = await exams
+            // 4. Sayfalama işlemini yap
+            var pagedExams = await examsQuery
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
+            // 5. ViewBag verilerini doldur
             ViewBag.PageNumber = pageNumber;
             ViewBag.TotalPages = totalPages;
             ViewBag.HasPreviousPage = pageNumber > 1;
@@ -51,6 +62,7 @@ namespace OnlineSinavSistemi.Controllers
 
             return View(pagedExams);
         }
+        
         
 
         // 🟢 Yeni sınav oluştur (GET)
@@ -192,6 +204,7 @@ namespace OnlineSinavSistemi.Controllers
         }
 
         // 🟢 Sınav sil (GET)
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             var exam = await _examService.GetExamByIdAsync(id);
@@ -201,17 +214,39 @@ namespace OnlineSinavSistemi.Controllers
         }
 
         // 🟢 Sınav sil (POST)
+        // 🟢 Sınav sil (POST)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var exam = await _examService.GetExamByIdAsync(id);
-            if (exam == null) return NotFound();
+            var exam = await _db.Exams
+                .Include(e => e.Questions)
+                    .ThenInclude(q => q.Choices)
+                .FirstOrDefaultAsync(e => e.Id == id);
 
+            if (exam == null)
+                return NotFound();
+
+            // 🔴 Choice id’lerini al
+            var choiceIds = exam.Questions
+                .SelectMany(q => q.Choices)
+                .Select(c => c.Id)
+                .ToList();
+
+            // 🔴 Bu choice’lara bağlı cevapları sil
+            var answers = _db.Answers
+    .Where(a => a.SelectedChoiceId.HasValue &&
+                choiceIds.Contains(a.SelectedChoiceId.Value));
+
+            _db.Answers.RemoveRange(answers);
+
+            // 🔴 En son sınavı sil
             _db.Exams.Remove(exam);
+
             await _db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
+
 
         // 🟢 Sınav yayınla / yayından kaldır
         [HttpPost]
