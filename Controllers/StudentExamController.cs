@@ -63,19 +63,57 @@ namespace OnlineSinavSistemi.Controllers
 
             if (studentExam == null)
                 return Unauthorized();
+            var now = DateTime.Now;
+            var examStartDate = studentExam.Exam.StartDate;
+            var examDuration = studentExam.Exam.DurationMinutes;
+            var examGlobalEndDate = examStartDate.AddMinutes(examDuration);
 
-            // Başlangıç zamanı kaydedilmemişse kaydet
+            // A. Sınav henüz başlamadıysa
+            if (now < examStartDate)
+            {
+                TempData["ErrorMessage"] = "Sınav zamanı henüz gelmedi!";
+                return RedirectToAction("Sinavlarim");
+            }
+
+            // B. Sınavın genel süresi dolduysa (Başlangıç saati + Süre)
+            if (now > examGlobalEndDate)
+            {
+                TempData["ErrorMessage"] = "Sınavın geçerlilik süresi doldu, artık giriş yapamazsınız.";
+                return RedirectToAction("Sinavlarim");
+            }
+            // ---------------------------------------------------------------------
+
+            // Sınav zaten tamamlandıysa tekrar giremesin
+            if (studentExam.Completed)
+            {
+                TempData["ErrorMessage"] = "Bu sınavı zaten tamamladınız.";
+                return RedirectToAction("Sinavlarim");
+            }
+
+            // Başlangıç zamanı kaydedilmemişse (Öğrenci ilk kez giriyorsa) kaydet
             if (!studentExam.StartTime.HasValue)
             {
                 studentExam.StartTime = DateTime.Now;
                 _context.SaveChanges();
             }
 
-            // Süre kontrolü
+            // Öğrencinin KENDİ süresinin kontrolü (Örn: Sınava geç girdi, ne kadar vakti kaldı?)
             if (studentExam.Exam.DurationMinutes > 0)
             {
-                var endTime = studentExam.StartTime.Value.AddMinutes(studentExam.Exam.DurationMinutes);
-                if (DateTime.Now > endTime)
+                // Öğrencinin girdiği andan itibaren değil, sınavın BİTİŞ saatine göre kalan süre
+                // Burada mantık tercihe bağlıdır: 
+                // 1. Yöntem: Öğrenci geç girse bile tam süre verilir (StartTime + Duration).
+                // 2. Yöntem: Sınav 10:00-11:00 arasındaysa ve 10:30'da girdiyse sadece 30 dk verilir.
+
+                // Senin kodundaki mevcut yapı 1. Yönteme benziyor ama "Sınav Süresi" kavramı genellikle
+                // sınavın global bitiş saatini aşamaz.
+
+                // Bu yüzden şu kontrolü de ekliyoruz:
+                // Öğrencinin bitirmesi gereken tahmini zaman
+                var studentEndTime = studentExam.StartTime.Value.AddMinutes(studentExam.Exam.DurationMinutes);
+
+                // Eğer şu anki zaman, öğrencinin süresini aştıysa VEYA sınavın global süresini aştıysa
+                if (now > studentEndTime || now > examGlobalEndDate)
                 {
                     // Süre dolduysa sınavı tamamla
                     studentExam.Completed = true;
