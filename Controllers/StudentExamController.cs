@@ -128,24 +128,31 @@ namespace OnlineSinavSistemi.Controllers
         }
 
         // 🔹 SINAVI GÖNDER
-        [HttpPost]
+        
+     
         [HttpPost]
         public async Task<IActionResult> SubmitExam(int Id)
         {
             var studentId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // 1. Sınavı ve soruları, şıklarıyla birlikte çek
             var studentExam = await _context.StudentExams
                 .Include(se => se.Exam)
                     .ThenInclude(e => e.Questions)
                         .ThenInclude(q => q.Choices)
-                .FirstOrDefaultAsync(se => se.Id == Id && se.StudentId == studentId); // Burada studentId kontrolü eklendi
+                .FirstOrDefaultAsync(se => se.Id == Id && se.StudentId == studentId);
 
             if (studentExam == null) return Unauthorized();
 
-            // 🛡️ Çift submit engeli
-            if (studentExam.Completed)
-                return RedirectToAction("Index");
+            // Çift gönderimi engelle
+            if (studentExam.Completed) return RedirectToAction("Index");
 
             var questions = studentExam.Exam.Questions.ToList();
+
+            // Klasik soru var mı kontrol et (Varsa otomatik puanlama devre dışı kalacak)
+            bool hasClassicQuestion = questions.Any(q => q.Type == QuestionType.Klasik);
+
+            double totalScore = 0;
 
             for (int i = 0; i < questions.Count; i++)
             {
@@ -156,19 +163,38 @@ namespace OnlineSinavSistemi.Controllers
                     QuestionId = question.Id
                 };
 
+                // Formdan gelen verileri al
                 var selectedChoice = Request.Form[$"Answers[{i}].SelectedChoiceId"];
-                if (!string.IsNullOrEmpty(selectedChoice))
-                    answer.SelectedChoiceId = int.Parse(selectedChoice);
-
                 var textAnswer = Request.Form[$"Answers[{i}].AnswerText"];
+                var file = Request.Form.Files.FirstOrDefault(f => f.Name == $"Answers[{i}].FileUpload");
+
+                // Şık seçimi varsa ata
+                if (!string.IsNullOrEmpty(selectedChoice) && int.TryParse(selectedChoice, out int choiceId))
+                {
+                    answer.SelectedChoiceId = choiceId;
+
+                    // --- OTOMATİK PUAN HESAPLAMA (BURAYA EKLENDİ) ---
+                    // Eğer klasik soru yoksa, döngü içindeyken puanı hesapla
+                    if (!hasClassicQuestion)
+                    {
+                        var correctChoice = question.Choices.FirstOrDefault(c => c.IsCorrect);
+                        if (correctChoice != null && correctChoice.Id == choiceId)
+                        {
+                            totalScore += question.Point ?? 0;
+                        }
+                    }
+                    // ------------------------------------------------
+                }
+
                 if (!string.IsNullOrEmpty(textAnswer))
                     answer.AnswerText = textAnswer;
 
-                var file = Request.Form.Files.FirstOrDefault(f => f.Name == $"Answers[{i}].FileUpload");
+                // Dosya yükleme işlemi
                 if (file != null && file.Length > 0)
                 {
-                    var uploads = Path.Combine("wwwroot/uploads");
-                    Directory.CreateDirectory(uploads);
+                    var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads"); // Path düzeltildi
+                    if (!Directory.Exists(uploads)) Directory.CreateDirectory(uploads);
+
                     var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
                     var path = Path.Combine(uploads, fileName);
                     using var stream = new FileStream(path, FileMode.Create);
@@ -179,43 +205,22 @@ namespace OnlineSinavSistemi.Controllers
                 _context.Answers.Add(answer);
             }
 
+            // Sınavı tamamlandı olarak işaretle
             studentExam.Completed = true;
             studentExam.EndTime = DateTime.Now;
 
-            // 🔹 OTOMATİK PUAN (SADECE ŞIKLI)
-            bool hasClassicQuestion = studentExam.Exam.Questions
-                .Any(q => q.Type == QuestionType.Klasik);
-
+            // Eğer klasik soru yoksa puanı ve yayınlama durumunu güncelle
             if (!hasClassicQuestion)
             {
-                var answers = await _context.Answers
-                    .Where(a => a.StudentExamId == studentExam.Id)
-                    .Include(a => a.Question)
-                        .ThenInclude(q => q.Choices)
-                    .ToListAsync();
-
-                double totalScore = 0;
-
-                foreach (var answer in answers)
-                {
-                    if (answer.SelectedChoiceId.HasValue)
-                    {
-                        var correctChoice = answer.Question.Choices
-                            .FirstOrDefault(c => c.IsCorrect);
-
-                        if (correctChoice != null &&
-                            correctChoice.Id == answer.SelectedChoiceId)
-                        {
-                            totalScore += answer.Question.Point ?? 0;
-                        }
-                    }
-                }
-
                 studentExam.Score = totalScore;
-                studentExam.ScoreShared = true;
+                studentExam.ScoreShared = true; // Puanı öğrenciye göster
+            }
+            else
+            {
+                studentExam.ScoreShared = false; // Hoca onayı bekle
             }
 
-            // ✅ PUANI KAYDET
+            // TEK SEFERDE KAYDET
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
