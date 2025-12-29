@@ -5,7 +5,9 @@
 }
 
 <div class="container mt-4">
-    <h2>@ViewData["Title"]</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>@ViewData["Title"]</h2>
+    </div>
 
     <div id="ajaxAlertContainer"></div>
 
@@ -22,50 +24,63 @@
     <form asp-action="Edit" method="post" id="editForm">
         @Html.AntiForgeryToken()
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="TeacherId" />
 
-        <div class="form-group">
-            <label asp-for="Title" class="control-label font-weight-bold">Sınav Başlığı</label>
-            <input asp-for="Title" class="form-control" />
-            <span asp-validation-for="Title" class="text-danger"></span>
-        </div>
+        <div class="card shadow-sm">
+            <div class="card-body">
 
-        <div class="form-group">
-            <label asp-for="CourseId" class="control-label font-weight-bold">Ders</label>
-            <select asp-for="CourseId" class="form-control" asp-items="ViewBag.Dersler">
-                <option value="">-- Ders Seçin --</option>
-            </select>
-            <span asp-validation-for="CourseId" class="text-danger"></span>
-        </div>
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label font-weight-bold">Sınav Başlığı</label>
+                    <input asp-for="Title" class="form-control" placeholder="Örn: Matematik Vize Sınavı" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
 
-        <div class="form-group">
-            <label asp-for="DurationMinutes" class="control-label font-weight-bold">Sınav Süresi (dakika)</label>
-            <input asp-for="DurationMinutes" class="form-control" type="number" min="1" max="480" />
-            <span asp-validation-for="DurationMinutes" class="text-danger"></span>
-            <small class="form-text text-muted">Sınav süresi dakika cinsinden (1-480 dakika).</small>
-        </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="CourseId" class="control-label font-weight-bold">Ders</label>
+                        <select asp-for="CourseId" class="form-control" asp-items="ViewBag.Dersler">
+                            <option value="">-- Ders Seçin --</option>
+                        </select>
+                        <span asp-validation-for="CourseId" class="text-danger"></span>
+                    </div>
 
-        <input asp-for="StartDate"
-               class="form-control"
-               type="datetime-local"
-               value="@Model.StartDate.ToString("yyyy-MM-ddTHH:mm")"
-               data-val="false"
-               id="StartDate"
-               name="StartDate" />
+                    <div class="form-group col-md-6">
+                        <label asp-for="DurationMinutes" class="control-label font-weight-bold">Sınav Süresi (Dakika)</label>
+                        <input asp-for="DurationMinutes" class="form-control" type="number" min="1" max="480" />
+                        <span asp-validation-for="DurationMinutes" class="text-danger"></span>
+                    </div>
+                </div>
 
-        <div class="form-group mt-3">
-            <button type="submit" class="btn btn-primary" id="saveBtn">
-                <i class="fas fa-save"></i> Kaydet ve Listeye Dön
-            </button>
+                <div class="form-group">
+                    <label asp-for="StartDate" class="control-label font-weight-bold">Başlangıç Tarihi ve Saati</label>
+                    <input asp-for="StartDate"
+                           class="form-control"
+                           type="datetime-local"
+                           asp-format="{0:yyyy-MM-ddTHH:mm}" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                    <small class="text-muted">Sınavın başlayacağı tarih ve saati seçiniz.</small>
+                </div>
 
-            <a asp-action="Index" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> İptal
-            </a>
+            </div>
+            <div class="card-footer bg-white">
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Listeye Dön
+                    </a>
 
-            <button type="button" class="btn btn-success float-right" id="saveAndStayBtn">
-                <i class="fas fa-check-circle"></i> Kaydet ve Burada Kal
-            </button>
+                    <div>
+                        <button type="submit" class="btn btn-primary mr-2" id="saveBtn">
+                            <i class="fas fa-save"></i> Kaydet ve Çık
+                        </button>
+
+                        <button type="button" class="btn btn-success" id="saveAndStayBtn">
+                            <i class="fas fa-check-circle"></i> Kaydet ve Burada Kal
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </div>
@@ -77,15 +92,22 @@
 
     <script>
         $(document).ready(function() {
-       
-            // --- 2. AJAX ile Kaydetme ---
+
+            // --- AJAX ile Kaydetme İşlemi ---
             $('#saveAndStayBtn').click(function(e) {
-                e.preventDefault(); // Sayfanın normal post olmasını engelle
+                e.preventDefault();
 
                 var form = $('#editForm');
+                var btn = $(this);
 
-                // İstemci tarafı validasyon kontrolü (Boş alan vs.)
-                if (!form.valid()) return;
+                // 1. İstemci tarafı validasyon kontrolü (jQuery Validate)
+                if (!form.valid()) {
+                    return false; // Form geçerli değilse durdur
+                }
+
+                // Butonu devre dışı bırak (çift tıklamayı önle)
+                var originalContent = btn.html();
+                btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Kaydediliyor...');
 
                 // Form verilerini al
                 var formData = new FormData(form[0]);
@@ -97,11 +119,11 @@
                     processData: false,
                     contentType: false,
                     headers: {
-                        "X-Requested-With": "XMLHttpRequest" // Controller bunu kontrol edecek
+                        "X-Requested-With": "XMLHttpRequest"
                     },
                     success: function(response) {
                         if (response.success) {
-                            // Başarılı ise Alert Oluştur
+                            // Başarılı Alert
                             var alertHtml = `
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     <i class="fas fa-check-circle me-2"></i> ${response.message}
@@ -110,26 +132,36 @@
                                     </button>
                                 </div>`;
 
-                            // Mesajı ekrana bas
-                            $('#ajaxAlertContainer').html(alertHtml);
+                            $('#ajaxAlertContainer').html(alertHtml).hide().fadeIn();
 
-                            // Sayfayı YENİLEMİYORUZ (window.location.reload YOK)
-                            // Böylece kullanıcı formda kalmaya devam eder.
-
-                            // 5 saniye sonra mesajı otomatik kapat
-                            setTimeout(function() { $('.alert').alert('close'); }, 5000);
+                            // 4 saniye sonra alerti kapat
+                            setTimeout(function() {
+                                $('.alert').fadeOut('slow', function(){ $(this).remove(); });
+                            }, 4000);
 
                         } else {
-                            // Backend validasyon hatası varsa
-                            var errorMsg = response.message;
-                            if(response.errors && response.errors.length > 0) {
-                                errorMsg += "\n" + response.errors.join("\n");
-                            }
-                            alert(errorMsg);
+                            // Backend Validasyon Hatası (JSON döndüyse)
+                            var errorHtml = `
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <i class="fas fa-exclamation-triangle me-2"></i> ${response.message}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>`;
+                            $('#ajaxAlertContainer').html(errorHtml);
                         }
                     },
                     error: function(xhr, status, error) {
-                        alert('Sunucu hatası oluştu: ' + error);
+                        console.error(xhr);
+                        var msg = "Bir hata oluştu.";
+                        if(xhr.status === 400 || xhr.status === 500){
+                            msg = "Sunucu hatası: Lütfen girdiğiniz verileri kontrol edin.";
+                        }
+                        alert(msg + " Detay: " + error);
+                    },
+                    complete: function() {
+                        // Butonu eski haline getir
+                        btn.prop('disabled', false).html(originalContent);
                     }
                 });
             });
@@ -141,20 +173,10 @@
             border-color: #667eea;
             box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
         }
-
-        .btn-primary {
-            background-color: #667eea;
-            border-color: #667eea;
-        }
-
-        .btn-success {
-            background-color: #10b981;
-            border-color: #10b981;
-        }
-
-        .alert {
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* Kart görünümü ekleyerek formu daha derli toplu yaptık */
+        .card {
+            border: none;
+            border-radius: 10px;
         }
     </style>
 }

@@ -187,21 +187,77 @@ namespace OnlineSinavSistemi.Controllers
         // 🟢 Sınav düzenle (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Exam model)
+        public async Task<IActionResult> Edit(int id, Exam exam)
         {
-            if (!ModelState.IsValid) return View(model);
+            // 1. ID Kontrolü
+            if (id != exam.Id) return NotFound();
 
-            var exam = await _examService.GetExamByIdAsync(model.Id);
-            if (exam == null) return NotFound();
+            // ============================================================
+            // 🛠️ ÇÖZÜM BURADA: Validasyon Engellerini Kaldırıyoruz
+            // Bu tablolar formdan boş gelir, bu yüzden hata vermemeleri için
+            // validasyondan siliyoruz.
+            // ============================================================
+            ModelState.Remove("Course");
+            ModelState.Remove("Teacher");
+            ModelState.Remove("Questions");
+            ModelState.Remove("StudentExams");
 
-            exam.Title= model.Title;
-            exam.CourseId = model.CourseId;
-            exam.DurationMinutes = model.DurationMinutes;
-            exam.StartDate= model.StartDate;
+            // 2. Validasyon Kontrolü
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _db.Update(exam);
+                    await _db.SaveChangesAsync();
 
-            await _db.SaveChangesAsync();
-            return RedirectToAction("Index");
+                    // A: AJAX İsteği (Kaydet ve Kal)
+                    if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                    {
+                        return Json(new { success = true, message = "Değişiklikler kaydedildi." });
+                    }
+
+                    // B: NORMAL İSTEK (Kaydet ve Çık) -> INDEX'e GİT
+                    TempData["SuccessMessage"] = "Sınav başarıyla güncellendi.";
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ExamExists(exam.Id)) return NotFound();
+                    else throw;
+                }
+            }
+
+            // 🔴 EĞER HALA GİTMİYORSA HATALARI GÖRMEK İÇİN:
+            // Hangi alanın hata verdiğini konsola yazdıralım (Debug ekranında çıkar)
+            foreach (var modelState in ModelState.Values)
+            {
+                foreach (var error in modelState.Errors)
+                {
+                    Console.WriteLine("VALIDATION ERROR: " + error.ErrorMessage);
+                }
+            }
+
+            // 3. Validasyon Hatası Varsa (Sayfa Yenilenir)
+
+            // AJAX hatası
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return Json(new { success = false, message = "Lütfen alanları kontrol ediniz.", errors = errors });
+            }
+
+            // Dropdown listesini tekrar doldur (CourseName DÜZELTİLDİ)
+            // Buraya .ToList() ekledik ve "Name" yerine "CourseName" yazdık.
+            ViewBag.Dersler = new SelectList(_db.Courses.ToList(), "Id", "CourseName", exam.CourseId);
+
+            return View(exam);
         }
+        // Controller sınıfının en altına bu metodu eklemeyi unutmayın (eğer yoksa):
+        private bool ExamExists(int id)
+        {
+            return _db.Exams.Any(e => e.Id == id);
+        }
+
 
         // 🟢 Sınav sil (GET)
         [HttpGet]
@@ -213,7 +269,7 @@ namespace OnlineSinavSistemi.Controllers
             return View(exam);
         }
 
-        // 🟢 Sınav sil (POST)
+        
         // 🟢 Sınav sil (POST)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

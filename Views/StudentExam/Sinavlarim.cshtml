@@ -131,41 +131,54 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
+                                        // --- ZAMAN HESAPLAMALARI ---
+                                        var now = DateTime.Now;
+                                        var startDate = item.Exam?.StartDate ?? DateTime.MinValue;
+                                        var duration = item.Exam?.DurationMinutes ?? 0;
+                                        var endDate = startDate.AddMinutes(duration);
+
+                                        // Durumlar
+                                        bool isExamStarted = now >= startDate; // Sınav saati geldi mi?
+                                        bool isExamExpired = now > endDate;    // Sınav süresi bitti mi?
+                                        bool isActive = isExamStarted && !isExamExpired; // Şu an girilebilir mi?
+                                                                                         // ---------------------------
+
                                         <tr>
                                             <td class="py-3 px-4 fw-bold">@item.Exam?.Title</td>
                                             <td class="py-3 px-4">@item.Exam?.Course?.CourseName</td>
-                                            <td class="py-3 px-4">@item.Exam?.StartDate.ToString("g")</td>
-                                            <td class="py-3 px-4">@item.Exam?.DurationMinutes</td>
+                                            <td class="py-3 px-4">
+                                                @item.Exam?.StartDate.ToString("dd.MM.yyyy") <br />
+                                                <small class="text-muted">@item.Exam?.StartDate.ToString("HH:mm")</small>
+                                            </td>
+                                            <td class="py-3 px-4">@item.Exam?.DurationMinutes dk</td>
 
-                                            <!-- DURUM -->
                                             <td class="py-3 px-4">
                                                 @if (item.Completed)
                                                 {
-                                                    <span class="badge bg-success">
-                                                        <i class="bi bi-check-circle me-1"></i>Tamamlandı
-                                                    </span>
+                                                    <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Tamamlandı</span>
+                                                }
+                                                else if (isExamExpired)
+                                                {
+                                                    <span class="badge bg-danger"><i class="bi bi-x-circle me-1"></i>Süresi Doldu</span>
+                                                }
+                                                else if (!isExamStarted)
+                                                {
+                                                    <span class="badge bg-info text-dark"><i class="bi bi-hourglass me-1"></i>Başlamadı</span>
                                                 }
                                                 else
                                                 {
-                                                    <span class="badge bg-warning text-dark">
-                                                        <i class="bi bi-clock me-1"></i>Bekliyor
-                                                    </span>
+                                                    <span class="badge bg-warning text-dark"><i class="bi bi-play-circle me-1"></i>Aktif / Girilebilir</span>
                                                 }
                                             </td>
 
-                                            <!-- SONUÇ / NOT -->
                                             <td class="py-3 px-4">
                                                 @if (item.Completed && item.ScoreShared)
                                                 {
-                                                    <span class="badge bg-primary">
-                                                        <i class="bi bi-star me-1"></i>Not: @item.Score
-                                                    </span>
+                                                    <span class="badge bg-primary"><i class="bi bi-star me-1"></i>Not: @item.Score</span>
                                                 }
                                                 else if (item.Completed && !item.ScoreShared)
                                                 {
-                                                    <span class="badge bg-secondary">
-                                                        <i class="bi bi-hourglass-split me-1"></i>Değerlendiriliyor
-                                                    </span>
+                                                    <span class="badge bg-secondary"><i class="bi bi-hourglass-split me-1"></i>Değerlendiriliyor</span>
                                                 }
                                                 else
                                                 {
@@ -173,21 +186,32 @@
                                                 }
                                             </td>
 
-                                            <!-- İŞLEM -->
                                             <td class="py-3 px-4">
                                                 @if (!item.Completed)
                                                 {
-                                                    <a asp-action="TakeExam"
-                                                       asp-route-examId="@item.ExamId"
-                                                       class="btn btn-primary btn-sm">
-                                                        <i class="bi bi-pencil me-1"></i>Sınava Gir
-                                                    </a>
+                                                    if (isActive)
+                                                    {
+                                                        // DURUM 1: Sınav saati geldi ve süresi bitmedi -> BUTON AKTİF
+                                                        <a asp-action="TakeExam" asp-route-examId="@item.ExamId" class="btn btn-primary btn-sm pulse-button">
+                                                            <i class="bi bi-pencil me-1"></i>Sınava Gir
+                                                        </a>
+                                                    }
+                                                    else if (!isExamStarted)
+                                                    {
+                                                        // DURUM 2: Henüz zamanı gelmedi -> BUTON PASİF
+                                                        <button class="btn btn-secondary btn-sm" disabled>
+                                                            <i class="bi bi-lock me-1"></i>@startDate.ToString("HH:mm") Bekleniyor
+                                                        </button>
+                                                    }
+                                                    else if (isExamExpired)
+                                                    {
+                                                        // DURUM 3: Süre geçti -> GİRİŞ YOK
+                                                        <span class="text-danger small"><i class="bi bi-x-circle"></i> Kaçırıldı</span>
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    <span class="text-success">
-                                                        <i class="bi bi-check2-circle me-1"></i>Tamamlandı
-                                                    </span>
+                                                    <span class="text-success"><i class="bi bi-check2-circle me-1"></i>Tamamlandı</span>
                                                 }
                                             </td>
                                         </tr>
