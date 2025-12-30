@@ -7,8 +7,9 @@ using OnlineSinavSistemi.Models;
 using OnlineSinavSistemi.Services;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.IO; // Eksik using
-using System.Linq; // Eksik using
+using System.IO;
+using System.Linq;
+using Microsoft.AspNetCore.Http; // Session için gerekli
 
 namespace OnlineSinavSistemi.Controllers
 {
@@ -28,16 +29,12 @@ namespace OnlineSinavSistemi.Controllers
             _context = context;
         }
 
-        // ---------------------------------------------------------------------
-        // 🔹 STUDENT DASHBOARD (ANA SAYFA)
-        // ---------------------------------------------------------------------
+        // 🔹 STUDENT DASHBOARD
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-                return RedirectToAction("AccessDenied", "Account");
+            if (user == null) return RedirectToAction("AccessDenied", "Account");
 
-            // Öğrencinin aldığı dersler (CourseStudent tablosu üzerinden)
             var dersler = await _context.CourseStudents
                 .Where(cs => cs.StudentId == user.Id)
                 .Include(cs => cs.Course)
@@ -48,151 +45,202 @@ namespace OnlineSinavSistemi.Controllers
             return View(dersler);
         }
 
-        // 🔹 SINAVA GİR
+        // ---------------------------------------------------------------------
+        // 🔹 SINAVA GİR (GÜVENLİK VE OTURUM KONTROLÜ EKLENDİ)
+        // ---------------------------------------------------------------------
         [HttpGet]
-        [HttpGet]
-        public IActionResult TakeExam(int examId)
+        public async Task<IActionResult> TakeExam(int examId)
         {
             var studentId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var studentExam = _context.StudentExams
+
+            // Sınavı ve daha önceki cevapları (varsa) getiriyoruz
+            var studentExam = await _context.StudentExams
                .Include(se => se.Exam)
                    .ThenInclude(e => e.Questions)
                        .ThenInclude(q => q.Choices)
                .Include(se => se.Answers)
-               .FirstOrDefault(se => se.ExamId == examId && se.StudentId == studentId);
+               .FirstOrDefaultAsync(se => se.ExamId == examId && se.StudentId == studentId);
 
-            if (studentExam == null)
-                return Unauthorized();
-            var now = DateTime.Now;
-            var examStartDate = studentExam.Exam.StartDate;
-            var examDuration = studentExam.Exam.DurationMinutes;
-            var examGlobalEndDate = examStartDate.AddMinutes(examDuration);
+            if (studentExam == null) return Unauthorized();
 
-            // A. Sınav henüz başlamadıysa
-            if (now < examStartDate)
-            {
-                TempData["ErrorMessage"] = "Sınav zamanı henüz gelmedi!";
-                return RedirectToAction("Sinavlarim");
-            }
-
-            // B. Sınavın genel süresi dolduysa (Başlangıç saati + Süre)
-            if (now > examGlobalEndDate)
-            {
-                TempData["ErrorMessage"] = "Sınavın geçerlilik süresi doldu, artık giriş yapamazsınız.";
-                return RedirectToAction("Sinavlarim");
-            }
-            // ---------------------------------------------------------------------
-
-            // Sınav zaten tamamlandıysa tekrar giremesin
+            // 1. Temel Kontroller
             if (studentExam.Completed)
             {
                 TempData["ErrorMessage"] = "Bu sınavı zaten tamamladınız.";
                 return RedirectToAction("Sinavlarim");
             }
 
-            // Başlangıç zamanı kaydedilmemişse (Öğrenci ilk kez giriyorsa) kaydet
-            if (!studentExam.StartTime.HasValue)
+            var now = DateTime.Now;
+            var examEndDate = studentExam.Exam.StartDate.AddMinutes(studentExam.Exam.DurationMinutes);
+
+            if (now < studentExam.Exam.StartDate)
             {
-                studentExam.StartTime = DateTime.Now;
-                _context.SaveChanges();
+                TempData["ErrorMessage"] = "Sınav zamanı henüz gelmedi!";
+                return RedirectToAction("Sinavlarim");
             }
 
-            // Öğrencinin KENDİ süresinin kontrolü (Örn: Sınava geç girdi, ne kadar vakti kaldı?)
-            if (studentExam.Exam.DurationMinutes > 0)
+            if (now > examEndDate)
             {
-                // Öğrencinin girdiği andan itibaren değil, sınavın BİTİŞ saatine göre kalan süre
-                // Burada mantık tercihe bağlıdır: 
-                // 1. Yöntem: Öğrenci geç girse bile tam süre verilir (StartTime + Duration).
-                // 2. Yöntem: Sınav 10:00-11:00 arasındaysa ve 10:30'da girdiyse sadece 30 dk verilir.
+                TempData["ErrorMessage"] = "Sınavın geçerlilik süresi doldu.";
+                return RedirectToAction("Sinavlarim");
+            }
 
-                // Senin kodundaki mevcut yapı 1. Yönteme benziyor ama "Sınav Süresi" kavramı genellikle
-                // sınavın global bitiş saatini aşamaz.
+            // 2. TEK GİRİŞ HAKKI (Session Koruması)
+            string sessionKey = $"ExamSession_{studentExam.Id}";
 
-                // Bu yüzden şu kontrolü de ekliyoruz:
-                // Öğrencinin bitirmesi gereken tahmini zaman
-                var studentEndTime = studentExam.StartTime.Value.AddMinutes(studentExam.Exam.DurationMinutes);
+            if (studentExam.StartTime.HasValue)
+            {
+                // Veritabanında giriş saati var. Peki Session var mı?
+                var sessionStatus = HttpContext.Session.GetString(sessionKey);
 
-                // Eğer şu anki zaman, öğrencinin süresini aştıysa VEYA sınavın global süresini aştıysa
-                if (now > studentEndTime || now > examGlobalEndDate)
+                if (string.IsNullOrEmpty(sessionStatus))
                 {
-                    // Süre dolduysa sınavı tamamla
+                    // KRİTİK: Başlangıç saati var ama Session yok. 
+                    // Demek ki öğrenci tarayıcıyı kapatmış veya başka cihazdan deniyor.
+                    // CEZA: Sınavı bitir.
+
                     studentExam.Completed = true;
                     studentExam.EndTime = DateTime.Now;
-                    _context.SaveChanges();
-                    TempData["ErrorMessage"] = "Sınav süresi doldu!";
+                    await _context.SaveChangesAsync();
+
+                    TempData["ErrorMessage"] = "Sınav ekranından ayrıldığınız veya tarayıcıyı kapattığınız için sınavınız sonlandırıldı.";
                     return RedirectToAction("Sinavlarim");
                 }
+
+                // Session varsa sorun yok, sayfa yenilemiştir. Devam etsin.
+            }
+            else
+            {
+                // İlk defa giriyor
+                studentExam.StartTime = DateTime.Now;
+                await _context.SaveChangesAsync();
+
+                // Session Damgası Vuruyoruz
+                HttpContext.Session.SetString(sessionKey, "Active");
+            }
+
+            // 3. Kişisel Süre Kontrolü
+            var studentEndTime = studentExam.StartTime.Value.AddMinutes(studentExam.Exam.DurationMinutes);
+            if (now > studentEndTime)
+            {
+                studentExam.Completed = true;
+                studentExam.EndTime = DateTime.Now;
+                await _context.SaveChangesAsync();
+
+                // Session'ı temizle
+                HttpContext.Session.Remove(sessionKey);
+
+                TempData["ErrorMessage"] = "Süreniz doldu!";
+                return RedirectToAction("Sinavlarim");
             }
 
             return View(studentExam);
         }
 
-        // 🔹 SINAVI GÖNDER
-        
-     
+        // ---------------------------------------------------------------------
+        // 🔹 ANLIK KAYIT (AJAX İLE ÇAĞRILACAK) - YENİ EKLENDİ
+        // ---------------------------------------------------------------------
+        [HttpPost]
+        public async Task<IActionResult> SaveSingleAnswer(int studentExamId, int questionId, int? selectedChoiceId, string answerText)
+        {
+            var studentId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Sınavın geçerliliğini kontrol et
+            var studentExam = await _context.StudentExams
+                .FirstOrDefaultAsync(se => se.Id == studentExamId && se.StudentId == studentId);
+
+            if (studentExam == null || studentExam.Completed)
+            {
+                return Json(new { success = false, message = "Sınav aktif değil." });
+            }
+
+            // Mevcut cevabı bul veya yenisini oluştur
+            var existingAnswer = await _context.Answers
+                .FirstOrDefaultAsync(a => a.StudentExamId == studentExamId && a.QuestionId == questionId);
+
+            if (existingAnswer == null)
+            {
+                existingAnswer = new Answer
+                {
+                    StudentExamId = studentExamId,
+                    QuestionId = questionId
+                };
+                _context.Answers.Add(existingAnswer);
+            }
+
+            // Verileri güncelle
+            if (selectedChoiceId.HasValue)
+                existingAnswer.SelectedChoiceId = selectedChoiceId.Value;
+
+            if (answerText != null) // Boş string ("") gelebilir, null kontrolü yeterli
+                existingAnswer.AnswerText = answerText;
+
+            await _context.SaveChangesAsync();
+            return Json(new { success = true });
+        }
+
+        // ---------------------------------------------------------------------
+        // 🔹 SINAVI BİTİR (GÜNCELLENDİ: Çift Kayıt Önleme)
+        // ---------------------------------------------------------------------
         [HttpPost]
         public async Task<IActionResult> SubmitExam(int Id)
         {
             var studentId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            // 1. Sınavı ve soruları, şıklarıyla birlikte çek
+            // Cevapları da Include ediyoruz ki güncelleme yapabilelim
             var studentExam = await _context.StudentExams
+                .Include(se => se.Answers)
                 .Include(se => se.Exam)
                     .ThenInclude(e => e.Questions)
                         .ThenInclude(q => q.Choices)
                 .FirstOrDefaultAsync(se => se.Id == Id && se.StudentId == studentId);
 
             if (studentExam == null) return Unauthorized();
-
-            // Çift gönderimi engelle
             if (studentExam.Completed) return RedirectToAction("Index");
 
             var questions = studentExam.Exam.Questions.ToList();
-
-            // Klasik soru var mı kontrol et (Varsa otomatik puanlama devre dışı kalacak)
             bool hasClassicQuestion = questions.Any(q => q.Type == QuestionType.Klasik);
-
             double totalScore = 0;
 
             for (int i = 0; i < questions.Count; i++)
             {
                 var question = questions[i];
-                var answer = new Answer
-                {
-                    StudentExamId = studentExam.Id,
-                    QuestionId = question.Id
-                };
 
-                // Formdan gelen verileri al
+                // 1. Önce bu soru için veritabanında zaten kayıtlı bir cevap var mı? (Anlık kayıt sayesinde olabilir)
+                var answer = studentExam.Answers.FirstOrDefault(a => a.QuestionId == question.Id);
+
+                // Eğer yoksa yeni oluştur
+                if (answer == null)
+                {
+                    answer = new Answer
+                    {
+                        StudentExamId = studentExam.Id,
+                        QuestionId = question.Id
+                    };
+                    _context.Answers.Add(answer);
+                }
+
+                // 2. Formdan gelen en son veriyi al
                 var selectedChoice = Request.Form[$"Answers[{i}].SelectedChoiceId"];
                 var textAnswer = Request.Form[$"Answers[{i}].AnswerText"];
                 var file = Request.Form.Files.FirstOrDefault(f => f.Name == $"Answers[{i}].FileUpload");
 
-                // Şık seçimi varsa ata
+                // Şık Cevabı Güncelle
                 if (!string.IsNullOrEmpty(selectedChoice) && int.TryParse(selectedChoice, out int choiceId))
                 {
                     answer.SelectedChoiceId = choiceId;
-
-                    // --- OTOMATİK PUAN HESAPLAMA (BURAYA EKLENDİ) ---
-                    // Eğer klasik soru yoksa, döngü içindeyken puanı hesapla
-                    if (!hasClassicQuestion)
-                    {
-                        var correctChoice = question.Choices.FirstOrDefault(c => c.IsCorrect);
-                        if (correctChoice != null && correctChoice.Id == choiceId)
-                        {
-                            totalScore += question.Point ?? 0;
-                        }
-                    }
-                    // ------------------------------------------------
                 }
 
+                // Metin Cevabı Güncelle
                 if (!string.IsNullOrEmpty(textAnswer))
+                {
                     answer.AnswerText = textAnswer;
+                }
 
-                // Dosya yükleme işlemi
+                // Dosya Varsa Yükle
                 if (file != null && file.Length > 0)
                 {
-                    var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads"); // Path düzeltildi
+                    var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
                     if (!Directory.Exists(uploads)) Directory.CreateDirectory(uploads);
 
                     var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
@@ -202,68 +250,67 @@ namespace OnlineSinavSistemi.Controllers
                     answer.FilePath = "/uploads/" + fileName;
                 }
 
-                _context.Answers.Add(answer);
+                // 3. PUAN HESAPLAMA (Final Kontrol)
+                if (!hasClassicQuestion && answer.SelectedChoiceId.HasValue)
+                {
+                    var correctChoice = question.Choices.FirstOrDefault(c => c.IsCorrect);
+                    if (correctChoice != null && correctChoice.Id == answer.SelectedChoiceId)
+                    {
+                        totalScore += question.Point ?? 0;
+                    }
+                }
             }
 
-            // Sınavı tamamlandı olarak işaretle
+            // Sınavı Kapat
             studentExam.Completed = true;
             studentExam.EndTime = DateTime.Now;
 
-            // Eğer klasik soru yoksa puanı ve yayınlama durumunu güncelle
+            // Session'ı temizle (Sınav bittiği için artık session'a gerek yok)
+            HttpContext.Session.Remove($"ExamSession_{studentExam.Id}");
+
             if (!hasClassicQuestion)
             {
                 studentExam.Score = totalScore;
-                studentExam.ScoreShared = true; // Puanı öğrenciye göster
+                studentExam.ScoreShared = true;
             }
             else
             {
-                studentExam.ScoreShared = false; // Hoca onayı bekle
+                studentExam.ScoreShared = false;
             }
 
-            // TEK SEFERDE KAYDET
             await _context.SaveChangesAsync();
-
             return RedirectToAction("Index");
         }
 
-        // 🔹 SINAVLARIM (SAYFALAMALI)
+        // 🔹 SINAVLARIM
         [HttpGet]
         public async Task<IActionResult> Sinavlarim(int? page)
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-                return RedirectToAction("AccessDenied", "Account");
+            if (user == null) return RedirectToAction("AccessDenied", "Account");
 
-            // Sayfalama parametreleri
-            int pageSize = 10;
+            int pageSize = 5;
             int pageNumber = page ?? 1;
 
-            // Öğrencinin tüm sınavlarını çekiyoruz
             var examsQuery = _context.StudentExams
                 .Where(se => se.StudentId == user.Id)
                 .Include(se => se.Exam)
                     .ThenInclude(e => e.Course)
                 .OrderByDescending(se => se.Exam.StartDate);
 
-            // Toplam kayıt sayısı
             var totalCount = await examsQuery.CountAsync();
             var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 
-            // Sayfalı veriyi al
             var pagedExams = await examsQuery
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
-            // İstatistikler için ayrı sorgular
             var allExams = await examsQuery.ToListAsync();
-            var tamamlananSinav = allExams.Count(e => e.Completed);
-            var bekleyenSinav = allExams.Count(e => !e.Completed);
 
-            // ViewBag ile verileri view'a gönder
             ViewBag.ToplamSinav = totalCount;
-            ViewBag.TamamlananSinav = tamamlananSinav;
-            ViewBag.BekleyenSinav = bekleyenSinav;
+            ViewBag.TamamlananSinav = allExams.Count(e => e.Completed);
+            ViewBag.BekleyenSinav = allExams.Count(e => !e.Completed);
             ViewBag.PageNumber = pageNumber;
             ViewBag.TotalPages = totalPages;
             ViewBag.HasPreviousPage = pageNumber > 1;
@@ -272,12 +319,11 @@ namespace OnlineSinavSistemi.Controllers
             return View(pagedExams);
         }
 
-        // 🔹 SINAV SONUCU GÖRÜNTÜLE
+        // 🔹 SINAV SONUCU
         [HttpGet]
         public async Task<IActionResult> ExamResult(int studentExamId)
         {
             var studentId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
             var studentExam = await _context.StudentExams
                 .Include(se => se.Exam)
                     .ThenInclude(e => e.Questions)
@@ -285,8 +331,7 @@ namespace OnlineSinavSistemi.Controllers
                 .Include(se => se.Answers)
                 .FirstOrDefaultAsync(se => se.Id == studentExamId && se.StudentId == studentId);
 
-            if (studentExam == null)
-                return Unauthorized();
+            if (studentExam == null) return Unauthorized();
 
             if (!studentExam.Completed)
             {

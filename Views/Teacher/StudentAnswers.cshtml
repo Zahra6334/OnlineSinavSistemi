@@ -28,7 +28,7 @@
                         <i class="bi bi-list-check me-2"></i>Tüm Cevaplar
                     </h5>
                 </div>
-                
+
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-hover mb-0">
@@ -87,9 +87,9 @@
                                                         <div class="list-group-item border-0 px-0 py-1">
                                                             <div class="d-flex align-items-center">
                                                                 <div class="form-check me-2">
-                                                                    <input class="form-check-input" 
-                                                                           type="radio" 
-                                                                           disabled 
+                                                                    <input class="form-check-input"
+                                                                           type="radio"
+                                                                           disabled
                                                                            @(a.SelectedChoiceId == c.Id ? "checked" : "")>
                                                                 </div>
                                                                 <div class="flex-grow-1">
@@ -193,15 +193,15 @@
                             <i class="bi bi-pencil-square me-2"></i>Not Ver
                         </h5>
                     </div>
-                    
+
                     <div class="card-body p-4">
                         <form asp-controller="Teacher"
                               asp-action="SaveScore"
                               method="post"
                               class="row g-3 align-items-end">
-                              
+
                             <input type="hidden" name="studentExamId" value="@ViewBag.StudentExamId" />
-                            
+
                             <!-- Not Alanı -->
                             <div class="col-md-3">
                                 <label class="form-label fw-bold">
@@ -221,7 +221,7 @@
                                            required />
                                 </div>
                             </div>
-                            
+
                             <!-- Notu Göster Seçeneği -->
                             <div class="col-md-4">
                                 <label class="form-label fw-bold">
@@ -237,14 +237,14 @@
                                     </select>
                                 </div>
                             </div>
-                            
+
                             <!-- Gönder Butonu -->
                             <div class="col-md-3">
                                 <button type="submit" class="btn btn-success btn-lg w-100">
                                     <i class="bi bi-check-circle me-2"></i>Notu Kaydet
                                 </button>
                             </div>
-                            
+
                             <!-- Bilgilendirme -->
                             <div class="col-md-2">
                                 <div class="text-center">
@@ -270,25 +270,25 @@
     .table-hover tbody tr:hover {
         background-color: rgba(102, 126, 234, 0.05) !important;
     }
-    
+
     .table th {
         border-bottom: 2px solid #dee2e6;
     }
-    
+
     .table td {
         border-bottom: 1px solid #dee2e6;
         vertical-align: middle;
     }
-    
+
     .list-group-item:hover {
         background-color: rgba(102, 126, 234, 0.03);
     }
-    
+
     .form-check-input:checked {
         background-color: #667eea;
         border-color: #667eea;
     }
-    
+
     .btn-primary {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
         border: none;

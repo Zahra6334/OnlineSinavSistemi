@@ -27,7 +27,16 @@ builder.Services.AddScoped<IStudentExamService, StudentExamService>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddScoped<IAnswerService, AnswerService>();
 builder.Services.AddScoped<IReminderService, ReminderService>();
+// Session için gerekli olan Memory Cache servisi
+builder.Services.AddDistributedMemoryCache();
 
+// Session servisini yapılandırma
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(40); // Sınav sürenize göre ayarlayın (örn: 40 dk)
+    options.Cookie.HttpOnly = true; // Güvenlik için
+    options.Cookie.IsEssential = true; // GDPR/KVKK onayı olmadan da çalışması için
+});
 var app = builder.Build();
 // ------------------------------------------------------------------
 // ROL OLUŞTURMA (SEED DATA) İŞLEMİ BURADA YAPILIYOR
@@ -60,7 +69,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

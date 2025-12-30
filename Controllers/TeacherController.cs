@@ -147,7 +147,8 @@ namespace OnlineSinavSistemi.Controllers
             return View(answers);
         }
 
-
+        //bu metod kullanılmıyor suan 
+       
         private double CalculateTestScore(List<Answer> answers)
         {
             int correct = answers.Count(a =>
